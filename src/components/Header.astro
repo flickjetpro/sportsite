@@ -1,0 +1,51 @@
+---
+const { currentSport } = Astro.props as { currentSport?: string };
+---
+
+<header class="border-b border-buff-border bg-buff-darker">
+  <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
+    <a href="/" class="text-2xl font-bold tracking-tight text-buff-gold no-underline">
+      Buffstreams Backup
+    </a>
+    <div id="live-clock" class="font-mono text-sm text-buff-muted">
+      ET: <span id="clock-time">--:--:-- --</span>
+    </div>
+  </div>
+  <nav class="mx-auto flex max-w-5xl gap-1 overflow-x-auto px-4 pb-3 text-sm">
+    {['nfl', 'mlb', 'nba', 'nhl', 'ufc', 'f1', 'soccer', 'tennis', 'golf'].map(
+      (sport) => {
+        const label = sport === 'ufc' ? 'UFC' : sport === 'f1' ? 'F1' : sport.charAt(0).toUpperCase() + sport.slice(1);
+        return (
+          <a
+            href={`/${sport}`}
+            class={`whitespace-nowrap rounded px-3 py-1.5 no-underline transition-colors ${
+              currentSport === sport
+                ? 'bg-buff-gold text-black'
+                : 'text-white hover:bg-buff-card'
+            }`}
+          >
+            {label}
+          </a>
+        );
+      }
+    )}
+  </nav>
+</header>
+
+<script>
+  function updateClock() {
+    const el = document.getElementById('clock-time');
+    if (!el) return;
+    const now = new Date();
+    const et = now.toLocaleTimeString('en-US', {
+      timeZone: 'America/New_York',
+      hour: 'numeric',
+      minute: '2-digit',
+      second: '2-digit',
+      hour12: true,
+    });
+    el.textContent = et;
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+</script>

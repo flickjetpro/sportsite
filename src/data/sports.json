@@ -1,0 +1,119 @@
+{
+  "premiumSports": {
+    "nfl": {
+      "category": "american-football",
+      "displayName": "NFL",
+      "route": "/nfl",
+      "icon": "🏈",
+      "keywords": ["NFL", "Super Bowl", "Preseason", "Pro Bowl"],
+      "teams": [
+        "Cardinals", "Falcons", "Ravens", "Bills", "Panthers", "Bears",
+        "Bengals", "Browns", "Cowboys", "Broncos", "Lions", "Packers",
+        "Texans", "Colts", "Jaguars", "Chiefs", "Raiders", "Chargers",
+        "Rams", "Dolphins", "Vikings", "Patriots", "Saints", "Giants",
+        "Jets", "Eagles", "Steelers", "49ers", "Seahawks", "Buccaneers",
+        "Titans", "Commanders", "Washington", "LA Rams", "LA Chargers",
+        "Kansas City", "San Francisco", "Tampa Bay", "Green Bay",
+        "Las Vegas", "New England", "New Orleans"
+      ]
+    },
+    "nba": {
+      "category": "basketball",
+      "displayName": "NBA",
+      "route": "/nba",
+      "icon": "🏀",
+      "keywords": ["NBA", "WNBA", "Finals", "Playoffs", "All-Star"],
+      "teams": [
+        "Celtics", "Nets", "Knicks", "76ers", "Raptors", "Bulls",
+        "Cavaliers", "Pistons", "Pacers", "Bucks", "Hawks", "Hornets",
+        "Heat", "Magic", "Wizards", "Nuggets", "Timberwolves", "Thunder",
+        "Trail Blazers", "Blazers", "Jazz", "Warriors", "Clippers",
+        "Lakers", "Suns", "Kings", "Mavericks", "Rockets", "Grizzlies",
+        "Pelicans", "Spurs", "Golden State", "LA Lakers", "LA Clippers",
+        "Oklahoma City", "San Antonio"
+      ]
+    },
+    "mlb": {
+      "category": "baseball",
+      "displayName": "MLB",
+      "route": "/mlb",
+      "icon": "⚾",
+      "keywords": ["MLB", "World Series", "Playoffs", "Spring Training"],
+      "teams": [
+        "Orioles", "Red Sox", "Yankees", "Rays", "Blue Jays",
+        "White Sox", "Guardians", "Tigers", "Royals", "Twins",
+        "Astros", "Angels", "Athletics", "Mariners", "Rangers",
+        "Braves", "Marlins", "Mets", "Phillies", "Nationals",
+        "Cubs", "Reds", "Brewers", "Pirates", "Cardinals",
+        "Diamondbacks", "Rockies", "Dodgers", "Padres", "Giants",
+        "Boston", "New York", "Los Angeles", "Chicago", "San Diego",
+        "San Francisco", "Houston", "St. Louis"
+      ]
+    },
+    "nhl": {
+      "category": "hockey",
+      "displayName": "NHL",
+      "route": "/nhl",
+      "icon": "🏒",
+      "keywords": ["NHL", "Stanley Cup", "Playoffs", "All-Star"],
+      "teams": [
+        "Ducks", "Coyotes", "Bruins", "Sabres", "Flames", "Hurricanes",
+        "Blackhawks", "Avalanche", "Blue Jackets", "Stars", "Red Wings",
+        "Oilers", "Panthers", "Kings", "Wild", "Canadiens", "Predators",
+        "Devils", "Islanders", "Rangers", "Senators", "Flyers",
+        "Penguins", "Sharks", "Kraken", "Blues", "Lightning",
+        "Maple Leafs", "Leafs", "Canucks", "Golden Knights", "Knights",
+        "Capitals", "Jets", "Montreal", "Toronto", "Vegas"
+      ]
+    },
+    "ufc": {
+      "category": "fight",
+      "displayName": "UFC",
+      "route": "/ufc",
+      "icon": "🥊",
+      "keywords": ["UFC", "MMA", "Ultimate Fighting"],
+      "teams": []
+    },
+    "f1": {
+      "category": "motor-sports",
+      "displayName": "F1",
+      "route": "/f1",
+      "icon": "🏎️",
+      "keywords": ["F1", "Formula 1", "Formula One", "Grand Prix", "GP"],
+      "teams": []
+    },
+    "soccer": {
+      "category": "football",
+      "displayName": "Soccer",
+      "route": "/soccer",
+      "icon": "⚽",
+      "keywords": ["World Cup", "MLS", "Premier League", "Champions League",
+                   "La Liga", "Bundesliga", "Serie A", "Liga MX"],
+      "teams": []
+    },
+    "tennis": {
+      "category": "tennis",
+      "displayName": "Tennis",
+      "route": "/tennis",
+      "icon": "🎾",
+      "keywords": [],
+      "teams": []
+    },
+    "golf": {
+      "category": "golf",
+      "displayName": "Golf",
+      "route": "/golf",
+      "icon": "⛳",
+      "keywords": [],
+      "teams": []
+    }
+  },
+  "nonPremiumCategories": {
+    "afl": { "displayName": "AFL", "icon": "🏉" },
+    "rugby": { "displayName": "Rugby", "icon": "🏉" },
+    "cricket": { "displayName": "Cricket", "icon": "🏏" },
+    "billiards": { "displayName": "Billiards", "icon": "🎱" },
+    "darts": { "displayName": "Darts", "icon": "🎯" },
+    "other": { "displayName": "Other", "icon": "📺" }
+  }
+}

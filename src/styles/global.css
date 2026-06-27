@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@theme {
+  --color-buff-dark: #0d0d0d;
+  --color-buff-darker: #0a0a0a;
+  --color-buff-card: #1a1a1a;
+  --color-buff-border: #2a2a2a;
+  --color-buff-gold: #e8b800;
+  --color-buff-goldhover: #d4a600;
+  --color-buff-muted: #aaaaaa;
+  --color-buff-live: #e74c3c;
+  --color-buff-upcoming: #3498db;
+}
+
+body {
+  background-color: var(--color-buff-dark);
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+    Ubuntu, Cantarell, sans-serif;
+}
+
+@keyframes pulse-live {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+.animate-pulse-live {
+  animation: pulse-live 1.5s ease-in-out infinite;
+}

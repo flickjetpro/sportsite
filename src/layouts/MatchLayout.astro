@@ -1,0 +1,22 @@
+---
+import Base from './Base.astro';
+import type { PremiumMatch } from '../lib/api';
+
+export interface Props {
+  match: PremiumMatch;
+}
+const { match } = Astro.props;
+---
+
+<Base title={`${match.title} - Game Time & Schedule | Buffstreams Backup`} description={`${match.title} game information, match time, and schedule.`}>
+  <slot name="breadcrumb" />
+  <main class="mx-auto max-w-5xl px-4 py-6">
+    <slot name="content" />
+  </main>
+  <footer class="border-t border-buff-border bg-buff-darker px-4 py-8 text-center text-sm text-buff-muted">
+    <p class="mx-auto max-w-3xl">
+      Buffstreams Backup is a sports information directory. We provide game schedules, match times, and sports calendar data for informational purposes only. We do not host, stream, embed, or link to any video or audio content. Stream source links displayed on match pages are provided by third-party services. All trademarks, team names, and logos are property of their respective owners. For official broadcasts, visit the respective league's authorized platform.
+    </p>
+    <p class="mt-4">&copy; 2026 Buffstreams Backup. All rights reserved.</p>
+  </footer>
+</Base>

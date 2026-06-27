@@ -1,0 +1,21 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+import { buildFAQSchema } from '../lib/schema';
+---
+
+<Base title="FAQ - Frequently Asked Questions | Buffstreams Backup" description="Frequently asked questions about Buffstreams Backup sports schedule directory.">
+  <Header />
+  <main class="mx-auto max-w-5xl px-4 py-6">
+    <Breadcrumb items={[
+      { name: 'Home', url: '/' },
+      { name: 'FAQ', url: '/faq' },
+    ]} />
+    <h1 class="mb-6 text-2xl font-bold text-white">Frequently Asked Questions</h1>
+    <FAQ />
+  </main>
+  <Footer />
+</Base>

@@ -1,0 +1,30 @@
+---
+const sports = [
+  { id: 'nfl', label: 'NFL', img: '/images/nfl.webp' },
+  { id: 'nba', label: 'NBA', img: '/images/nba.webp' },
+  { id: 'mlb', label: 'MLB', img: '/images/mlb.webp' },
+  { id: 'nhl', label: 'NHL', img: '/images/nhl.webp' },
+  { id: 'ufc', label: 'UFC', img: '/images/ufc.webp' },
+  { id: 'f1', label: 'F1', img: '/images/f1.webp' },
+  { id: 'soccer', label: 'Soccer', img: '/images/soccer.webp' },
+  { id: 'tennis', label: 'Tennis', img: '/images/tennis.webp' },
+  { id: 'golf', label: 'Golf', img: '/images/golf.webp' },
+  { id: 'boxing', label: 'Boxing', img: '/images/boxing.webp' },
+  { id: 'wwe', label: 'WWE', img: '/images/wwe.webp' },
+  { id: 'wnba', label: 'WNBA', img: '/images/wnba.webp' },
+];
+---
+
+<div class="mx-auto grid max-w-3xl grid-cols-3 gap-3 px-4 py-6 sm:grid-cols-4 md:grid-cols-6">
+  {sports.map((s) => (
+    <a
+      href={`/${s.id}`}
+      class="group flex flex-col items-center rounded-lg bg-buff-card p-3 text-center no-underline transition hover:bg-buff-gold hover:text-black"
+    >
+      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-buff-dark text-2xl group-hover:bg-white/20">
+        {s.label.slice(0, 2)}
+      </div>
+      <span class="mt-2 text-xs font-medium text-white group-hover:text-black">{s.label}</span>
+    </a>
+  ))}
+</div>

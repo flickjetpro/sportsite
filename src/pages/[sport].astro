@@ -1,0 +1,65 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import LiveBar from '../components/LiveBar.astro';
+import ScheduleSection from '../components/ScheduleSection.astro';
+import Calendar from '../components/Calendar.astro';
+import Footer from '../components/Footer.astro';
+import { loadMatchesFromData, mapToPremiumSport, filterByDate } from '../lib/api';
+import { getSportSEO } from '../lib/seo';
+import type { APIMatch } from '../lib/api';
+import sportsData from '../data/sports.json';
+
+export async function getStaticPaths() {
+  return Object.keys(sportsData.premiumSports).map((sport) => ({
+    params: { sport },
+    props: { sport },
+  }));
+}
+
+const { sport } = Astro.props as { sport: string };
+const sportConfig = (sportsData.premiumSports as Record<string, any>)[sport];
+
+const liveFile = import.meta.glob('../data/matches-live.json', { eager: true });
+const todayFile = import.meta.glob('../data/matches-today.json', { eager: true });
+const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
+const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
+
+const allMatches = [...liveData, ...todayData]
+  .filter((m) => m.popular && m.category === sportConfig.category)
+  .map((m) => mapToPremiumSport(m))
+  .filter((m) => m.premiumSport === sport);
+
+const dateParam = Astro.url.searchParams.get('date');
+const filteredMatches = dateParam ? filterByDate(allMatches, dateParam) : allMatches;
+const now = Date.now();
+const liveFiltered = filteredMatches.filter((m) => now >= m.date && now <= m.date + 3 * 60 * 60 * 1000);
+const scheduleFiltered = filteredMatches.filter((m) => m.date > now);
+
+const seoDescription = getSportSEO(sport);
+---
+
+<Base title={`${sportConfig.displayName} Schedule Today - Game Times | Buffstreams Backup`} description={seoDescription}>
+  <Header currentSport={sport} />
+  <main class="mx-auto max-w-5xl px-4 py-6">
+    <Breadcrumb items={[
+      { name: 'Home', url: '/' },
+      { name: sportConfig.displayName, url: `/${sport}` },
+    ]} />
+    <h1 class="mb-6 text-2xl font-bold text-white">{sportConfig.displayName} Schedule</h1>
+    <LiveBar matches={liveFiltered} />
+    <div class="mt-6">
+      <ScheduleSection matches={scheduleFiltered} />
+    </div>
+    <div class="mt-8">
+      <Calendar sport={sport} />
+    </div>
+    <div class="mt-12">
+      <article class="prose prose-invert max-w-none">
+        <p class="text-buff-muted">{seoDescription}</p>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</Base>

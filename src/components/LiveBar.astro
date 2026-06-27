@@ -1,0 +1,26 @@
+---
+import type { PremiumMatch } from '../lib/api';
+import MatchCard from './MatchCard.astro';
+
+export interface Props {
+  matches: PremiumMatch[];
+}
+
+const { matches } = Astro.props;
+const liveMatches = matches.filter((m) => {
+  const now = Date.now();
+  return now >= m.date && now <= m.date + 3 * 60 * 60 * 1000;
+});
+---
+
+{liveMatches.length > 0 && (
+  <section>
+    <h2 class="mb-3 flex items-center gap-2 text-lg font-bold text-buff-live">
+      <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
+      LIVE NOW
+    </h2>
+    <div class="flex flex-col gap-2">
+      {liveMatches.map((m) => <MatchCard match={m} />)}
+    </div>
+  </section>
+)}

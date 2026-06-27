@@ -1,0 +1,23 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import Breadcrumb from '../components/Breadcrumb.astro';
+import Footer from '../components/Footer.astro';
+---
+
+<Base title="About Buffstreams Backup | Sports Schedule Directory" description="Buffstreams Backup is your complete sports schedule directory. Learn more about our service.">
+  <Header />
+  <main class="mx-auto max-w-5xl px-4 py-6">
+    <Breadcrumb items={[
+      { name: 'Home', url: '/' },
+      { name: 'About', url: '/about' },
+    ]} />
+    <h1 class="mb-6 text-2xl font-bold text-white">About Buffstreams Backup</h1>
+    <div class="prose prose-invert max-w-none text-buff-muted">
+      <p>Buffstreams Backup is a sports information directory that provides game schedules, match times, and sports calendar data for NFL, NBA, MLB, NHL, UFC, F1, and other major sports leagues.</p>
+      <p>Our goal is to provide a clean, fast, and up-to-date sports schedule directory that helps fans find game times and match information for their favorite sports.</p>
+      <p>We are an independent service and are not affiliated with any professional sports league or organization. All trademarks, team names, and logos are property of their respective owners.</p>
+    </div>
+  </main>
+  <Footer />
+</Base>

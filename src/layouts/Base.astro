@@ -1,0 +1,32 @@
+---
+import '../../src/styles/global.css';
+import { buildWebSiteSchema } from '../../src/lib/schema';
+
+export interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = 'Buffstreams Backup - Sports Schedule Directory', description = 'Complete sports schedule directory for NFL, NBA, MLB, NHL, UFC, and more.' } = Astro.props;
+
+const schema = buildWebSiteSchema();
+---
+
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.url.href} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta name="twitter:card" content="summary" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body class="min-h-screen bg-buff-dark text-white antialiased">
+    <slot />
+  </body>
+</html>

@@ -1,0 +1,59 @@
+---
+import Base from '../layouts/Base.astro';
+import Header from '../components/Header.astro';
+import SportGrid from '../components/SportGrid.astro';
+import LiveBar from '../components/LiveBar.astro';
+import ScheduleSection from '../components/ScheduleSection.astro';
+import OtherMatches from '../components/OtherMatches.astro';
+import Calendar from '../components/Calendar.astro';
+import FAQ from '../components/FAQ.astro';
+import Footer from '../components/Footer.astro';
+import { loadMatchesFromData } from '../lib/api';
+import type { APIMatch } from '../lib/api';
+
+const liveFile = import.meta.glob('../data/matches-live.json', { eager: true });
+const todayFile = import.meta.glob('../data/matches-today.json', { eager: true });
+const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
+const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
+
+const allMatches = loadMatchesFromData([...liveData, ...todayData]);
+const now = Date.now();
+const liveMatches = allMatches.filter((m) => {
+  return now >= m.date && now <= m.date + 3 * 60 * 60 * 1000;
+});
+const scheduleMatches = allMatches.filter((m) => m.date > now);
+---
+
+<Base>
+  <Header />
+  <main class="mx-auto max-w-5xl px-4 py-6">
+    <SportGrid />
+    <div class="mt-8">
+      <LiveBar matches={allMatches} />
+    </div>
+    <div class="mt-8">
+      <ScheduleSection matches={scheduleMatches} />
+    </div>
+    <div class="mt-8">
+      <OtherMatches matches={allMatches} />
+    </div>
+    <div class="mt-8">
+      <Calendar />
+    </div>
+    <div class="mt-12">
+      <article class="prose prose-invert max-w-none">
+        <h2 class="text-xl font-bold text-white">Buffstreams Backup: Your Complete Sports Schedule Directory</h2>
+        <p class="text-buff-muted">
+          Buffstreams Backup is your complete sports schedule directory for NFL, NBA, MLB, NHL, UFC, F1, and more. Browse today's game times, check match schedules, and stay updated with the latest sports calendar information. Find game dates and kickoff times for all major US sports leagues in one place.
+        </p>
+        <p class="text-buff-muted">
+          Whether you're looking for NFL football schedules, NBA basketball game times, MLB baseball matchups, NHL hockey puck drops, UFC fight cards, or Formula 1 race times, Buffstreams Backup has you covered. Our schedule is updated every 30 minutes to ensure you have the most current information.
+        </p>
+      </article>
+    </div>
+    <div class="mt-8">
+      <FAQ />
+    </div>
+  </main>
+  <Footer />
+</Base>

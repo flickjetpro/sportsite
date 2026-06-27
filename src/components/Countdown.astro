@@ -1,0 +1,35 @@
+---
+export interface Props {
+  matchDate: number;
+  sport?: string;
+}
+const { matchDate } = Astro.props;
+const target = matchDate;
+---
+
+<div id="countdown-{matchDate}" class="font-mono text-lg text-buff-gold">
+  <span id="cd-text-{matchDate}">--</span>
+</div>
+
+<script>
+  (function () {
+    const target = Number({target});
+    const textEl = document.getElementById('cd-text-{matchDate}');
+    if (!textEl) return;
+
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        textEl.textContent = 'LIVE';
+        return;
+      }
+      const h = Math.floor(diff / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      textEl.textContent = `Starts in ${h}h ${m}m ${s}s`;
+    }
+
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>

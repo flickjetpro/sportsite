@@ -1,0 +1,88 @@
+---
+import type { PremiumMatch } from '../lib/api';
+import { formatET, getMatchStatus } from '../lib/time';
+
+export interface Props {
+  match: PremiumMatch;
+  showCategoryBadge?: boolean;
+}
+
+const { match, showCategoryBadge = false } = Astro.props;
+const status = getMatchStatus(match);
+const badge = match.premiumDisplayName || match.categoryBadge;
+const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
+---
+
+<a
+  href={`/match/${match.id}`}
+  class="flex items-center gap-3 rounded-lg border border-buff-border bg-buff-card p-3 no-underline transition hover:border-buff-gold"
+  data-status={status}
+  data-date={match.date}
+  data-uid={uniqueId}
+>
+  <div class="flex min-w-0 flex-1 items-center gap-2">
+    {match.teams?.home?.badge && (
+      <img
+        src={`/api/proxy/images/badge/${match.teams.home.badge}.webp`}
+        alt=""
+        class="h-8 w-8 rounded-full object-contain"
+        loading="lazy"
+      />
+    )}
+    <span class="truncate text-sm font-medium text-white">
+      {match.teams?.home?.name || match.title.split(' vs ')[0]}
+    </span>
+  </div>
+
+  <div class="flex flex-col items-center gap-1" style="min-width:80px">
+    {status === 'live' && (
+      <>
+        <span class="flex items-center gap-1.5 text-xs font-bold text-buff-live">
+          <span class="inline-block h-2 w-2 rounded-full bg-buff-live animate-pulse-live" />
+          <span class="mc-timer">--</span>
+        </span>
+        <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
+          {formatET(match.date)} ET
+        </span>
+      </>
+    )}
+    {status === 'upcoming' && (
+      <>
+        <span class="mc-timer text-xs font-bold text-buff-upcoming">--</span>
+        <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
+          {formatET(match.date)} ET
+        </span>
+      </>
+    )}
+    {status === 'finished' && (
+      <>
+        <span class="rounded bg-buff-border px-2 py-0.5 text-xs font-bold text-buff-muted">FINAL</span>
+        <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
+          {formatET(match.date)} ET
+        </span>
+      </>
+    )}
+  </div>
+
+  <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+    <span class="truncate text-sm font-medium text-white">
+      {match.teams?.away?.name || match.title.split(' vs ')[1]}
+    </span>
+    {match.teams?.away?.badge && (
+      <img
+        src={`/api/proxy/images/badge/${match.teams.away.badge}.webp`}
+        alt=""
+        class="h-8 w-8 rounded-full object-contain"
+        loading="lazy"
+      />
+    )}
+  </div>
+
+  {badge && (
+    <span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">
+      [{badge.toUpperCase()}]
+    </span>
+  )}
+
+  <span class="ml-1 text-buff-muted">&rsaquo;</span>
+</a>

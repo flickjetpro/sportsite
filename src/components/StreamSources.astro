@@ -1,0 +1,31 @@
+---
+import type { PremiumMatch } from '../lib/api';
+
+export interface Props {
+  match: PremiumMatch;
+}
+
+const { match } = Astro.props;
+---
+
+{match.sources.length > 0 && (
+  <section>
+    <h2 class="mb-3 text-lg font-bold text-white">Available Stream Sources</h2>
+    <div class="flex flex-wrap gap-2">
+      {match.sources.map((s, i) => (
+        <a
+          href={`/stream/${s.source}/${s.id}/1`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="rounded-lg border border-buff-border bg-buff-card px-4 py-2 text-sm text-white no-underline transition hover:border-buff-gold hover:text-buff-gold"
+        >
+          Source {i + 1} - {s.source}
+          <span class="ml-1 text-buff-muted text-xs">↗</span>
+        </a>
+      ))}
+    </div>
+    <p class="mt-2 text-xs text-buff-muted">
+      All stream sources open in a new browser tab. We do not host or embed video content.
+    </p>
+  </section>
+)}

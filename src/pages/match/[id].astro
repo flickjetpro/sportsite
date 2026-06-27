@@ -1,0 +1,93 @@
+---
+import MatchLayout from '../../layouts/MatchLayout.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import Countdown from '../../components/Countdown.astro';
+import StreamSources from '../../components/StreamSources.astro';
+import { mapToPremiumSport } from '../../lib/api';
+import { formatET, formatETWithDate, getMatchStatus } from '../../lib/time';
+import { getMatchSEO } from '../../lib/seo';
+import type { APIMatch } from '../../lib/api';
+import sportsData from '../../data/sports.json';
+
+export async function getStaticPaths() {
+  const liveFile = import.meta.glob('../../data/matches-live.json', { eager: true });
+  const todayFile = import.meta.glob('../../data/matches-today.json', { eager: true });
+  const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
+  const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
+  const allMatches = [...liveData, ...todayData];
+  return allMatches.map((m) => ({
+    params: { id: m.id },
+    props: { match: m },
+  }));
+}
+
+const { match } = Astro.props as { match: APIMatch };
+const premiumMatch = mapToPremiumSport(match);
+const status = getMatchStatus(match);
+const statusColors: Record<string, string> = {
+  live: 'text-buff-live',
+  upcoming: 'text-buff-upcoming',
+  finished: 'text-buff-muted',
+};
+const sportConfig = premiumMatch.premiumSport
+  ? (sportsData.premiumSports as Record<string, any>)[premiumMatch.premiumSport]
+  : null;
+---
+
+<MatchLayout match={premiumMatch}>
+  <div slot="breadcrumb">
+    <Breadcrumb items={[
+      { name: 'Home', url: '/' },
+      ...(sportConfig ? [{ name: sportConfig.displayName, url: `/${premiumMatch.premiumSport}` }] : []),
+      { name: match.title, url: `/match/${match.id}` },
+    ]} />
+  </div>
+  <div slot="content">
+    <div class="flex flex-col items-center gap-4 py-8 text-center">
+      <div class="flex items-center gap-6">
+        {match.teams?.home?.badge && (
+          <div class="flex flex-col items-center gap-2">
+            <img
+              src={`/api/proxy/images/badge/${match.teams.home.badge}.webp`}
+              alt={match.teams.home.name}
+              class="h-16 w-16 rounded-full object-contain"
+            />
+            <span class="text-sm font-medium text-white">{match.teams.home.name}</span>
+          </div>
+        )}
+        <span class="text-2xl font-bold text-buff-muted">VS</span>
+        {match.teams?.away?.badge && (
+          <div class="flex flex-col items-center gap-2">
+            <img
+              src={`/api/proxy/images/badge/${match.teams.away.badge}.webp`}
+              alt={match.teams.away.name}
+              class="h-16 w-16 rounded-full object-contain"
+            />
+            <span class="text-sm font-medium text-white">{match.teams.away.name}</span>
+          </div>
+        )}
+      </div>
+
+      <h1 class="mt-4 text-xl font-bold text-white">{match.title}</h1>
+      <p class="text-buff-muted">{formatETWithDate(match.date)}</p>
+      <p class="font-mono text-lg text-white">{formatET(match.date)} ET</p>
+      <p class={`font-bold ${statusColors[status]}`}>
+        {status === 'live' ? 'LIVE' : status === 'upcoming' ? 'UPCOMING' : 'FINAL'}
+      </p>
+
+      {status !== 'finished' && (
+        <Countdown matchDate={match.date} />
+      )}
+    </div>
+
+    <div class="mt-8">
+      <StreamSources match={premiumMatch} />
+    </div>
+
+    <div class="mt-12">
+      <article class="prose prose-invert max-w-none">
+        <p class="text-buff-muted">{getMatchSEO(match)}</p>
+      </article>
+    </div>
+  </div>
+</MatchLayout>
