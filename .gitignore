@@ -3,3 +3,10 @@ dist/
 .astro/
 credentials-*.json
 *.env
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
