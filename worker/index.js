@@ -17,11 +17,7 @@ export default {
       const resp = await fetch('https://streamed.pk/api/matches/live');
       const data = await resp.json();
       return new Response(JSON.stringify(data), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=30',
-        },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
       });
     }
 
@@ -29,42 +25,18 @@ export default {
       const resp = await fetch('https://streamed.pk/api/matches/all-today');
       const data = await resp.json();
       return new Response(JSON.stringify(data), {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'application/json',
-          'Cache-Control': 'public, max-age=60',
-        },
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60' },
       });
     }
 
     const badgeMatch = path.match(/^\/api\/proxy\/images\/badge\/(.+)\.webp$/);
     if (badgeMatch) {
       const id = badgeMatch[1];
-      const resp = await fetch(
-        `https://streamed.pk/api/images/badge/${encodeURIComponent(id)}.webp`
-      );
+      const resp = await fetch(`https://streamed.pk/api/images/badge/${encodeURIComponent(id)}.webp`);
       const image = await resp.arrayBuffer();
       return new Response(image, {
-        headers: {
-          ...corsHeaders,
-          'Content-Type': 'image/webp',
-          'Cache-Control': 'public, max-age=86400',
-        },
+        headers: { ...corsHeaders, 'Content-Type': 'image/webp', 'Cache-Control': 'public, max-age=86400' },
       });
-    }
-
-    const streamMatch = path.match(/^\/stream\/([^/]+)\/([^/]+)\/(\d+)$/);
-    if (streamMatch) {
-      const [, source, id] = streamMatch;
-      const resp = await fetch(
-        `https://streamed.pk/api/stream/${source}/${id}`
-      );
-      const streams = await resp.json();
-      const stream = streams[0];
-      if (stream?.embedUrl) {
-        return Response.redirect(stream.embedUrl, 302);
-      }
-      return new Response('Stream not found', { status: 404 });
     }
 
     return env.ASSETS.fetch(request);

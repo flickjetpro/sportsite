@@ -1,0 +1,6 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "sportsite-stream",
+  "compatibility_date": "2026-06-27",
+  "main": "stream-worker/index.js"
+}

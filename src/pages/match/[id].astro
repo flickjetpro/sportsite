@@ -2,7 +2,6 @@
 import MatchLayout from '../../layouts/MatchLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Countdown from '../../components/Countdown.astro';
-import StreamSources from '../../components/StreamSources.astro';
 import { mapToPremiumSport } from '../../lib/api';
 import { formatET, formatETWithDate, getMatchStatus } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
@@ -80,9 +79,19 @@ const sportConfig = premiumMatch.premiumSport
       )}
     </div>
 
-    <div class="mt-8">
-      <StreamSources match={premiumMatch} />
-    </div>
+    {status !== 'finished' && match.sources?.length > 0 && (
+      <div class="mt-8 text-center">
+        <a
+          href={`https://stream.buffstreamsbackup.xyz/match/${match.id}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-block rounded-lg bg-buff-gold px-8 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
+        >
+          Watch Now ↗
+        </a>
+        <p class="mt-2 text-xs text-buff-muted">Stream opens on a separate domain.</p>
+      </div>
+    )}
 
     <div class="mt-12">
       <article class="prose prose-invert max-w-none">
