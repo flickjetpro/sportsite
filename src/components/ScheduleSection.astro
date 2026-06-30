@@ -29,9 +29,11 @@ const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis
               <span class="text-buff-muted"> ({sportMatches.length})</span>
             </h3>
             <div class="flex flex-col gap-2">
-              {sportMatches.map((m) => (
-                <MatchCard match={m} />
-              ))}
+              {sportMatches
+                .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0))
+                .map((m) => (
+                  <MatchCard match={m} />
+                ))}
             </div>
           </div>
         ))}

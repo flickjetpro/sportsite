@@ -4,54 +4,75 @@ import MatchCard from './MatchCard.astro';
 
 export interface Props {
   allMatches: PremiumMatch[];
+  todayDate: string;
 }
 
-const { allMatches } = Astro.props;
-const liveMatches = allMatches.filter((m) => m.popular);
+const { allMatches, todayDate } = Astro.props;
 const INITIAL_SHOW = 5;
-const hasMore = liveMatches.length > INITIAL_SHOW;
+
+const popularLive = allMatches.filter((m) => m.popular);
+const nonPopularLive = allMatches.filter((m) => !m.popular);
+const totalLive = allMatches.length;
+
+// Ordered: popular first, then non-popular
+const gridItems = [...popularLive, ...nonPopularLive];
+const hasNonPopular = nonPopularLive.length > 0;
 ---
 
-{liveMatches.length > 0 && (
+{totalLive > 0 && (
   <section>
     <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
       <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
       POPULAR LIVE
     </h2>
+
     <div class="flex flex-col gap-2" id="popular-live-grid">
-      {liveMatches.map((m, i) => (
+      {gridItems.map((m, i) => (
         <div class={i >= INITIAL_SHOW ? 'hidden-extra' : ''} data-pl-index={i}>
-          <div class="flex items-start gap-2">
-            <div class="min-w-0 flex-1">
-              <MatchCard match={m} showCategoryBadge={true} />
-            </div>
-            <span class="mt-3 flex shrink-0 items-center gap-1 rounded bg-buff-dark px-2 py-1 text-xs font-bold text-buff-gold">
-              ★ Popular
-            </span>
-          </div>
+          <MatchCard match={m} showCategoryBadge={true} />
         </div>
       ))}
     </div>
 
-    {hasMore && (
-      <div class="mt-4 text-center" id="show-more-wrap">
-        <button
-          id="show-more-btn"
-          class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
-        >
-          ⏷ Show More ({liveMatches.length - INITIAL_SHOW})
-        </button>
-      </div>
+    {gridItems.length > INITIAL_SHOW && (
+      <>
+        <div class="mt-4 text-center" id="show-more-wrap">
+          <button
+            id="show-more-btn"
+            class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
+          >
+            ⏷ Show More
+          </button>
+        </div>
+
+        <div class="mt-4 text-center" id="view-all-wrap" style="display:none">
+          <a
+            href={`/schedule?date=${todayDate}`}
+            class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
+          >
+            → Show All ({totalLive} Live Match{totalLive !== 1 ? 'es' : ''})
+          </a>
+        </div>
+      </>
     )}
 
-    <div class="mt-4 text-center" id="view-all-wrap" style="display:none">
-      <a
-        href="/schedule"
-        class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
-      >
-        → View All Live Matches
-      </a>
-    </div>
+    {hasNonPopular && (
+      <div class="mt-6" id="non-popular-wrap">
+        <div class="text-center">
+          <button
+            id="non-popular-btn"
+            class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-muted transition hover:border-buff-gold"
+          >
+            ⏷ Show Non-popular Matches ({nonPopularLive.length})
+          </button>
+        </div>
+        <div id="non-popular-grid" class="mt-2 flex flex-col gap-2" style="display:none">
+          {nonPopularLive.map((m) => (
+            <MatchCard match={m} showCategoryBadge={true} />
+          ))}
+        </div>
+      </div>
+    )}
   </section>
 )}
 
@@ -65,12 +86,27 @@ const hasMore = liveMatches.length > INITIAL_SHOW;
 
     showMoreBtn.addEventListener('click', function () {
       var items = grid.querySelectorAll('.hidden-extra');
-      for (var i = 0; i < items.length; i++) {
+      var toShow = Math.min(items.length, 5);
+      for (var i = 0; i < toShow; i++) {
         items[i].classList.remove('hidden-extra');
       }
-      if (showMoreWrap) showMoreWrap.style.display = 'none';
+      if (toShow < 5 || grid.querySelectorAll('.hidden-extra').length === 0) {
+        if (showMoreWrap) showMoreWrap.style.display = 'none';
+      }
       if (viewAllWrap) viewAllWrap.style.display = 'block';
     });
+
+    var nonPopBtn = document.getElementById('non-popular-btn');
+    var nonPopGrid = document.getElementById('non-popular-grid');
+    if (nonPopBtn && nonPopGrid) {
+      nonPopBtn.addEventListener('click', function () {
+        var isHidden = nonPopGrid.style.display === 'none';
+        nonPopGrid.style.display = isHidden ? 'flex' : 'none';
+        nonPopBtn.innerHTML = isHidden
+          ? '⏶ Hide Non-popular Matches (' + nonPopGrid.children.length + ')'
+          : '⏷ Show Non-popular Matches (' + nonPopGrid.children.length + ')';
+      });
+    }
   })();
 </script>
 
