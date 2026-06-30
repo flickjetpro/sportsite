@@ -88,7 +88,7 @@ function streamPage(match, sources, currentSource, embedUrl, views) {
 </div>
 <div class="main">
 <div class="iframe-wrap">
-<iframe id="stream-iframe" src="${embedUrl}" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+<iframe id="stream-iframe" src="${embedUrl}" allowfullscreen></iframe>
 </div>
 <div class="fallback" id="fallback-btn">
 <a href="${embedUrl}" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
