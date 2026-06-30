@@ -49,11 +49,8 @@ for (let d = 1; d <= daysInMonth; d++) {
   });
 }
 
-// Next month overflow — fill remaining grid cells with next month days that have matches
-const totalCells = firstDay + daysInMonth;
-const remainingSlots = Math.ceil(totalCells / 7) * 7 - totalCells;
-
-for (let d = 1; d <= remainingSlots; d++) {
+// Next month overflow — show next-month days that have matches (consecutive from day 1)
+for (let d = 1; ; d++) {
   const dateStr = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
   if (!matchDates.has(dateStr)) break;
   days.push({
