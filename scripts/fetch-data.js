@@ -74,8 +74,14 @@ async function main() {
   const todayMatches = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-today.json'), 'utf-8')
   );
+  const now = Date.now();
+  const WINDOW_END = now + 30 * 60 * 1000;
   const todayCandidates = todayMatches.filter(
-    (m) => m.sources?.length > 0 && !liveMatches.some((l) => l.id === m.id)
+    (m) =>
+      m.sources?.length > 0 &&
+      m.date >= now &&
+      m.date <= WINDOW_END &&
+      !liveMatches.some((l) => l.id === m.id)
   );
   if (todayCandidates.length > 0) {
     console.log(`  Fetching viewer counts for ${todayCandidates.length} today matches...`);
