@@ -33,9 +33,26 @@ async function main() {
     console.log(`Fetching ${name} matches from ${url}...`);
     const data = await fetchJSON(url);
     const filtered = data.filter((m) => !is247(m));
+
+    // Enrich live matches with viewer counts from stream endpoints
+    let dataToWrite = filtered;
+    if (name === 'live') {
+      console.log(`  Fetching viewer counts for ${filtered.length} live matches...`);
+      dataToWrite = await Promise.all(filtered.map(async (match) => {
+        if (!match.sources?.length) return { ...match, totalViewers: 0 };
+        const viewerCounts = await Promise.all(match.sources.map(async (s) => {
+          try {
+            const streams = await fetchJSON(`https://streamed.pk/api/stream/${s.source}/${s.id}`);
+            return streams.reduce((sum, st) => sum + (st.viewers || 0), 0);
+          } catch { return 0; }
+        }));
+        return { ...match, totalViewers: viewerCounts.reduce((a, b) => a + b, 0) };
+      }));
+    }
+
     const filePath = join(DATA_DIR, `matches-${name}.json`);
-    writeFileSync(filePath, JSON.stringify(filtered, null, 2));
-    console.log(`  Wrote ${filtered.length} matches to ${filePath}`);
+    writeFileSync(filePath, JSON.stringify(dataToWrite, null, 2));
+    console.log(`  Wrote ${dataToWrite.length} matches to ${filePath}`);
   }
 
   const liveMatches = JSON.parse(

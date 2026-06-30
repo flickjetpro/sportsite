@@ -11,9 +11,10 @@ export interface Props {
 
 const { allMatches, initialShow, step, viewAllMode } = Astro.props;
 
-const popularLive = allMatches.filter((m) => m.popular);
-const nonPopularLive = allMatches.filter((m) => !m.popular);
-const ordered = [...popularLive, ...nonPopularLive];
+const byViewers = allMatches.filter((m) => (m.totalViewers ?? 0) > 0).sort((a, b) => (b.totalViewers ?? 0) - (a.totalViewers ?? 0));
+const popular = allMatches.filter((m) => m.popular && !(m.totalViewers ?? 0));
+const rest = allMatches.filter((m) => !m.popular && !(m.totalViewers ?? 0));
+const ordered = [...byViewers, ...popular, ...rest];
 const total = ordered.length;
 const remaining = total - initialShow;
 ---

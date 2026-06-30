@@ -1,39 +1,16 @@
 [
   {
-    "id": "netherlands-vs-morocco-2499836",
-    "title": "Netherlands vs Morocco",
-    "category": "football",
-    "date": 1782781200000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAY29lBWSUYAUwVmDTAE5p5gJhqDh61hh1OPgBDYLKQRcOJBt15cyAE1LBCETI3BiOzdqEZoQKbKBC8QWECeogSICCGnWD5lkgpYRcxrtUoeYMvCLU5nviswGDe4mIQQA.webp",
-    "popular": false,
-    "teams": {
-      "home": {
-        "name": "Netherlands",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkuhDdYIGKGwgIqkCRAoQiPiDOnuemAQpM+KLmDLwi80Q6a0wTsaIhA"
-      },
-      "away": {
-        "name": "Morocco",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkhxAM2YAQAZgSENxB8QifYZR7cBkMsIxgTPii5gy8IvNGOmtMM7GiIQA"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "netherlands-vs-morocco-football-1562345"
-      }
-    ]
-  },
-  {
-    "id": "ppv-event-01-wwe-monday-night-raw-ppv-01",
-    "title": "WWE Monday Night RAW 💥",
+    "id": "wimbledon-championships-2026-roland-2026",
+    "title": "Wimbledon Championships 2026 🎾",
     "category": "other",
-    "date": 1782781200000,
+    "date": 1782813600000,
     "popular": true,
     "sources": [
       {
         "source": "echo",
-        "id": "ppv-event-01-wwe-monday-night-raw-ppv-01"
+        "id": "wimbledon-championships-2026-roland-2026"
       }
-    ]
+    ],
+    "totalViewers": 48
   }
 ]

@@ -13,6 +13,7 @@ export interface APIMatch {
     away?: { name: string; badge: string };
   };
   sources: { source: string; id: string }[];
+  totalViewers?: number;
 }
 
 export interface PremiumMatch extends APIMatch {
