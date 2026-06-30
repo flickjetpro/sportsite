@@ -3,7 +3,7 @@ export function buildWebSiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Buffstreams Backup',
-    url: 'https://buffstreamsbackup.xyz',
+    url: 'https://alphastreams.fit',
     description: 'Complete sports schedule directory for NFL, NBA, MLB, NHL, UFC, and more.',
   };
 }

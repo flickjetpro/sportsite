@@ -38,7 +38,7 @@ export default {
     }
 
     if (path === '/') {
-      return Response.redirect('https://buffstreamsbackup.xyz', 302);
+      return Response.redirect('https://alphastreams.fit', 302);
     }
 
     const streamMatch = path.match(/^\/stream\/([^/]+)\/(\d+)$/);
@@ -50,7 +50,7 @@ export default {
       if (stream?.embedUrl) {
         return Response.redirect(stream.embedUrl, 302);
       }
-      const body = `<div class="err"><h2>Stream not available</h2><p class="back"><a href="https://buffstreamsbackup.xyz">Back to main site</a></p></div>`;
+      const body = `<div class="err"><h2>Stream not available</h2><p class="back"><a href="https://alphastreams.fit">Back to main site</a></p></div>`;
       return new Response(html(body), {
         headers: { 'Content-Type': 'text/html;charset=utf-8' },
         status: 404,
@@ -68,7 +68,7 @@ export default {
       const match = allMatches.find(m => m.id === matchId);
 
       if (!match) {
-        const body = `<div class="err"><h2>Match not found</h2><p class="back"><a href="https://buffstreamsbackup.xyz">Back to main site</a></p></div>`;
+        const body = `<div class="err"><h2>Match not found</h2><p class="back"><a href="https://alphastreams.fit">Back to main site</a></p></div>`;
         return new Response(html(body), {
           headers: { 'Content-Type': 'text/html;charset=utf-8' },
           status: 404,
@@ -83,7 +83,7 @@ export default {
         <h1>${match.title}</h1>
         <div class="sources">${sources || '<p style="color:#999">No sources available</p>'}</div>
         <p class="note">Streams open in a new tab. We do not host or embed video content.</p>
-        <p class="back"><a href="https://buffstreamsbackup.xyz">← Back to main site</a></p>`;
+        <p class="back"><a href="https://alphastreams.fit">← Back to main site</a></p>`;
 
       return new Response(html(body), {
         headers: { 'Content-Type': 'text/html;charset=utf-8' },

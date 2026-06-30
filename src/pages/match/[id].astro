@@ -7,6 +7,7 @@ import { formatET, formatETWithDate, getMatchStatus } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
 import type { APIMatch } from '../../lib/api';
 import sportsData from '../../data/sports.json';
+import { STREAM_DOMAIN } from '../../lib/config';
 
 export async function getStaticPaths() {
   const liveFile = import.meta.glob('../../data/matches-live.json', { eager: true });
@@ -82,7 +83,7 @@ const sportConfig = premiumMatch.premiumSport
     {status !== 'finished' && match.sources?.length > 0 && (
       <div class="mt-8 text-center">
         <a
-          href={`https://stream.buffstreamsbackup.xyz/match/${match.id}`}
+          href={`https://${STREAM_DOMAIN}/match/${match.id}`}
           target="_blank"
           rel="noopener noreferrer"
           class="inline-block rounded-lg bg-buff-gold px-8 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
