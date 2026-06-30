@@ -20,10 +20,10 @@ const allMatches = loadMatchesFromData([...liveData, ...todayData]);
 const dateParam = Astro.url.searchParams.get('date') || '';
 const now = Date.now();
 const todayStr = formatDateParam(now);
-const filteredMatches = dateParam ? filterByDate(allMatches, dateParam) : allMatches;
+const filteredMatches = dateParam ? filterByDate(allMatches, dateParam) : filterByDate(allMatches, todayStr);
 
-// Check if viewing today (default "Today's Schedule" or explicit today date)
-const isToday = !dateParam || dateParam === todayStr;
+// Check if viewing today
+const isToday = dateParam ? dateParam === todayStr : true;
 
 // Split into live (within 3h window) and upcoming
 const liveMatches = isToday ? filteredMatches.filter((m) => {
@@ -72,3 +72,20 @@ const orderedLive = [...liveMatches.filter(m => m.popular), ...liveMatches.filte
   </main>
   <Footer />
 </Base>
+
+<script>
+  (function() {
+    var params = new URLSearchParams(window.location.search);
+    var dateParam = params.get('date');
+    if (dateParam) {
+      var heading = document.querySelector('h1');
+      if (heading) heading.textContent = 'Schedule for ' + dateParam;
+      var cards = document.querySelectorAll('[data-date-str]');
+      cards.forEach(function(card) {
+        if (card.getAttribute('data-date-str') !== dateParam) {
+          card.style.display = 'none';
+        }
+      });
+    }
+  })();
+</script>
