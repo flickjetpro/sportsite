@@ -20,6 +20,26 @@ async function fetchJSON(url) {
   return resp.json();
 }
 
+async function fetchMatchViewers(match) {
+  if (!match.sources?.length) return { ...match, totalViewers: 0 };
+  const viewerCounts = await Promise.all(match.sources.map(async (s) => {
+    try {
+      const streams = await fetchJSON(`https://streamed.pk/api/stream/${s.source}/${s.id}`);
+      return streams.reduce((sum, st) => sum + (st.viewers || 0), 0);
+    } catch { return 0; }
+  }));
+  return { ...match, totalViewers: viewerCounts.reduce((a, b) => a + b, 0) };
+}
+
+async function processBatch(items, fn, concurrency = 20) {
+  const results = [];
+  for (let i = 0; i < items.length; i += concurrency) {
+    const batch = items.slice(i, i + concurrency);
+    results.push(...await Promise.all(batch.map(fn)));
+  }
+  return results;
+}
+
 async function main() {
   mkdirSync(DATA_DIR, { recursive: true });
 
@@ -38,16 +58,7 @@ async function main() {
     let dataToWrite = filtered;
     if (name === 'live') {
       console.log(`  Fetching viewer counts for ${filtered.length} live matches...`);
-      dataToWrite = await Promise.all(filtered.map(async (match) => {
-        if (!match.sources?.length) return { ...match, totalViewers: 0 };
-        const viewerCounts = await Promise.all(match.sources.map(async (s) => {
-          try {
-            const streams = await fetchJSON(`https://streamed.pk/api/stream/${s.source}/${s.id}`);
-            return streams.reduce((sum, st) => sum + (st.viewers || 0), 0);
-          } catch { return 0; }
-        }));
-        return { ...match, totalViewers: viewerCounts.reduce((a, b) => a + b, 0) };
-      }));
+      dataToWrite = await processBatch(filtered, fetchMatchViewers);
     }
 
     const filePath = join(DATA_DIR, `matches-${name}.json`);
@@ -55,12 +66,27 @@ async function main() {
     console.log(`  Wrote ${dataToWrite.length} matches to ${filePath}`);
   }
 
-  const liveMatches = JSON.parse(
+  // Merge today matches with active streams into live matches
+  console.log('Checking today matches for active streams...');
+  let liveMatches = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-live.json'), 'utf-8')
   );
   const todayMatches = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-today.json'), 'utf-8')
   );
+  const todayCandidates = todayMatches.filter(
+    (m) => m.sources?.length > 0 && !liveMatches.some((l) => l.id === m.id)
+  );
+  if (todayCandidates.length > 0) {
+    console.log(`  Fetching viewer counts for ${todayCandidates.length} today matches...`);
+    const enriched = await processBatch(todayCandidates, fetchMatchViewers);
+    const withViewers = enriched.filter((m) => m.totalViewers > 0);
+    if (withViewers.length > 0) {
+      liveMatches = [...liveMatches, ...withViewers];
+      writeFileSync(join(DATA_DIR, 'matches-live.json'), JSON.stringify(liveMatches, null, 2));
+      console.log(`  Added ${withViewers.length} matches with active streams to matches-live.json`);
+    }
+  }
   const allFuture = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-all.json'), 'utf-8')
   );
