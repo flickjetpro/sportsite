@@ -9,30 +9,38 @@ body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .fallback{display:none;margin-top:8px;text-align:center}
 .fallback a{display:inline-block;background:#e8b800;color:#000;padding:10px 24px;border-radius:6px;font-weight:700;font-size:.85rem;text-decoration:none}
 .fallback a:hover{background:#d4a600}
-.source-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.source-header h2{color:#fff;font-size:1.05rem;font-weight:700}
-.source-header span{color:#aaa;font-size:.8rem}
-.source-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));margin-bottom:24px}
-.source-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:border-color .2s;color:inherit;font:inherit;display:flex;flex-direction:column;gap:4px}
-.source-btn:hover{border-color:#e8b800}
-.source-btn.active{border-color:#e8b800;background:#1a1a1a}
-.source-btn-label{color:#e8b800;font-size:.85rem;font-weight:700}
-.source-btn-desc{color:#aaa;font-size:.75rem}
-.source-btn-views{color:#22c55e;font-size:.7rem;font-weight:600}
+.stream-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.stream-header h2{color:#fff;font-size:1.05rem;font-weight:700}
+.stream-header span{color:#aaa;font-size:.8rem}
+.stream-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-bottom:24px}
+.stream-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:border-color .2s;color:inherit;font:inherit;display:flex;flex-direction:column;gap:6px}
+.stream-btn:hover{border-color:#e8b800}
+.stream-btn.active{border-color:#e8b800}
+.stream-btn-top{display:flex;align-items:center;justify-content:space-between}
+.stream-btn-label{color:#e8b800;font-size:.85rem;font-weight:700}
+.stream-btn-badges{display:flex;gap:4px}
+.stream-badge{display:inline-block;border-radius:4px;padding:1px 6px;font-size:.65rem;font-weight:700;background:#0d0d0d}
+.stream-badge-hd{color:#e8b800}
+.stream-badge-sd{color:#aaa}
+.stream-badge-lang{color:#aaa;font-weight:400}
+.stream-btn-bottom{display:flex;align-items:center;justify-content:space-between}
+.stream-btn-source{color:#666;font-size:.7rem;text-transform:lowercase}
+.stream-btn-views{font-size:.75rem;font-weight:600}
+.stream-btn-views-live{color:#22c55e}
+.stream-btn-views-none{color:#666}
 .footer{border-top:1px solid #2a2a2a;background:#0a0a0a;padding:24px 16px;text-align:center;font-size:.8rem;color:#666;margin-top:auto}
 .down-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0d0d0d;padding:20px;text-align:center}
 .down-icon{font-size:2.5rem;margin-bottom:16px}
 .down-title{color:#888;font-size:1.1rem}`
 
-const SOURCE_LABELS = {
-  echo: { label: 'HD-1', desc: 'Great quality overall' },
-  delta: { label: 'HD-2', desc: 'High quality stream' },
-  golf: { label: 'HD-3', desc: 'Alternative stream' },
-  admin: { label: 'Channel 4', desc: 'Admin added streams' },
+const SOURCE_NAMES = { echo: 'Echo', delta: 'Delta', golf: 'Golf', admin: 'Admin' }
+
+function sourceLabel(source) {
+  return SOURCE_NAMES[source] || source.charAt(0).toUpperCase() + source.slice(1)
 }
 
-function getSourceInfo(source) {
-  return SOURCE_LABELS[source] || { label: source.toUpperCase(), desc: `${source} stream` }
+function streamLabel(source, streamNo) {
+  return sourceLabel(source) + ' #' + streamNo
 }
 
 function html(body) {
@@ -58,15 +66,31 @@ function downPage(msg) {
 </div>`)
 }
 
-function streamPage(match, sources, currentSource, embedUrl, views) {
-  const sourceButtons = sources.map(s => {
-    const si = getSourceInfo(s.source)
-    const active = s.source === currentSource
-    return `<button class="source-btn${active ? ' active' : ''}" data-source="${s.source}" data-match="${match.id}">
-<span class="source-btn-label">${si.label}</span>
-<span class="source-btn-desc">${si.desc}</span>
+function streamPage(matchTitle, allStreams, selected, fallbackUrl) {
+  const cards = allStreams.map((s, i) => {
+    const active = i === selected
+    const label = streamLabel(s.source, s.streamNo)
+    const quality = s.hd ? 'HD' : 'SD'
+    const qClass = s.hd ? 'stream-badge-hd' : 'stream-badge-sd'
+    const langBadge = s.language ? `<span class="stream-badge stream-badge-lang">${esc(s.language)}</span>` : ''
+    const viewsClass = s.viewers > 0 ? 'stream-btn-views-live' : 'stream-btn-views-none'
+    const viewsText = s.viewers > 0 ? s.viewers.toLocaleString() + ' watching' : '0 watching'
+    return `<button class="stream-btn${active ? ' active' : ''}" data-index="${i}">
+<div class="stream-btn-top">
+<span class="stream-btn-label">${esc(label)}</span>
+<div class="stream-btn-badges">
+<span class="stream-badge ${qClass}">${quality}</span>
+${langBadge}
+</div>
+</div>
+<div class="stream-btn-bottom">
+<span class="stream-btn-source">${esc(s.source)}</span>
+<span class="stream-btn-views ${viewsClass}">${viewsText}</span>
+</div>
 </button>`
   }).join('')
+
+  const streamsJson = esc(JSON.stringify(allStreams.map(s => ({ source: s.source, streamNo: s.streamNo, hd: s.hd, language: s.language, embedUrl: s.embedUrl, viewers: s.viewers }))))
 
   return html(`<div class="header">
 <div class="header-inner">
@@ -75,65 +99,58 @@ function streamPage(match, sources, currentSource, embedUrl, views) {
 </div>
 <div class="main">
 <div class="iframe-wrap">
-<iframe id="stream-iframe" src="${embedUrl}" allowfullscreen></iframe>
+<iframe id="stream-iframe" src="${esc(fallbackUrl)}" allowfullscreen></iframe>
 </div>
 <div class="fallback" id="fallback-btn">
-<a href="${embedUrl}" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+<a href="${esc(fallbackUrl)}" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
 </div>
-<div class="source-header">
+<div class="stream-header">
 <h2>Stream Links</h2>
-<span>${sources.length} ${sources.length === 1 ? 'source' : 'sources'} available</span>
+<span>${allStreams.length} ${allStreams.length === 1 ? 'stream' : 'streams'} available</span>
 </div>
-<div class="source-grid" id="source-grid">
-${sourceButtons}
+<div class="stream-grid" id="stream-grid">
+${cards}
 </div>
 </div>
 <div class="footer">
 All rights reserved.
 </div>
 <script>
-(function() {
-  var iframe = document.getElementById('stream-iframe');
-  var grid = document.getElementById('source-grid');
-  var fallback = document.getElementById('fallback-btn');
+var _streams = JSON.parse('${streamsJson}');
+var iframe = document.getElementById('stream-iframe');
+var grid = document.getElementById('stream-grid');
+var fallback = document.getElementById('fallback-btn');
+var currentIndex = ${selected};
 
-  iframe.addEventListener('error', function() {
-    fallback.style.display = 'block';
-  });
-
-  var timeout = setTimeout(function() {
-    fallback.style.display = 'block';
-  }, 10000);
-
-  iframe.addEventListener('load', function() {
-    clearTimeout(timeout);
-  });
-
+if (grid) {
   grid.addEventListener('click', function(e) {
-    var btn = e.target.closest('.source-btn');
-    if (!btn || btn.classList.contains('active')) return;
-
-    var source = btn.dataset.source;
-    var matchId = btn.dataset.match;
-
-    fetch('/api/stream/' + source + '/' + matchId)
-      .then(function(r) { return r.json() })
-      .then(function(data) {
-        if (data.embedUrl) {
-          iframe.src = data.embedUrl;
-          fallback.querySelector('a').href = data.embedUrl;
-          fallback.style.display = 'none';
-
-          document.querySelectorAll('.source-btn').forEach(function(b) {
-            b.classList.remove('active');
-          });
-          btn.classList.add('active');
-        }
-      })
-      .catch(function() {});
+    var btn = e.target.closest('.stream-btn');
+    if (!btn) return;
+    var idx = parseInt(btn.dataset.index);
+    if (idx === currentIndex) return;
+    var s = _streams[idx];
+    if (s && s.embedUrl) {
+      iframe.src = s.embedUrl;
+      fallback.querySelector('a').href = s.embedUrl;
+      fallback.style.display = 'none';
+      document.querySelectorAll('.stream-btn').forEach(function(b) {
+        b.classList.remove('active');
+      });
+      btn.classList.add('active');
+      currentIndex = idx;
+    }
   });
-})();
+}
+
+iframe.addEventListener('error', function() { fallback.style.display = 'block'; });
+var timeout = setTimeout(function() { fallback.style.display = 'block'; }, 10000);
+iframe.addEventListener('load', function() { clearTimeout(timeout); });
 </script>`)
+}
+
+function esc(s) {
+  if (typeof s !== 'string') s = String(s)
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;')
 }
 
 export default {
@@ -160,25 +177,22 @@ export default {
       try {
         const resp = await fetch(`https://streamed.pk/api/stream/${source}/${id}`)
         const data = await resp.json()
-        const stream = Array.isArray(data) ? data[0] : null
-        if (stream?.embedUrl) {
-          return new Response(JSON.stringify({
-            embedUrl: stream.embedUrl,
-            views: stream.views || stream.viewers || 0,
-          }), {
-            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-          })
-        }
-      } catch (e) {}
-      return new Response(JSON.stringify({ error: 'unavailable' }), {
-        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
-      })
+        const list = Array.isArray(data) ? data : []
+        return new Response(JSON.stringify(list), {
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        })
+      } catch (e) {
+        return new Response(JSON.stringify([]), {
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        })
+      }
     }
 
     const matchPage = path.match(/^\/match\/(.+)$/)
     if (matchPage) {
       const matchId = matchPage[1]
-      const selectedSource = url.searchParams.get('source') || ''
+      const reqSource = url.searchParams.get('source') || ''
+      const reqStream = parseInt(url.searchParams.get('stream')) || 0
 
       try {
         const [live, today] = await Promise.all([
@@ -198,34 +212,45 @@ export default {
         }
 
         const sources = match.sources || []
-        const currentSource = sources.find(s => s.source === selectedSource)
-          ? selectedSource
-          : sources.length > 0 ? sources[0].source : ''
 
-        let embedUrl = ''
-        let views = 0
-        if (currentSource) {
-          const sourceObj = sources.find(s => s.source === currentSource)
-          if (sourceObj) {
-            try {
-              const resp = await fetch(`https://streamed.pk/api/stream/${currentSource}/${sourceObj.id}`)
-              const data = await resp.json()
-              const stream = Array.isArray(data) ? data[0] : null
-              embedUrl = stream?.embedUrl || ''
-              views = stream?.views || stream?.viewers || 0
-            } catch (e) {}
-          }
-        }
+        const streamResults = await Promise.all(sources.map(src =>
+          fetch(`https://streamed.pk/api/stream/${src.source}/${src.id}`)
+            .then(r => r.json())
+            .catch(() => [])
+        ))
 
-        if (!embedUrl) {
-          const si = getSourceInfo(currentSource)
-          return new Response(downPage('Stream not available for ' + si.label), {
+        const allStreams = []
+        streamResults.forEach((data, i) => {
+          const list = Array.isArray(data) ? data : []
+          list.forEach(s => {
+            allStreams.push({
+              source: sources[i].source,
+              streamNo: s.streamNo || 1,
+              language: s.language || '',
+              hd: s.hd === true,
+              embedUrl: s.embedUrl || '',
+              viewers: s.viewers || 0,
+            })
+          })
+        })
+
+        if (allStreams.length === 0) {
+          return new Response(downPage('No streams available'), {
             headers: { 'Content-Type': 'text/html;charset=utf-8' },
             status: 404,
           })
         }
 
-        return new Response(streamPage(match, sources, currentSource, embedUrl, views), {
+        let selectedIndex = 0
+        if (reqSource) {
+          const idx = allStreams.findIndex(s => s.source === reqSource && (reqStream === 0 || s.streamNo === reqStream))
+          if (idx >= 0) selectedIndex = idx
+        }
+
+        const current = allStreams[selectedIndex]
+        const embedUrl = current.embedUrl
+
+        return new Response(streamPage(match.title, allStreams, selectedIndex, embedUrl), {
           headers: { 'Content-Type': 'text/html;charset=utf-8' },
         })
       } catch (e) {

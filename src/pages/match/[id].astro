@@ -5,7 +5,7 @@ import Countdown from '../../components/Countdown.astro';
 import { mapToPremiumSport } from '../../lib/api';
 import { formatET, formatETWithDate, getMatchStatus } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
-import { STREAM_DOMAIN, SOURCE_INFO } from '../../lib/config';
+import { STREAM_DOMAIN, SOURCE_NAMES, formatStreamLabel } from '../../lib/config';
 import type { APIMatch } from '../../lib/api';
 import sportsData from '../../data/sports.json';
 
@@ -38,7 +38,7 @@ const sportConfig = premiumMatch.premiumSport
   ? (sportsData.premiumSports as Record<string, any>)[premiumMatch.premiumSport]
   : null;
 const sources = match.sources || [];
-const sourceInfo = (s: string) => SOURCE_INFO[s] || { label: s.toUpperCase(), description: `${s} stream` };
+const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() + s.slice(1);
 ---
 
 <MatchLayout match={premiumMatch}>
@@ -99,22 +99,24 @@ const sourceInfo = (s: string) => SOURCE_INFO[s] || { label: s.toUpperCase(), de
       <section class="mt-8">
         <div class="mb-4 flex items-center justify-between">
           <h2 class="text-lg font-bold text-white">Stream Links</h2>
-          <span class="text-sm text-buff-muted">{sources.length} {sources.length === 1 ? 'source' : 'sources'} available</span>
+          <span class="text-sm text-buff-muted" id="stream-count">Loading...</span>
         </div>
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" id="stream-grid">
           {sources.map((s) => {
-            const info = sourceInfo(s.source);
+            const name = sourceName(s.source);
             return (
               <a
                 href={`https://${STREAM_DOMAIN}/match/${match.id}?source=${s.source}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                class="group flex flex-col gap-1 rounded-lg border border-buff-border bg-buff-card p-4 no-underline transition hover:border-buff-gold"
+                data-source={s.source}
+                data-sid={s.id}
+                class="stream-card group flex flex-col gap-1 rounded-lg border border-buff-border bg-buff-card p-4 no-underline transition hover:border-buff-gold"
               >
                 <div class="flex items-center justify-between">
-                  <span class="text-sm font-bold text-buff-gold">{info.label}</span>
+                  <span class="text-sm font-bold text-buff-gold">{name}</span>
                 </div>
-                <span class="text-xs text-buff-muted">{info.description}</span>
+                <span class="text-xs text-buff-muted">Loading streams...</span>
               </a>
             );
           })}
@@ -137,3 +139,102 @@ const sourceInfo = (s: string) => SOURCE_INFO[s] || { label: s.toUpperCase(), de
     </div>
   </div>
 </MatchLayout>
+
+<script id="match-data" type="application/json">{
+  "matchId": {JSON.stringify(match.id)},
+  "sources": {JSON.stringify(sources)},
+  "sourceNames": {JSON.stringify(SOURCE_NAMES)},
+  "streamDomain": {JSON.stringify(STREAM_DOMAIN)}
+}</script>
+<script>
+  (function () {
+    const data = JSON.parse(document.getElementById('match-data').textContent);
+    const matchId = data.matchId;
+    const sources = data.sources;
+    const sourceNames = data.sourceNames;
+    const streamDomain = data.streamDomain;
+    const grid = document.getElementById('stream-grid');
+    const countEl = document.getElementById('stream-count');
+    if (!grid) return;
+
+    function sourceLabel(source) {
+      return sourceNames[source] || source.charAt(0).toUpperCase() + source.slice(1);
+    }
+
+    function escapeHtml(text) {
+      var d = document.createElement('div');
+      d.textContent = text;
+      return d.innerHTML;
+    }
+
+    async function loadStreams() {
+      var allStreams = [];
+
+      for (var i = 0; i < sources.length; i++) {
+        var src = sources[i];
+        try {
+          var res = await fetch('/api/proxy/stream/' + src.source + '/' + src.id);
+          var data2 = await res.json();
+          var list = Array.isArray(data2) ? data2 : (data2.value || []);
+          for (var j = 0; j < list.length; j++) {
+            var s = list[j];
+            allStreams.push({
+              source: src.source,
+              streamNo: s.streamNo || 1,
+              language: s.language || '',
+              hd: s.hd === true,
+              embedUrl: s.embedUrl || '',
+              viewers: s.viewers || 0,
+            });
+          }
+        } catch (e) {}
+      }
+
+      if (allStreams.length === 0) {
+        var cards = grid.querySelectorAll('.stream-card');
+        for (var k = 0; k < cards.length; k++) {
+          var desc = cards[k].querySelector('.text-xs');
+          if (desc) desc.textContent = 'No streams available';
+        }
+        if (countEl) countEl.textContent = '0 streams';
+        return;
+      }
+
+      if (countEl) countEl.textContent = allStreams.length + ' ' + (allStreams.length === 1 ? 'stream' : 'streams') + ' available';
+
+      grid.innerHTML = '';
+
+      for (var m = 0; m < allStreams.length; m++) {
+        var s2 = allStreams[m];
+        var label = sourceLabel(s2.source) + ' #' + s2.streamNo;
+        var quality = s2.hd ? 'HD' : 'SD';
+        var lang = s2.language;
+        var href = 'https://' + streamDomain + '/match/' + matchId + '?source=' + s2.source + '&stream=' + s2.streamNo;
+
+        var card = document.createElement('a');
+        card.href = href;
+        card.target = '_blank';
+        card.rel = 'noopener noreferrer';
+        card.className = 'group flex flex-col gap-1.5 rounded-lg border border-buff-border bg-buff-card p-4 no-underline transition hover:border-buff-gold';
+
+        var badges = '';
+        badges += '<span class="inline-block rounded bg-buff-dark px-1.5 py-0.5 text-xs font-bold ' + (quality === 'HD' ? 'text-buff-gold' : 'text-buff-muted') + '">' + quality + '</span>';
+        if (lang) {
+          badges += '<span class="inline-block rounded bg-buff-dark px-1.5 py-0.5 text-xs text-buff-muted">' + escapeHtml(lang) + '</span>';
+        }
+
+        var viewersHtml = '';
+        if (s2.viewers > 0) {
+          viewersHtml = '<span class="text-xs font-semibold" style="color:#22c55e">' + s2.viewers.toLocaleString() + ' watching</span>';
+        } else {
+          viewersHtml = '<span class="text-xs text-buff-muted">0 watching</span>';
+        }
+
+        card.innerHTML = '<div class="flex items-center justify-between"><span class="text-sm font-bold text-buff-gold">' + escapeHtml(label) + '</span><div class="flex gap-1">' + badges + '</div></div><div class="flex items-center justify-between"><span class="text-xs text-buff-muted">' + escapeHtml(s2.source) + '</span>' + viewersHtml + '</div>';
+        grid.appendChild(card);
+      }
+    }
+
+    loadStreams();
+  })();
+</script>

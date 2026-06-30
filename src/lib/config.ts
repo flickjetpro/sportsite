@@ -2,14 +2,14 @@ export const STREAM_DOMAIN = 'stream.alphastreams.fit'
 
 export const MAIN_DOMAIN = 'alphastreams.fit'
 
-export interface SourceInfo {
-  label: string
-  description: string
+export const SOURCE_NAMES: Record<string, string> = {
+  echo: 'Echo',
+  delta: 'Delta',
+  golf: 'Golf',
+  admin: 'Admin',
 }
 
-export const SOURCE_INFO: Record<string, SourceInfo> = {
-  echo: { label: 'HD-1', description: 'Great quality overall' },
-  delta: { label: 'HD-2', description: 'High quality stream' },
-  golf: { label: 'HD-3', description: 'Alternative stream' },
-  admin: { label: 'Channel 4', description: 'Admin added streams' },
+export function formatStreamLabel(source: string, streamNo: number): string {
+  const name = SOURCE_NAMES[source] || source.charAt(0).toUpperCase() + source.slice(1)
+  return `${name} #${streamNo}`
 }
