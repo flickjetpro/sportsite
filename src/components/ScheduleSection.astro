@@ -9,7 +9,8 @@ export interface Props {
 }
 
 const { matches, heading = "SCHEDULE" } = Astro.props;
-const grouped = groupBySport(matches);
+const premiumMatches = matches.filter((m) => m.premiumSport !== null);
+const grouped = groupBySport(premiumMatches);
 const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis', 'Golf'];
 ---
 
