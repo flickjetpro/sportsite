@@ -1218,20 +1218,6 @@
     ]
   },
   {
-    "id": "ppv-aew-wednesday-night-dynamite",
-    "title": "AEW: Wednesday Night Dynamite",
-    "category": "fight",
-    "date": 1782950400000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzuAQ1sFKBWSYAU2DFLABM8E9g1gDCFJMd46Tp51jwywYAE5MwkBBAwQNWSBQgsUqcEkKsI+SHFLpVZdPH7piEsvGTZwKinIRQYQSKbZ6YQsCS4AxraGPWe2FSegJgeHJHVRCIIA.webp",
-    "popular": true,
-    "sources": [
-      {
-        "source": "admin",
-        "id": "ppv-aew-wednesday-night-dynamite"
-      }
-    ]
-  },
-  {
     "id": "ppv-united-states-vs-bosnia-herzegovina",
     "title": "United States vs. Bosnia-Herzegovina",
     "category": "football",
@@ -1256,6 +1242,20 @@
       {
         "source": "golf",
         "id": "23484"
+      }
+    ]
+  },
+  {
+    "id": "ppv-aew-wednesday-night-dynamite",
+    "title": "AEW: Wednesday Night Dynamite",
+    "category": "fight",
+    "date": 1782950400000,
+    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzuAQ1sFKBWSYAU2DFLABM8E9g1gDCFJMd46Tp51jwywYAE5MwkBBAwQNWSBQgsUqcEkKsI+SHFLpVZdPH7piEsvGTZwKinIRQYQSKbZ6YQsCS4AxraGPWe2FSegJgeHJHVRCIIA.webp",
+    "popular": true,
+    "sources": [
+      {
+        "source": "admin",
+        "id": "ppv-aew-wednesday-night-dynamite"
       }
     ]
   },
