@@ -3,9 +3,10 @@ import datesData from '../data/dates.json';
 
 export interface Props {
   sport?: string;
+  activeDate?: string;
 }
 
-const { sport } = Astro.props;
+const { sport, activeDate } = Astro.props;
 const matchDates = new Set(datesData as string[]);
 
 const now = new Date();
@@ -16,11 +17,14 @@ const currentYear = now.getFullYear();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+const highlightDate = activeDate || todayStr;
+
 interface DayCell {
   day: number;
   hasMatch: boolean;
   dateStr: string;
   isToday: boolean;
+  isActive: boolean;
   isNextMonth: boolean;
 }
 
@@ -45,6 +49,7 @@ for (let d = 1; d <= daysInMonth; d++) {
     hasMatch: matchDates.has(dateStr),
     dateStr,
     isToday: dateStr === todayStr,
+    isActive: dateStr === highlightDate,
     isNextMonth: false,
   });
 }
@@ -58,6 +63,7 @@ for (let d = 1; ; d++) {
     hasMatch: true,
     dateStr,
     isToday: false,
+    isActive: dateStr === highlightDate,
     isNextMonth: true,
   });
 }
@@ -79,18 +85,20 @@ for (let d = 1; ; d++) {
         <a
             href={`/schedule/${d.dateStr}`}
           class={`relative rounded py-1.5 text-sm no-underline transition ${
-            d.isNextMonth ? 'opacity-60 text-buff-muted hover:bg-buff-border' : d.isToday
+            d.isActive
               ? 'bg-buff-gold font-bold text-black'
-              : 'text-white hover:bg-buff-border'
+              : d.isNextMonth
+                ? 'opacity-60 text-buff-muted hover:bg-buff-border'
+                : 'text-white hover:bg-buff-border'
           }`}
         >
           {d.day}
-          {d.hasMatch && !d.isToday && (
+          {d.hasMatch && !d.isActive && (
             <span class="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-buff-gold" />
           )}
         </a>
       ) : (
-        <div class={`rounded py-1.5 text-sm ${d.isNextMonth ? 'opacity-40 text-buff-muted' : d.isToday ? 'bg-buff-border font-bold text-white' : 'text-buff-muted'}`}>
+        <div class={`rounded py-1.5 text-sm ${d.isActive ? 'bg-buff-border font-bold text-white' : d.isNextMonth ? 'opacity-40 text-buff-muted' : 'text-buff-muted'}`}>
           {d.day}
         </div>
       )

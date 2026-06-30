@@ -57,7 +57,7 @@ const scheduleMatches = isToday ? filteredMatches.filter((m) => m.date > now) : 
       <OtherMatches matches={scheduleMatches} />
     </div>
     <div class="mt-8">
-      <Calendar />
+      <Calendar activeDate={date} />
     </div>
   </main>
   <Footer />
