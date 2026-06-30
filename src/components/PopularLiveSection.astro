@@ -7,10 +7,7 @@ export interface Props {
 }
 
 const { allMatches } = Astro.props;
-const now = Date.now();
-const liveMatches = allMatches.filter((m) => {
-  return m.popular && now >= m.date && now <= m.date + 3 * 60 * 60 * 1000;
-});
+const liveMatches = allMatches.filter((m) => m.popular);
 const INITIAL_SHOW = 5;
 const hasMore = liveMatches.length > INITIAL_SHOW;
 ---
