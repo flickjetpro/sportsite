@@ -77,7 +77,7 @@ for (let d = 1; ; d++) {
     {days.map((d) => (
       d.hasMatch ? (
         <a
-          href={sport ? `/${sport}?date=${d.dateStr}` : `/schedule?date=${d.dateStr}`}
+            href={`/schedule/${d.dateStr}`}
           class={`relative rounded py-1.5 text-sm no-underline transition ${
             d.isNextMonth ? 'opacity-60 text-buff-muted hover:bg-buff-border' : d.isToday
               ? 'bg-buff-gold font-bold text-black'

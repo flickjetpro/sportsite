@@ -1,0 +1,78 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import MatchCard from '../../components/MatchCard.astro';
+import ScheduleSection from '../../components/ScheduleSection.astro';
+import OtherMatches from '../../components/OtherMatches.astro';
+import Calendar from '../../components/Calendar.astro';
+import Footer from '../../components/Footer.astro';
+import { loadMatchesFromData, filterByDate } from '../../lib/api';
+import { formatDateParam } from '../../lib/time';
+import type { APIMatch } from '../../lib/api';
+import datesData from '../../data/dates.json';
+
+export async function getStaticPaths() {
+  return (datesData as string[]).map((date) => ({
+    params: { date },
+    props: { date },
+  }));
+}
+
+const { date } = Astro.props as { date: string };
+
+const liveFile = import.meta.glob('../../data/matches-live.json', { eager: true });
+const todayFile = import.meta.glob('../../data/matches-today.json', { eager: true });
+const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
+const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
+
+const allMatches = loadMatchesFromData([...liveData, ...todayData]);
+const filteredMatches = filterByDate(allMatches, date);
+const now = Date.now();
+const todayStr = formatDateParam(now);
+const isToday = date === todayStr;
+
+const liveMatches = isToday ? filteredMatches.filter((m) => {
+  const end = m.date + 3 * 60 * 60 * 1000;
+  return now >= m.date && now <= end;
+}) : [];
+
+const scheduleMatches = isToday ? filteredMatches.filter((m) => m.date > now) : filteredMatches;
+
+const orderedLive = [...liveMatches.filter(m => m.popular), ...liveMatches.filter(m => !m.popular)];
+---
+
+<Base title={`Sports Schedule for ${date} | Buffstreams Backup`} description={`Browse the sports schedule for ${date}. Find NFL, NBA, MLB, NHL, UFC, and more game times.`}>
+  <Header />
+  <main class="mx-auto max-w-5xl px-4 py-6">
+    <Breadcrumb items={[
+      { name: 'Home', url: '/' },
+      { name: 'Schedule', url: '/schedule' },
+      { name: date, url: `/schedule/${date}` },
+    ]} />
+    <h1 class="mb-6 text-2xl font-bold text-white">Schedule for {date}</h1>
+
+    {isToday && orderedLive.length > 0 && (
+      <section class="mb-8">
+        <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-buff-live">
+          <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
+          LIVE NOW
+        </h2>
+        <div class="flex flex-col gap-2">
+          {orderedLive.map((m) => (
+            <MatchCard match={m} showCategoryBadge={true} />
+          ))}
+        </div>
+      </section>
+    )}
+
+    <ScheduleSection matches={scheduleMatches} heading="SCHEDULE" />
+    <div class="mt-8">
+      <OtherMatches matches={scheduleMatches} />
+    </div>
+    <div class="mt-8">
+      <Calendar />
+    </div>
+  </main>
+  <Footer />
+</Base>
