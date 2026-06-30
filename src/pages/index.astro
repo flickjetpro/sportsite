@@ -10,9 +10,6 @@ import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
 import { loadMatchesFromData } from '../lib/api';
 import type { APIMatch } from '../lib/api';
-import { formatDateParam } from '../lib/time';
-
-const todayDate = formatDateParam(new Date());
 
 const liveFile = import.meta.glob('../data/matches-live.json', { eager: true });
 const todayFile = import.meta.glob('../data/matches-today.json', { eager: true });
@@ -30,7 +27,7 @@ const scheduleMatches = allMatches.filter((m) => m.date > now);
   <main class="mx-auto max-w-5xl px-4 py-6">
     <SportGrid />
     <div class="mt-8">
-      <PopularLiveSection allMatches={liveMatches} todayDate={todayDate} />
+      <PopularLiveSection allMatches={liveMatches} initialShow={5} step={5} viewAllMode="link" />
     </div>
     <div class="mt-8">
       <ScheduleSection matches={scheduleMatches} heading="UPCOMING SCHEDULE" />

@@ -4,73 +4,64 @@ import MatchCard from './MatchCard.astro';
 
 export interface Props {
   allMatches: PremiumMatch[];
-  todayDate: string;
+  initialShow: number;
+  step: number;
+  viewAllMode: 'link' | 'inline';
 }
 
-const { allMatches, todayDate } = Astro.props;
-const INITIAL_SHOW = 5;
+const { allMatches, initialShow, step, viewAllMode } = Astro.props;
 
 const popularLive = allMatches.filter((m) => m.popular);
 const nonPopularLive = allMatches.filter((m) => !m.popular);
-const totalLive = allMatches.length;
-
-// Ordered: popular first, then non-popular
-const gridItems = [...popularLive, ...nonPopularLive];
-const hasNonPopular = nonPopularLive.length > 0;
+const ordered = [...popularLive, ...nonPopularLive];
+const total = ordered.length;
+const remaining = total - initialShow;
 ---
 
-{totalLive > 0 && (
+{total > 0 && (
   <section>
     <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
       <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
       POPULAR LIVE
     </h2>
 
-    <div class="flex flex-col gap-2" id="popular-live-grid">
-      {gridItems.map((m, i) => (
-        <div class={i >= INITIAL_SHOW ? 'hidden-extra' : ''} data-pl-index={i}>
+    <div class="flex flex-col gap-2" id="popular-live-grid" data-pl-step={step}>
+      {ordered.map((m, i) => (
+        <div class={i >= initialShow ? 'pl-hidden' : ''} data-pl-index={i}>
           <MatchCard match={m} showCategoryBadge={true} />
         </div>
       ))}
     </div>
 
-    {gridItems.length > INITIAL_SHOW && (
+    {viewAllMode === 'link' && remaining > 0 && (
       <>
-        <div class="mt-4 text-center" id="show-more-wrap">
+        <div class="mt-4 text-center" id="pl-show-more-wrap">
           <button
-            id="show-more-btn"
+            id="pl-show-more"
             class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
           >
             ⏷ Show More
           </button>
         </div>
-
-        <div class="mt-4 text-center" id="view-all-wrap" style="display:none">
+        <div class="mt-4 text-center" id="pl-view-all-wrap" style="display:none">
           <a
-            href={`/schedule?date=${todayDate}`}
+            href="/schedule"
             class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
           >
-            → Show All ({totalLive} Live Match{totalLive !== 1 ? 'es' : ''})
+            → View All ({total} Live Match{total !== 1 ? 'es' : ''})
           </a>
         </div>
       </>
     )}
 
-    {hasNonPopular && (
-      <div class="mt-6" id="non-popular-wrap">
-        <div class="text-center">
-          <button
-            id="non-popular-btn"
-            class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-muted transition hover:border-buff-gold"
-          >
-            ⏷ Show Non-popular Matches ({nonPopularLive.length})
-          </button>
-        </div>
-        <div id="non-popular-grid" class="mt-2 flex flex-col gap-2" style="display:none">
-          {nonPopularLive.map((m) => (
-            <MatchCard match={m} showCategoryBadge={true} />
-          ))}
-        </div>
+    {viewAllMode === 'inline' && remaining > 0 && (
+      <div class="mt-4 text-center" id="pl-show-all-wrap">
+        <button
+          id="pl-show-all"
+          class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black transition hover:opacity-90"
+        >
+          Show {remaining} More Live Match{remaining !== 1 ? 'es' : ''}
+        </button>
       </div>
     )}
   </section>
@@ -79,39 +70,44 @@ const hasNonPopular = nonPopularLive.length > 0;
 <script>
   (function () {
     var grid = document.getElementById('popular-live-grid');
-    var showMoreBtn = document.getElementById('show-more-btn');
-    var showMoreWrap = document.getElementById('show-more-wrap');
-    var viewAllWrap = document.getElementById('view-all-wrap');
-    if (!grid || !showMoreBtn) return;
+    if (!grid) return;
 
-    showMoreBtn.addEventListener('click', function () {
-      var items = grid.querySelectorAll('.hidden-extra');
-      var toShow = Math.min(items.length, 5);
-      for (var i = 0; i < toShow; i++) {
-        items[i].classList.remove('hidden-extra');
-      }
-      if (toShow < 5 || grid.querySelectorAll('.hidden-extra').length === 0) {
-        if (showMoreWrap) showMoreWrap.style.display = 'none';
-      }
-      if (viewAllWrap) viewAllWrap.style.display = 'block';
-    });
+    // Link mode: Show More (step) → View All link
+    var showMoreBtn = document.getElementById('pl-show-more');
+    var showMoreWrap = document.getElementById('pl-show-more-wrap');
+    var viewAllWrap = document.getElementById('pl-view-all-wrap');
+    if (showMoreBtn) {
+      showMoreBtn.addEventListener('click', function () {
+        var hidden = grid.querySelectorAll('.pl-hidden');
+        var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
+        var toShow = Math.min(hidden.length, step);
+        for (var i = 0; i < toShow; i++) {
+          hidden[i].classList.remove('pl-hidden');
+        }
+        if (grid.querySelectorAll('.pl-hidden').length === 0) {
+          if (showMoreWrap) showMoreWrap.style.display = 'none';
+          if (viewAllWrap) viewAllWrap.style.display = 'block';
+        }
+      });
+    }
 
-    var nonPopBtn = document.getElementById('non-popular-btn');
-    var nonPopGrid = document.getElementById('non-popular-grid');
-    if (nonPopBtn && nonPopGrid) {
-      nonPopBtn.addEventListener('click', function () {
-        var isHidden = nonPopGrid.style.display === 'none';
-        nonPopGrid.style.display = isHidden ? 'flex' : 'none';
-        nonPopBtn.innerHTML = isHidden
-          ? '⏶ Hide Non-popular Matches (' + nonPopGrid.children.length + ')'
-          : '⏷ Show Non-popular Matches (' + nonPopGrid.children.length + ')';
+    // Inline mode: Show All remaining
+    var showAllBtn = document.getElementById('pl-show-all');
+    var showAllWrap = document.getElementById('pl-show-all-wrap');
+    if (showAllBtn) {
+      showAllBtn.addEventListener('click', function () {
+        var hidden = grid.querySelectorAll('.pl-hidden');
+        for (var i = 0; i < hidden.length; i++) {
+          hidden[i].classList.remove('pl-hidden');
+        }
+        if (showAllWrap) showAllWrap.style.display = 'none';
       });
     }
   })();
 </script>
 
 <style>
-  .hidden-extra {
+  .pl-hidden {
     display: none;
   }
 </style>
