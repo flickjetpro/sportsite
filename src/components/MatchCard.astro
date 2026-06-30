@@ -5,9 +5,10 @@ import { formatET, getMatchStatus, getMatchDateStr } from '../lib/time';
 export interface Props {
   match: PremiumMatch;
   showCategoryBadge?: boolean;
+  showPopularBadge?: boolean;
 }
 
-const { match, showCategoryBadge = false } = Astro.props;
+const { match, showCategoryBadge = false, showPopularBadge = true } = Astro.props;
 const status = getMatchStatus(match);
 const badge = match.premiumDisplayName || match.categoryBadge;
 const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
@@ -80,7 +81,7 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
   </div>
 
   <span class="flex items-center gap-1">
-    {match.popular && (
+    {match.popular && showPopularBadge && (
       <span class="text-buff-gold" title="Popular">★</span>
     )}
     {badge && (

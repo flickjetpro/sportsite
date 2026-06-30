@@ -34,7 +34,7 @@ const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis
               {sportMatches
                 .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0))
                 .map((m) => (
-                  <MatchCard match={m} />
+                  <MatchCard match={m} showPopularBadge={false} />
                 ))}
             </div>
           </div>
