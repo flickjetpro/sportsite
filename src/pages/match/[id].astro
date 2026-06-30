@@ -5,9 +5,9 @@ import Countdown from '../../components/Countdown.astro';
 import { mapToPremiumSport } from '../../lib/api';
 import { formatET, formatETWithDate, getMatchStatus } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
+import { STREAM_DOMAIN, SOURCE_INFO } from '../../lib/config';
 import type { APIMatch } from '../../lib/api';
 import sportsData from '../../data/sports.json';
-import { STREAM_DOMAIN } from '../../lib/config';
 
 export async function getStaticPaths() {
   const liveFile = import.meta.glob('../../data/matches-live.json', { eager: true });
@@ -29,9 +29,16 @@ const statusColors: Record<string, string> = {
   upcoming: 'text-buff-upcoming',
   finished: 'text-buff-muted',
 };
+const statusLabels: Record<string, string> = {
+  live: 'LIVE',
+  upcoming: 'UPCOMING',
+  finished: 'FINAL',
+};
 const sportConfig = premiumMatch.premiumSport
   ? (sportsData.premiumSports as Record<string, any>)[premiumMatch.premiumSport]
   : null;
+const sources = match.sources || [];
+const sourceInfo = (s: string) => SOURCE_INFO[s] || { label: s.toUpperCase(), description: `${s} stream` };
 ---
 
 <MatchLayout match={premiumMatch}>
@@ -69,29 +76,58 @@ const sportConfig = premiumMatch.premiumSport
       </div>
 
       <h1 class="mt-4 text-xl font-bold text-white">{match.title}</h1>
-      <p class="text-buff-muted">{formatETWithDate(match.date)}</p>
-      <p class="font-mono text-lg text-white">{formatET(match.date)} ET</p>
-      <p class={`font-bold ${statusColors[status]}`}>
-        {status === 'live' ? 'LIVE' : status === 'upcoming' ? 'UPCOMING' : 'FINAL'}
-      </p>
+
+      <div class="flex flex-wrap items-center justify-center gap-3 text-sm">
+        {premiumMatch.categoryBadge && (
+          <span class="rounded bg-buff-card px-2 py-0.5 text-xs font-bold text-buff-gold">
+            {premiumMatch.categoryBadge}
+          </span>
+        )}
+        <span class="text-buff-muted">{formatETWithDate(match.date)}</span>
+        <span class="font-mono text-white">{formatET(match.date)} ET</span>
+        <span class={`font-bold ${statusColors[status]}`}>
+          {statusLabels[status]}
+        </span>
+      </div>
 
       {status !== 'finished' && (
         <Countdown matchDate={match.date} />
       )}
     </div>
 
-    {status !== 'finished' && match.sources?.length > 0 && (
-      <div class="mt-8 text-center">
-        <a
-          href={`https://${STREAM_DOMAIN}/match/${match.id}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          class="inline-block rounded-lg bg-buff-gold px-8 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
-        >
-          Watch Now ↗
-        </a>
-        <p class="mt-2 text-xs text-buff-muted">Stream opens on a separate domain.</p>
-      </div>
+    {sources.length > 0 && (
+      <section class="mt-8">
+        <div class="mb-4 flex items-center justify-between">
+          <h2 class="text-lg font-bold text-white">Stream Links</h2>
+          <span class="text-sm text-buff-muted">{sources.length} {sources.length === 1 ? 'source' : 'sources'} available</span>
+        </div>
+        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+          {sources.map((s) => {
+            const info = sourceInfo(s.source);
+            return (
+              <a
+                href={`https://${STREAM_DOMAIN}/match/${match.id}?source=${s.source}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex flex-col gap-1 rounded-lg border border-buff-border bg-buff-card p-4 no-underline transition hover:border-buff-gold"
+              >
+                <div class="flex items-center justify-between">
+                  <span class="text-sm font-bold text-buff-gold">{info.label}</span>
+                </div>
+                <span class="text-xs text-buff-muted">{info.description}</span>
+              </a>
+            );
+          })}
+        </div>
+      </section>
+    )}
+
+    {sources.length === 0 && (
+      <section class="mt-8 text-center">
+        <p class="rounded-lg border border-buff-border bg-buff-card px-6 py-8 text-sm text-buff-muted">
+          No stream sources available yet. Check back closer to game time.
+        </p>
+      </section>
     )}
 
     <div class="mt-12">

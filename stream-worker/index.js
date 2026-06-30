@@ -1,3 +1,48 @@
+const STYLES = `*{box-sizing:border-box;margin:0;padding:0}
+body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+.header{background:#0a0a0a;border-bottom:1px solid #2a2a2a;padding:12px 16px}
+.header-inner{max-width:1024px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
+.header-back{color:#e8b800;text-decoration:none;font-size:.85rem;display:flex;align-items:center;gap:4px}
+.header-back:hover{text-decoration:underline}
+.header-logo{color:#e8b800;font-weight:700;font-size:1.1rem;letter-spacing:-.02em;text-decoration:none}
+.main{flex:1;max-width:1024px;margin:0 auto;padding:16px;width:100%}
+.iframe-wrap{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#000;margin-bottom:12px}
+.iframe-wrap iframe{width:100%;height:60vh;min-height:360px;border:none;display:block}
+.fallback{display:none;margin-top:8px;text-align:center}
+.fallback a{display:inline-block;background:#e8b800;color:#000;padding:10px 24px;border-radius:6px;font-weight:700;font-size:.85rem;text-decoration:none}
+.fallback a:hover{background:#d4a600}
+.source-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.source-header h2{color:#fff;font-size:1.05rem;font-weight:700}
+.source-header span{color:#aaa;font-size:.8rem}
+.source-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));margin-bottom:24px}
+.source-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:border-color .2s;color:inherit;font:inherit;display:flex;flex-direction:column;gap:4px}
+.source-btn:hover{border-color:#e8b800}
+.source-btn.active{border-color:#e8b800;background:#1a1a1a}
+.source-btn-label{color:#e8b800;font-size:.85rem;font-weight:700}
+.source-btn-desc{color:#aaa;font-size:.75rem}
+.source-btn-views{color:#22c55e;font-size:.7rem;font-weight:600}
+.footer{border-top:1px solid #2a2a2a;background:#0a0a0a;padding:24px 16px;text-align:center;font-size:.8rem;color:#aaa;margin-top:auto}
+.footer-inner{max-width:768px;margin:0 auto}
+.footer a{color:#e8b800;text-decoration:none}
+.footer a:hover{text-decoration:underline}
+.down-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0d0d0d;padding:20px;text-align:center}
+.down-icon{font-size:2.5rem;margin-bottom:16px}
+.down-title{color:#aaa;font-size:1.1rem;margin-bottom:24px}
+.down-link{color:#e8b800;text-decoration:none;font-size:.8rem;margin-top:48px}
+.down-link:hover{text-decoration:underline}`
+
+const SOURCE_LABELS = {
+  echo: { label: 'HD-1', desc: 'Great quality overall' },
+  delta: { label: 'HD-2', desc: 'High quality stream' },
+  golf: { label: 'HD-3', desc: 'Alternative stream' },
+  admin: { label: 'Channel 4', desc: 'Admin added streams' },
+}
+
+function getSourceInfo(source) {
+  return SOURCE_LABELS[source] || { label: source.toUpperCase(), desc: `${source} stream` }
+}
+
 function html(body) {
   return `<!DOCTYPE html>
 <html lang="en">
@@ -6,90 +51,213 @@ function html(body) {
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
 <title>Stream</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:#0d0d0d;color:#fff;font-family:sans-serif;min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px}
-h1{font-size:1.1rem;margin-bottom:2rem;color:#e8b800;text-align:center;max-width:500px;line-height:1.4}
-.sources{display:flex;flex-wrap:wrap;gap:10px;justify-content:center}
-.btn{display:inline-block;padding:12px 28px;border:1px solid #333;border-radius:8px;background:#1a1a1a;color:#fff;text-decoration:none;font-weight:700;font-size:.9rem;transition:border-color .2s,color .2s}
-.btn:hover{border-color:#e8b800;color:#e8b800}
-.back{margin-top:3rem;font-size:.8rem}
-.back a{color:#e8b800;text-decoration:none}
-.back a:hover{text-decoration:underline}
-.note{margin-top:1rem;font-size:.7rem;color:#666;max-width:400px;text-align:center}
-.err{padding:40px;text-align:center;color:#999}
-</style>
+<style>${STYLES}</style>
 </head>
 <body>
 ${body}
 </body>
-</html>`;
+</html>`
+}
+
+function downPage() {
+  return html(`<div class="down-page">
+<div class="down-icon">⚠</div>
+<div class="down-title">This site is temporarily unavailable</div>
+<div class="down-link"><a href="https://alphastreams.fit">alphastreams.fit</a></div>
+</div>`)
+}
+
+function streamPage(match, sources, currentSource, embedUrl, views) {
+  const info = getSourceInfo(currentSource)
+  const sourceButtons = sources.map(s => {
+    const si = getSourceInfo(s.source)
+    const active = s.source === currentSource
+    return `<button class="source-btn${active ? ' active' : ''}" data-source="${s.source}" data-match="${match.id}">
+<span class="source-btn-label">${si.label}</span>
+<span class="source-btn-desc">${si.desc}</span>
+</button>`
+  }).join('')
+
+  const viewsHtml = views > 0 ? `<span class="source-btn-views">${views} watching</span>` : ''
+
+  return html(`<div class="header">
+<div class="header-inner">
+<a href="https://alphastreams.fit" class="header-back">← Back to Main Site</a>
+<a href="https://alphastreams.fit" class="header-logo">AlphaStreams</a>
+</div>
+</div>
+<div class="main">
+<div class="iframe-wrap">
+<iframe id="stream-iframe" src="${embedUrl}" allowfullscreen sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+</div>
+<div class="fallback" id="fallback-btn">
+<a href="${embedUrl}" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
+</div>
+<div class="source-header">
+<h2>Stream Links</h2>
+<span>${sources.length} ${sources.length === 1 ? 'source' : 'sources'} available</span>
+</div>
+<div class="source-grid" id="source-grid">
+${sourceButtons}
+</div>
+</div>
+<div class="footer">
+<div class="footer-inner">
+<p>We do not host or embed video content. Stream links are provided by third-party services. All trademarks are property of their respective owners.</p>
+<p style="margin-top:8px">© 2026 <a href="https://alphastreams.fit">AlphaStreams</a>. All rights reserved.</p>
+</div>
+</div>
+<script>
+(function() {
+  var iframe = document.getElementById('stream-iframe');
+  var grid = document.getElementById('source-grid');
+  var fallback = document.getElementById('fallback-btn');
+
+  iframe.addEventListener('error', function() {
+    fallback.style.display = 'block';
+  });
+
+  var timeout = setTimeout(function() {
+    fallback.style.display = 'block';
+  }, 10000);
+
+  iframe.addEventListener('load', function() {
+    clearTimeout(timeout);
+  });
+
+  grid.addEventListener('click', function(e) {
+    var btn = e.target.closest('.source-btn');
+    if (!btn || btn.classList.contains('active')) return;
+
+    var source = btn.dataset.source;
+    var matchId = btn.dataset.match;
+
+    fetch('/api/stream/' + source + '/' + matchId)
+      .then(function(r) { return r.json() })
+      .then(function(data) {
+        if (data.embedUrl) {
+          iframe.src = data.embedUrl;
+          fallback.querySelector('a').href = data.embedUrl;
+          fallback.style.display = 'none';
+
+          document.querySelectorAll('.source-btn').forEach(function(b) {
+            b.classList.remove('active');
+          });
+          btn.classList.add('active');
+        }
+      })
+      .catch(function() {});
+  });
+})();
+</script>`)
 }
 
 export default {
   async fetch(request, env, ctx) {
-    const url = new URL(request.url);
-    const path = url.pathname;
+    const url = new URL(request.url)
+    const path = url.pathname
 
     if (path === '/robots.txt') {
       return new Response('User-agent: *\nDisallow: /\n', {
         headers: { 'Content-Type': 'text/plain' },
-      });
+      })
     }
 
     if (path === '/') {
-      return Response.redirect('https://alphastreams.fit', 302);
-    }
-
-    const streamMatch = path.match(/^\/stream\/([^/]+)\/(\d+)$/);
-    if (streamMatch) {
-      const [, source, id] = streamMatch;
-      const resp = await fetch(`https://streamed.pk/api/stream/${source}/${id}`);
-      const streams = await resp.json();
-      const stream = streams?.[0];
-      if (stream?.embedUrl) {
-        return Response.redirect(stream.embedUrl, 302);
-      }
-      const body = `<div class="err"><h2>Stream not available</h2><p class="back"><a href="https://alphastreams.fit">Back to main site</a></p></div>`;
-      return new Response(html(body), {
+      return new Response(downPage(), {
         headers: { 'Content-Type': 'text/html;charset=utf-8' },
         status: 404,
-      });
+      })
     }
 
-    const matchPage = path.match(/^\/match\/(.+)$/);
-    if (matchPage) {
-      const matchId = matchPage[1];
-      const [live, today] = await Promise.all([
-        fetch('https://streamed.pk/api/matches/live').then(r => r.json()).catch(() => []),
-        fetch('https://streamed.pk/api/matches/all-today').then(r => r.json()).catch(() => []),
-      ]);
-      const allMatches = [...live, ...today];
-      const match = allMatches.find(m => m.id === matchId);
+    const apiMatch = path.match(/^\/api\/stream\/([^/]+)\/(.+)$/)
+    if (apiMatch) {
+      const [, source, id] = apiMatch
+      try {
+        const resp = await fetch(`https://streamed.pk/api/stream/${source}/${id}`)
+        const data = await resp.json()
+        const stream = Array.isArray(data) ? data[0] : null
+        if (stream?.embedUrl) {
+          return new Response(JSON.stringify({
+            embedUrl: stream.embedUrl,
+            views: stream.views || stream.viewers || 0,
+          }), {
+            headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+          })
+        }
+      } catch (e) {}
+      return new Response(JSON.stringify({ error: 'unavailable' }), {
+        headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+      })
+    }
 
-      if (!match) {
-        const body = `<div class="err"><h2>Match not found</h2><p class="back"><a href="https://alphastreams.fit">Back to main site</a></p></div>`;
+    const matchPage = path.match(/^\/match\/(.+)$/)
+    if (matchPage) {
+      const matchId = matchPage[1]
+      const selectedSource = url.searchParams.get('source') || ''
+
+      try {
+        const [live, today] = await Promise.all([
+          fetch('https://streamed.pk/api/matches/live').then(r => r.json()).catch(() => []),
+          fetch('https://streamed.pk/api/matches/all-today').then(r => r.json()).catch(() => []),
+        ])
+        const liveArr = Array.isArray(live) ? live : []
+        const todayArr = Array.isArray(today) ? today : []
+        const allMatches = [...liveArr, ...todayArr]
+        const match = allMatches.find(m => m.id === matchId)
+
+        if (!match) {
+          const body = `<div class="down-page"><div class="down-title">Match not found</div><div class="down-link"><a href="https://alphastreams.fit">← Back to Main Site</a></div></div>`
+          return new Response(html(body), {
+            headers: { 'Content-Type': 'text/html;charset=utf-8' },
+            status: 404,
+          })
+        }
+
+        const sources = match.sources || []
+        const currentSource = sources.find(s => s.source === selectedSource)
+          ? selectedSource
+          : sources.length > 0 ? sources[0].source : ''
+
+        let embedUrl = ''
+        let views = 0
+        if (currentSource) {
+          const sourceObj = sources.find(s => s.source === currentSource)
+          if (sourceObj) {
+            try {
+              const resp = await fetch(`https://streamed.pk/api/stream/${currentSource}/${sourceObj.id}`)
+              const data = await resp.json()
+              const stream = Array.isArray(data) ? data[0] : null
+              embedUrl = stream?.embedUrl || ''
+              views = stream?.views || stream?.viewers || 0
+            } catch (e) {}
+          }
+        }
+
+        if (!embedUrl) {
+          const si = getSourceInfo(currentSource)
+          const body = `<div class="down-page"><div class="down-title">Stream not available for ${si.label}</div><div class="down-link"><a href="https://alphastreams.fit">← Back to Main Site</a></div></div>`
+          return new Response(html(body), {
+            headers: { 'Content-Type': 'text/html;charset=utf-8' },
+            status: 404,
+          })
+        }
+
+        return new Response(streamPage(match, sources, currentSource, embedUrl, views), {
+          headers: { 'Content-Type': 'text/html;charset=utf-8' },
+        })
+      } catch (e) {
+        const body = `<div class="down-page"><div class="down-title">Something went wrong</div><div class="down-link"><a href="https://alphastreams.fit">← Back to Main Site</a></div></div>`
         return new Response(html(body), {
           headers: { 'Content-Type': 'text/html;charset=utf-8' },
-          status: 404,
-        });
+          status: 500,
+        })
       }
-
-      const sources = (match.sources || []).map(s =>
-        `<a href="/stream/${s.source}/${s.id}" class="btn" target="_blank" rel="noopener">${s.source.toUpperCase()} Source</a>`
-      ).join('');
-
-      const body = `
-        <h1>${match.title}</h1>
-        <div class="sources">${sources || '<p style="color:#999">No sources available</p>'}</div>
-        <p class="note">Streams open in a new tab. We do not host or embed video content.</p>
-        <p class="back"><a href="https://alphastreams.fit">← Back to main site</a></p>`;
-
-      return new Response(html(body), {
-        headers: { 'Content-Type': 'text/html;charset=utf-8' },
-      });
     }
 
-    return new Response('Not found', { status: 404 });
+    return new Response(downPage(), {
+      headers: { 'Content-Type': 'text/html;charset=utf-8' },
+      status: 404,
+    })
   },
-};
+}

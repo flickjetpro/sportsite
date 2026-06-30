@@ -29,6 +29,16 @@ export default {
       });
     }
 
+    const streamMatch = path.match(/^\/api\/proxy\/stream\/([^/]+)\/(.+)$/);
+    if (streamMatch) {
+      const [, source, id] = streamMatch;
+      const resp = await fetch(`https://streamed.pk/api/stream/${source}/${id}`);
+      const data = await resp.json();
+      return new Response(JSON.stringify(data), {
+        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
+      });
+    }
+
     const badgeMatch = path.match(/^\/api\/proxy\/images\/badge\/(.+)\.webp$/);
     if (badgeMatch) {
       const id = badgeMatch[1];
