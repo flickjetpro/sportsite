@@ -84,7 +84,7 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
     {match.popular && showPopularBadge && (
       <span class="text-buff-gold" title="Popular">★</span>
     )}
-    {badge && (
+    {showCategoryBadge && badge && (
       <span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">
         [{badge.toUpperCase()}]
       </span>
