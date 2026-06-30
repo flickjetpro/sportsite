@@ -24,8 +24,9 @@ async function main() {
   mkdirSync(DATA_DIR, { recursive: true });
 
   const urls = [
-    { name: 'live', url: 'https://streamed.pk/api/matches/live/popular' },
-    { name: 'today', url: 'https://streamed.pk/api/matches/all-today/popular' },
+    { name: 'live', url: 'https://streamed.pk/api/matches/live' },
+    { name: 'today', url: 'https://streamed.pk/api/matches/all-today' },
+    { name: 'all', url: 'https://streamed.pk/api/matches/all' },
   ];
 
   for (const { name, url } of urls) {
@@ -43,7 +44,10 @@ async function main() {
   const todayMatches = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-today.json'), 'utf-8')
   );
-  const allMatches = [...liveMatches, ...todayMatches];
+  const allFuture = JSON.parse(
+    readFileSync(join(DATA_DIR, 'matches-all.json'), 'utf-8')
+  );
+  const allMatches = [...liveMatches, ...todayMatches, ...allFuture];
   const dates = [...new Set(allMatches.map((m) => {
     const d = new Date(m.date);
     return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;

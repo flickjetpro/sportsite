@@ -95,7 +95,6 @@ export function mapToPremiumSport(
 
 export function loadMatchesFromData(data: APIMatch[]): PremiumMatch[] {
   return filter247(data)
-    .filter((m) => m.popular)
     .map((m) => mapToPremiumSport(m));
 }
 
