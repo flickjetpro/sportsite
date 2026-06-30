@@ -16,95 +16,87 @@ const currentYear = now.getFullYear();
 const monthNames = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
-function getDaysInMonth(year: number, month: number): number {
-  return new Date(year, month + 1, 0).getDate();
-}
-
-function getFirstDayOfMonth(year: number, month: number): number {
-  return new Date(year, month, 1).getDay();
-}
-
-// Collect unique year-month combos from dates.json that are >= current month
-const monthSet = new Set<string>();
-for (const dateStr of datesData as string[]) {
-  const ym = dateStr.slice(0, 7); // "2026-07"
-  const [y, m] = ym.split('-').map(Number);
-  if (y > currentYear || (y === currentYear && m - 1 >= currentMonth)) {
-    monthSet.add(ym);
-  }
-}
-const monthsToShow = [...monthSet].sort();
-
-// Build day grids for each month
 interface DayCell {
   day: number;
   hasMatch: boolean;
   dateStr: string;
   isToday: boolean;
+  isNextMonth: boolean;
 }
 
-interface MonthGrid {
-  year: number;
-  month: number;
-  label: string;
-  firstDay: number;
-  days: DayCell[];
+const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+
+// Determine next month/year
+let nextMonth = currentMonth + 1;
+let nextYear = currentYear;
+if (nextMonth > 11) {
+  nextMonth = 0;
+  nextYear++;
 }
 
-const grids: MonthGrid[] = monthsToShow.map((ym) => {
-  const [y, m] = ym.split('-').map(Number);
-  const monthIndex = m - 1;
-  const daysInMonth = getDaysInMonth(y, monthIndex);
-  const firstDay = getFirstDayOfMonth(y, monthIndex);
-  const days: DayCell[] = [];
-  for (let d = 1; d <= daysInMonth; d++) {
-    const dateStr = `${y}-${String(m).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    days.push({
-      day: d,
-      hasMatch: matchDates.has(dateStr),
-      dateStr,
-      isToday: dateStr === todayStr,
-    });
-  }
-  return { year: y, month: monthIndex, label: `${monthNames[monthIndex]} ${y}`, firstDay, days };
-});
+const days: DayCell[] = [];
+
+// Current month days
+for (let d = 1; d <= daysInMonth; d++) {
+  const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+  days.push({
+    day: d,
+    hasMatch: matchDates.has(dateStr),
+    dateStr,
+    isToday: dateStr === todayStr,
+    isNextMonth: false,
+  });
+}
+
+// Next month overflow — fill remaining grid cells with next month days that have matches
+const totalCells = firstDay + daysInMonth;
+const remainingSlots = Math.ceil(totalCells / 7) * 7 - totalCells;
+
+for (let d = 1; d <= remainingSlots; d++) {
+  const dateStr = `${nextYear}-${String(nextMonth + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+  if (!matchDates.has(dateStr)) break;
+  days.push({
+    day: d,
+    hasMatch: true,
+    dateStr,
+    isToday: false,
+    isNextMonth: true,
+  });
+}
 ---
 
-<div class="flex flex-col gap-6">
-  {grids.map((grid) => (
-    <div class="rounded-lg border border-buff-border bg-buff-card p-4">
-      <div class="mb-3 flex items-center justify-between">
-        <h3 class="text-sm font-bold text-white">{grid.label}</h3>
-      </div>
-      <div class="grid grid-cols-7 gap-1 text-center">
-        {dayNames.map((dn) => (
-          <div class="py-1 text-xs font-medium text-buff-muted">{dn}</div>
-        ))}
-        {Array.from({ length: grid.firstDay }).map(() => (
-          <div />
-        ))}
-        {grid.days.map((d) => (
-          d.hasMatch ? (
-            <a
-              href={sport ? `/${sport}?date=${d.dateStr}` : `/schedule?date=${d.dateStr}`}
-              class={`relative rounded py-1.5 text-sm no-underline transition ${
-                d.isToday
-                  ? 'bg-buff-gold font-bold text-black'
-                  : 'text-white hover:bg-buff-border'
-              }`}
-            >
-              {d.day}
-              {d.hasMatch && !d.isToday && (
-                <span class="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-buff-gold" />
-              )}
-            </a>
-          ) : (
-            <div class={`rounded py-1.5 text-sm ${d.isToday ? 'bg-buff-border font-bold text-white' : 'text-buff-muted'}`}>
-              {d.day}
-            </div>
-          )
-        ))}
-      </div>
-    </div>
-  ))}
+<div class="rounded-lg border border-buff-border bg-buff-card p-4">
+  <div class="mb-3 flex items-center justify-between">
+    <h3 class="text-sm font-bold text-white">{monthNames[currentMonth]} {currentYear}</h3>
+  </div>
+  <div class="grid grid-cols-7 gap-1 text-center">
+    {dayNames.map((dn) => (
+      <div class="py-1 text-xs font-medium text-buff-muted">{dn}</div>
+    ))}
+    {Array.from({ length: firstDay }).map(() => (
+      <div />
+    ))}
+    {days.map((d) => (
+      d.hasMatch ? (
+        <a
+          href={sport ? `/${sport}?date=${d.dateStr}` : `/schedule?date=${d.dateStr}`}
+          class={`relative rounded py-1.5 text-sm no-underline transition ${
+            d.isNextMonth ? 'opacity-60 text-buff-muted hover:bg-buff-border' : d.isToday
+              ? 'bg-buff-gold font-bold text-black'
+              : 'text-white hover:bg-buff-border'
+          }`}
+        >
+          {d.day}
+          {d.hasMatch && !d.isToday && (
+            <span class="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-buff-gold" />
+          )}
+        </a>
+      ) : (
+        <div class={`rounded py-1.5 text-sm ${d.isNextMonth ? 'opacity-40 text-buff-muted' : d.isToday ? 'bg-buff-border font-bold text-white' : 'text-buff-muted'}`}>
+          {d.day}
+        </div>
+      )
+    ))}
+  </div>
 </div>
