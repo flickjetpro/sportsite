@@ -1,11 +1,8 @@
 const STYLES = `*{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;min-height:100vh;display:flex;flex-direction:column}
-a{color:inherit}
 .header{background:#0a0a0a;border-bottom:1px solid #2a2a2a;padding:12px 16px}
-.header-inner{max-width:1024px;margin:0 auto;display:flex;align-items:center;justify-content:space-between}
-.header-back{color:#e8b800;text-decoration:none;font-size:.85rem;display:flex;align-items:center;gap:4px}
-.header-back:hover{text-decoration:underline}
-.header-logo{color:#e8b800;font-weight:700;font-size:1.1rem;letter-spacing:-.02em;text-decoration:none}
+.header-inner{max-width:1024px;margin:0 auto;text-align:center}
+.header-title{color:#e8b800;font-weight:700;font-size:1.1rem;letter-spacing:-.02em}
 .main{flex:1;max-width:1024px;margin:0 auto;padding:16px;width:100%}
 .iframe-wrap{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#000;margin-bottom:12px}
 .iframe-wrap iframe{width:100%;height:60vh;min-height:360px;border:none;display:block}
@@ -22,15 +19,10 @@ a{color:inherit}
 .source-btn-label{color:#e8b800;font-size:.85rem;font-weight:700}
 .source-btn-desc{color:#aaa;font-size:.75rem}
 .source-btn-views{color:#22c55e;font-size:.7rem;font-weight:600}
-.footer{border-top:1px solid #2a2a2a;background:#0a0a0a;padding:24px 16px;text-align:center;font-size:.8rem;color:#aaa;margin-top:auto}
-.footer-inner{max-width:768px;margin:0 auto}
-.footer a{color:#e8b800;text-decoration:none}
-.footer a:hover{text-decoration:underline}
+.footer{border-top:1px solid #2a2a2a;background:#0a0a0a;padding:24px 16px;text-align:center;font-size:.8rem;color:#666;margin-top:auto}
 .down-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0d0d0d;padding:20px;text-align:center}
 .down-icon{font-size:2.5rem;margin-bottom:16px}
-.down-title{color:#aaa;font-size:1.1rem;margin-bottom:24px}
-.down-link{color:#e8b800;text-decoration:none;font-size:.8rem;margin-top:48px}
-.down-link:hover{text-decoration:underline}`
+.down-title{color:#888;font-size:1.1rem}`
 
 const SOURCE_LABELS = {
   echo: { label: 'HD-1', desc: 'Great quality overall' },
@@ -59,16 +51,14 @@ ${body}
 </html>`
 }
 
-function downPage() {
+function downPage(msg) {
   return html(`<div class="down-page">
 <div class="down-icon">⚠</div>
-<div class="down-title">This site is temporarily unavailable</div>
-<div class="down-link"><a href="https://alphastreams.fit">alphastreams.fit</a></div>
+<div class="down-title">${msg || 'This site is temporarily unavailable'}</div>
 </div>`)
 }
 
 function streamPage(match, sources, currentSource, embedUrl, views) {
-  const info = getSourceInfo(currentSource)
   const sourceButtons = sources.map(s => {
     const si = getSourceInfo(s.source)
     const active = s.source === currentSource
@@ -78,12 +68,9 @@ function streamPage(match, sources, currentSource, embedUrl, views) {
 </button>`
   }).join('')
 
-  const viewsHtml = views > 0 ? `<span class="source-btn-views">${views} watching</span>` : ''
-
   return html(`<div class="header">
 <div class="header-inner">
-<a href="https://alphastreams.fit" class="header-back">← Back to Main Site</a>
-<a href="https://alphastreams.fit" class="header-logo">AlphaStreams</a>
+<span class="header-title">AlphaStreams</span>
 </div>
 </div>
 <div class="main">
@@ -102,10 +89,7 @@ ${sourceButtons}
 </div>
 </div>
 <div class="footer">
-<div class="footer-inner">
-<p>We do not host or embed video content. Stream links are provided by third-party services. All trademarks are property of their respective owners.</p>
-<p style="margin-top:8px">© 2026 <a href="https://alphastreams.fit">AlphaStreams</a>. All rights reserved.</p>
-</div>
+All rights reserved.
 </div>
 <script>
 (function() {
@@ -207,8 +191,7 @@ export default {
         const match = allMatches.find(m => m.id === matchId)
 
         if (!match) {
-          const body = `<div class="down-page"><div class="down-title">Match not found</div><div class="down-link"><a href="https://alphastreams.fit">← Back to Main Site</a></div></div>`
-          return new Response(html(body), {
+          return new Response(downPage('Match not found'), {
             headers: { 'Content-Type': 'text/html;charset=utf-8' },
             status: 404,
           })
@@ -236,8 +219,7 @@ export default {
 
         if (!embedUrl) {
           const si = getSourceInfo(currentSource)
-          const body = `<div class="down-page"><div class="down-title">Stream not available for ${si.label}</div><div class="down-link"><a href="https://alphastreams.fit">← Back to Main Site</a></div></div>`
-          return new Response(html(body), {
+          return new Response(downPage('Stream not available for ' + si.label), {
             headers: { 'Content-Type': 'text/html;charset=utf-8' },
             status: 404,
           })
@@ -247,8 +229,7 @@ export default {
           headers: { 'Content-Type': 'text/html;charset=utf-8' },
         })
       } catch (e) {
-        const body = `<div class="down-page"><div class="down-title">Something went wrong</div><div class="down-link"><a href="https://alphastreams.fit">← Back to Main Site</a></div></div>`
-        return new Response(html(body), {
+        return new Response(downPage('Something went wrong'), {
           headers: { 'Content-Type': 'text/html;charset=utf-8' },
           status: 500,
         })
