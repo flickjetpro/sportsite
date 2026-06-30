@@ -16,6 +16,7 @@ const todayFile = import.meta.glob('../data/matches-today.json', { eager: true }
 const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
 const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
 
+const liveMatches = loadMatchesFromData(liveData);
 const allMatches = loadMatchesFromData([...liveData, ...todayData]);
 const now = Date.now();
 const scheduleMatches = allMatches.filter((m) => m.date > now);
@@ -26,7 +27,7 @@ const scheduleMatches = allMatches.filter((m) => m.date > now);
   <main class="mx-auto max-w-5xl px-4 py-6">
     <SportGrid />
     <div class="mt-8">
-      <PopularLiveSection allMatches={allMatches} />
+      <PopularLiveSection allMatches={liveMatches} />
     </div>
     <div class="mt-8">
       <ScheduleSection matches={scheduleMatches} />
