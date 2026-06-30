@@ -33,7 +33,7 @@ const scheduleMatches = allMatches.filter((m) => m.date > now);
       <PopularLiveSection allMatches={liveMatches} todayDate={todayDate} />
     </div>
     <div class="mt-8">
-      <ScheduleSection matches={scheduleMatches} />
+      <ScheduleSection matches={scheduleMatches} heading="UPCOMING SCHEDULE" />
     </div>
     <div class="mt-8">
       <OtherMatches matches={allMatches} />

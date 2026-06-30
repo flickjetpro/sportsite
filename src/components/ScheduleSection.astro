@@ -5,16 +5,17 @@ import MatchCard from './MatchCard.astro';
 
 export interface Props {
   matches: PremiumMatch[];
+  heading?: string;
 }
 
-const { matches } = Astro.props;
+const { matches, heading = "SCHEDULE" } = Astro.props;
 const grouped = groupBySport(matches);
 const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis', 'Golf'];
 ---
 
 {matches.length > 0 && (
   <section>
-    <h2 class="mb-4 text-lg font-bold text-white">TODAY'S SCHEDULE</h2>
+    <h2 class="mb-4 text-lg font-bold text-white">{heading}</h2>
     <div class="flex flex-col gap-6">
       {[...grouped.entries()]
         .sort(([a], [b]) => {

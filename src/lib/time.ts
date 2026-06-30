@@ -44,9 +44,13 @@ export function formatCountdown(ms: number): string {
 
 export function formatDateParam(date: Date | number): string {
   const d = typeof date === 'number' ? new Date(date) : date;
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
+  const parts = d.toLocaleDateString('en-US', {
+    timeZone: 'America/New_York',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  });
+  const [month, day, year] = parts.split('/');
   return `${year}-${month}-${day}`;
 }
 
