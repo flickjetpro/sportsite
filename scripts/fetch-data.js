@@ -92,6 +92,7 @@ async function main() {
       console.log(`  Added ${withViewers.length} matches with active streams to matches-live.json`);
     }
   }
+
   const allFuture = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-all.json'), 'utf-8')
   );
