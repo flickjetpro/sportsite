@@ -1,6 +1,6 @@
 ---
 import type { PremiumMatch } from '../lib/api';
-import { formatET, getMatchStatus, getMatchDateStr } from '../lib/time';
+import { formatET, getMatchStatus, getMatchDateStr, formatDateWithTime, formatDateParam } from '../lib/time';
 
 export interface Props {
   match: PremiumMatch;
@@ -11,6 +11,8 @@ const { match, showCategoryBadge = false } = Astro.props;
 const status = getMatchStatus(match);
 const badge = match.premiumDisplayName || match.categoryBadge;
 const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
+const isTodayScreen = formatDateParam(Date.now());
+const isToday = getMatchDateStr(match) === isTodayScreen;
 ---
 
 <a
@@ -51,10 +53,18 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
     )}
     {status === 'upcoming' && (
       <>
-        <span class="mc-timer text-xs font-bold text-buff-upcoming">--</span>
-        <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
-          {formatET(match.date)} ET
-        </span>
+        {isToday ? (
+          <span class="mc-timer text-xs font-bold text-buff-upcoming">--</span>
+        ) : (
+          <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
+            {formatDateWithTime(match.date)}
+          </span>
+        )}
+        {showCategoryBadge && badge && (
+          <span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">
+            [{badge.toUpperCase()}]
+          </span>
+        )}
       </>
     )}
     {status === 'finished' && (
@@ -81,12 +91,5 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
     )}
   </div>
 
-  <span class="flex items-center gap-1">
-    {status !== 'live' && showCategoryBadge && badge && (
-      <span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">
-        [{badge.toUpperCase()}]
-      </span>
-    )}
-    <span class="ml-1 text-buff-muted">&rsaquo;</span>
-  </span>
+  <span class="ml-1 text-buff-muted">&rsaquo;</span>
 </a>

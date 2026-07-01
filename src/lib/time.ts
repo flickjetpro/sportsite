@@ -91,6 +91,22 @@ export function formatTimeAgo(matchDate: number): string {
   return `${hours}.${Math.floor(mins / 6)}h`;
 }
 
+export function formatDateWithTime(date: Date | number): string {
+  const d = typeof date === 'number' ? new Date(date) : date;
+  const dateStr = d.toLocaleDateString('en-US', {
+    timeZone: 'America/New_York',
+    month: 'short',
+    day: 'numeric',
+  });
+  const timeStr = d.toLocaleTimeString('en-US', {
+    timeZone: 'America/New_York',
+    hour: 'numeric',
+    minute: '2-digit',
+    hour12: true,
+  });
+  return `${dateStr} ${timeStr}`;
+}
+
 export function formatCountdownShort(ms: number): string {
   if (ms <= 0) return 'LIVE';
   const h = Math.floor(ms / 3_600_000);
