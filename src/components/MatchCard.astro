@@ -1,6 +1,6 @@
 ---
 import type { PremiumMatch } from '../lib/api';
-import { formatET, getMatchStatus, getMatchDateStr, formatDateWithTime, formatDateParam } from '../lib/time';
+import { formatET, formatDateShort, getMatchStatus, getMatchDateStr, formatDateParam } from '../lib/time';
 
 export interface Props {
   match: PremiumMatch;
@@ -56,8 +56,9 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
         {isToday ? (
           <span class="mc-timer text-xs font-bold text-buff-upcoming">--</span>
         ) : (
-          <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
-            {formatDateWithTime(match.date)}
+          <span class="flex flex-col items-center font-mono text-xs text-buff-muted">
+            <span>{formatDateShort(match.date)}</span>
+            <span>{formatET(match.date)}</span>
           </span>
         )}
         {showCategoryBadge && badge && (

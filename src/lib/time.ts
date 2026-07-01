@@ -91,6 +91,15 @@ export function formatTimeAgo(matchDate: number): string {
   return `${hours}.${Math.floor(mins / 6)}h`;
 }
 
+export function formatDateShort(date: Date | number): string {
+  const d = typeof date === 'number' ? new Date(date) : date;
+  return d.toLocaleDateString('en-US', {
+    timeZone: 'America/New_York',
+    month: 'short',
+    day: 'numeric',
+  });
+}
+
 export function formatDateWithTime(date: Date | number): string {
   const d = typeof date === 'number' ? new Date(date) : date;
   const dateStr = d.toLocaleDateString('en-US', {
