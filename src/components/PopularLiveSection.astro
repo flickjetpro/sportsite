@@ -21,13 +21,13 @@ const remaining = total - initialShow;
 ---
 
 {total > 0 && (
-  <section>
+  <section class="rounded-lg border border-buff-border bg-buff-darker p-4">
     <h2 class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
       <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
       LIVE NOW
     </h2>
 
-    <div class="flex flex-col divide-y divide-dotted divide-[#eee]" id="popular-live-grid" data-pl-step={step}>
+    <div class="flex flex-col divide-y divide-dashed divide-[#eee]" id="popular-live-grid" data-pl-step={step}>
       {ordered.map((m, i) => (
         <div class={i >= initialShow ? 'pl-hidden' : ''} data-pl-index={i}>
           <MatchCard match={m} showCategoryBadge={true} />

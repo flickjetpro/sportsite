@@ -44,7 +44,7 @@ const sportIcons: Record<string, string> = {
               <span class="font-normal text-buff-muted"> ({sportMatches.length})</span>
             </h2>
           </div>
-          <div class="flex flex-col divide-y divide-dotted divide-[#eee]">
+          <div class="flex flex-col divide-y divide-dashed divide-[#eee]">
             {sportMatches
               .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0))
               .map((m) => (

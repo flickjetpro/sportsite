@@ -14,12 +14,12 @@ const liveMatches = matches.filter((m) => {
 ---
 
 {liveMatches.length > 0 && (
-  <section>
+  <section class="rounded-lg border border-buff-border bg-buff-darker p-4">
     <h2 class="mb-3 flex items-center gap-2 text-lg font-bold text-buff-live">
       <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
       LIVE NOW
     </h2>
-    <div class="flex flex-col divide-y divide-dotted divide-[#eee]">
+    <div class="flex flex-col divide-y divide-dashed divide-[#eee]">
       {liveMatches.map((m) => <MatchCard match={m} />)}
     </div>
   </section>
