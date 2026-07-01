@@ -9,16 +9,16 @@ const sports = [
   { id: 'soccer', label: 'Soccer', img: '/images/soccer.webp' },
   { id: 'tennis', label: 'Tennis', img: '/images/tennis.webp' },
   { id: 'golf', label: 'Golf', img: '/images/golf.webp' },
-  { id: 'boxing', label: 'Boxing', img: '/images/boxing.webp' },
-  { id: 'wwe', label: 'WWE', img: '/images/wwe.webp' },
-  { id: 'wnba', label: 'WNBA', img: '/images/wnba.webp' },
+  { id: 'boxing', label: 'Boxing', img: '/images/boxing.webp', href: '/ufc' },
+  { id: 'wwe', label: 'WWE', img: '/images/wwe.webp', href: '/ufc' },
+  { id: 'wnba', label: 'WNBA', img: '/images/wnba.webp', href: '/nba' },
 ];
 ---
 
 <div class="flex items-center gap-5 overflow-x-auto px-4 py-1 scroll-smooth" id="sports">
   {sports.map((s) => (
-    <a href={`/${s.id}`} title={s.label} class="shrink-0 mr-3">
-      <img width="45" height="45" src={s.img} alt={s.label + ' streams'} class="object-contain" />
+    <a href={s.href || `/${s.id}`} title={s.label} class="shrink-0 mr-3">
+      <img width="38" height="38" src={s.img} alt={s.label + ' streams'} class="object-contain" />
     </a>
   ))}
 </div>

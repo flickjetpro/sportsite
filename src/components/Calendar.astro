@@ -108,3 +108,23 @@ for (let d = 1; ; d++) {
     ))}
   </div>
 </div>
+
+<script>
+  (function () {
+    function updateClock() {
+      var el = document.getElementById('clock-time');
+      if (!el) return;
+      var now = new Date();
+      var et = now.toLocaleTimeString('en-US', {
+        timeZone: 'America/New_York',
+        hour: 'numeric',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true,
+      });
+      el.textContent = et;
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+  })();
+</script>
