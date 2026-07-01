@@ -8,7 +8,7 @@ export interface Props {
 }
 
 const { match, showCategoryBadge = false } = Astro.props;
-const status = getMatchStatus(match);
+const status = match._liveSource ? 'live' : getMatchStatus(match);
 const badge = match.premiumDisplayName || match.categoryBadge;
 const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
 const isTodayScreen = formatDateParam(Date.now());
