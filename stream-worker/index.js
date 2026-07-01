@@ -2,25 +2,25 @@ const STYLES = `*{box-sizing:border-box;margin:0;padding:0}
 body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Oxygen,Ubuntu,Cantarell,sans-serif;min-height:100vh;display:flex;flex-direction:column}
 .header{background:#0a0a0a;border-bottom:1px solid #2a2a2a;padding:12px 16px}
 .header-inner{max-width:1024px;margin:0 auto;text-align:center}
-.header-title{color:#e8b800;font-weight:700;font-size:1.1rem;letter-spacing:-.02em}
+.header-title{color:#0a93ae;font-weight:700;font-size:1.1rem;letter-spacing:-.02em}
 .main{flex:1;max-width:1024px;margin:0 auto;padding:16px;width:100%}
 .iframe-wrap{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#000;margin-bottom:12px}
 .iframe-wrap iframe{width:100%;height:60vh;min-height:360px;border:none;display:block}
 .fallback{display:none;margin-top:8px;text-align:center}
-.fallback a{display:inline-block;background:#e8b800;color:#000;padding:10px 24px;border-radius:6px;font-weight:700;font-size:.85rem;text-decoration:none}
-.fallback a:hover{background:#d4a600}
+.fallback a{display:inline-block;background:#0a93ae;color:#000;padding:10px 24px;border-radius:6px;font-weight:700;font-size:.85rem;text-decoration:none}
+.fallback a:hover{background:#066a7a}
 .stream-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .stream-header h2{color:#fff;font-size:1.05rem;font-weight:700}
 .stream-header span{color:#aaa;font-size:.8rem}
 .stream-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-bottom:24px}
 .stream-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:border-color .2s;color:inherit;font:inherit;display:flex;flex-direction:column;gap:6px}
-.stream-btn:hover{border-color:#e8b800}
-.stream-btn.active{border-color:#e8b800}
+.stream-btn:hover{border-color:#0a93ae}
+.stream-btn.active{border-color:#0a93ae}
 .stream-btn-top{display:flex;align-items:center;justify-content:space-between}
-.stream-btn-label{color:#e8b800;font-size:.85rem;font-weight:700}
+.stream-btn-label{color:#0a93ae;font-size:.85rem;font-weight:700}
 .stream-btn-badges{display:flex;gap:4px}
 .stream-badge{display:inline-block;border-radius:4px;padding:1px 6px;font-size:.65rem;font-weight:700;background:#0d0d0d}
-.stream-badge-hd{color:#e8b800}
+.stream-badge-hd{color:#0a93ae}
 .stream-badge-sd{color:#aaa}
 .stream-badge-lang{color:#aaa;font-weight:400}
 .stream-btn-bottom{display:flex;align-items:center;justify-content:space-between}
