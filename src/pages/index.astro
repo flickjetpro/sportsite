@@ -19,10 +19,12 @@ const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [
 
 const liveMatches = loadMatchesFromData(liveData);
 const allMatches = loadMatchesFromData([...liveData, ...todayData]);
+const liveIds = new Set(liveMatches.map((m) => m.id));
+const nonLiveMatches = allMatches.filter((m) => !liveIds.has(m.id));
 const now = Date.now();
 const todayStr = formatDateParam(now);
-const scheduleMatches = allMatches.filter((m) => m.date > now && getMatchDateStr(m) === todayStr);
-const futureMatches = allMatches.filter((m) => m.date > now && getMatchDateStr(m) !== todayStr);
+const scheduleMatches = nonLiveMatches.filter((m) => m.date > now && getMatchDateStr(m) === todayStr);
+const futureMatches = nonLiveMatches.filter((m) => m.date > now && getMatchDateStr(m) !== todayStr);
 const futureSportNames = new Set<string>();
 for (const m of futureMatches) {
   if (m.premiumSport !== null && m.premiumDisplayName) {
@@ -42,7 +44,7 @@ for (const m of futureMatches) {
       <ScheduleSection matches={scheduleMatches} heading="UPCOMING SCHEDULE" sportsWithFuture={futureSportNames} />
     </div>
     <div class="mt-8">
-      <OtherMatches matches={allMatches} />
+      <OtherMatches matches={nonLiveMatches} />
     </div>
     <div class="mt-8">
       <Calendar />
