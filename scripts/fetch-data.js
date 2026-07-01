@@ -80,7 +80,6 @@ async function main() {
     (m) =>
       m.sources?.length > 0 &&
       !liveMatches.some((l) => l.id === m.id) &&
-      m.date >= now &&
       m.date <= now + THIRTY_MIN
   );
   if (todayCandidates.length > 0) {
