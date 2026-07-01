@@ -14,6 +14,7 @@ export interface APIMatch {
   };
   sources: { source: string; id: string }[];
   totalViewers?: number;
+  _liveSource?: boolean;
 }
 
 export interface PremiumMatch extends APIMatch {

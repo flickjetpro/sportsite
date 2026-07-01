@@ -58,7 +58,7 @@ async function main() {
     let dataToWrite = filtered;
     if (name === 'live') {
       console.log(`  Fetching viewer counts for ${filtered.length} live matches...`);
-      dataToWrite = await processBatch(filtered, fetchMatchViewers);
+      dataToWrite = (await processBatch(filtered, fetchMatchViewers)).map((m) => ({ ...m, _liveSource: true }));
     }
 
     const filePath = join(DATA_DIR, `matches-${name}.json`);
@@ -74,10 +74,14 @@ async function main() {
   const todayMatches = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-today.json'), 'utf-8')
   );
+  const now = Date.now();
+  const THIRTY_MIN = 30 * 60 * 1000;
   const todayCandidates = todayMatches.filter(
     (m) =>
       m.sources?.length > 0 &&
-      !liveMatches.some((l) => l.id === m.id)
+      !liveMatches.some((l) => l.id === m.id) &&
+      m.date >= now &&
+      m.date <= now + THIRTY_MIN
   );
   if (todayCandidates.length > 0) {
     console.log(`  Fetching viewer counts for ${todayCandidates.length} today matches...`);
