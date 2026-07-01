@@ -39,7 +39,7 @@ const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis
           </div>
           {sportsWithFuture?.has(sport) && (
             <div class="mt-2 text-right">
-              <a href="/schedule" class="text-xs text-buff-gold no-underline hover:underline">
+              <a href={"/" + sport.toLowerCase()} class="text-xs text-buff-gold no-underline hover:underline">
                 Show more →
               </a>
             </div>
