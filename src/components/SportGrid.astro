@@ -15,10 +15,10 @@ const sports = [
 ];
 ---
 
-<div class="flex items-center gap-2 overflow-x-auto px-4 py-3" id="sports">
+<div class="flex items-center gap-5 overflow-x-auto px-4 py-1 scroll-smooth" id="sports">
   {sports.map((s) => (
-    <a href={`/${s.id}`} title={s.label} class="shrink-0">
-      <img width="35" height="35" src={s.img} alt={s.label + ' streams'} class="object-contain" />
+    <a href={`/${s.id}`} title={s.label} class="shrink-0 mr-3">
+      <img width="45" height="45" src={s.img} alt={s.label + ' streams'} class="object-contain" />
     </a>
   ))}
 </div>

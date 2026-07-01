@@ -54,7 +54,7 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
     {status === 'upcoming' && (
       <>
         {isToday ? (
-          <span class="mc-timer text-xs font-bold text-buff-upcoming">--</span>
+          <span class="mc-timer text-xs font-bold text-buff-gold">--</span>
         ) : (
           <span class="flex flex-col items-center font-mono text-xs text-buff-muted">
             <span>{formatDateShort(match.date)}</span>

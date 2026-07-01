@@ -27,7 +27,7 @@ const remaining = total - initialShow;
       LIVE NOW
     </h2>
 
-    <div class="flex flex-col divide-y divide-dashed divide-[#eee]" id="popular-live-grid" data-pl-step={step}>
+    <div class="flex flex-col divide-y divide-dashed divide-buff-border" id="popular-live-grid" data-pl-step={step}>
       {ordered.map((m, i) => (
         <div class={i >= initialShow ? 'pl-hidden' : ''} data-pl-index={i}>
           <MatchCard match={m} showCategoryBadge={true} />

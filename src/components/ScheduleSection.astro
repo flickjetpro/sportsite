@@ -37,14 +37,14 @@ const sportIcons: Record<string, string> = {
         <section class="rounded-lg border border-buff-border bg-buff-darker p-4">
           <div class="mb-3 flex items-center gap-2">
             {sportIcons[sport] && (
-              <img width="24" height="24" src={sportIcons[sport]} alt={sport} class="rounded-full object-contain" />
+              <img width="24" height="24" src={sportIcons[sport]} alt={sport} class="object-contain" />
             )}
             <h2 class="text-base font-bold text-white">
               {headingPrefix ? `${headingPrefix} ` : ''}{sport} STREAM LINKS
               <span class="font-normal text-buff-muted"> ({sportMatches.length})</span>
             </h2>
           </div>
-          <div class="flex flex-col divide-y divide-dashed divide-[#eee]">
+          <div class="flex flex-col divide-y divide-dashed divide-buff-border">
             {sportMatches
               .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0))
               .map((m) => (

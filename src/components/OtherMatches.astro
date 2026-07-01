@@ -11,9 +11,9 @@ const otherMatches = matches.filter((m) => m.premiumSport === null);
 ---
 
 {otherMatches.length > 0 && (
-  <section>
+  <section class="rounded-lg border border-buff-border bg-buff-darker p-4">
     <h2 class="mb-3 text-lg font-bold text-white">OTHER MATCHES</h2>
-    <div class="flex flex-col divide-y divide-dashed divide-[#eee]">
+    <div class="flex flex-col divide-y divide-dashed divide-buff-border">
       {otherMatches.map((m) => (
         <MatchCard match={m} showCategoryBadge={true} />
       ))}
