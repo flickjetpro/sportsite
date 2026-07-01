@@ -6,6 +6,7 @@ import PopularLiveSection from '../../components/PopularLiveSection.astro';
 import ScheduleSection from '../../components/ScheduleSection.astro';
 import OtherMatches from '../../components/OtherMatches.astro';
 import Calendar from '../../components/Calendar.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
 import Footer from '../../components/Footer.astro';
 import { loadMatchesFromData, filterByDate } from '../../lib/api';
 import { formatDateParam } from '../../lib/time';
@@ -46,18 +47,24 @@ const scheduleMatches = isToday ? filteredMatches.filter((m) => m.date > now) : 
     ]} />
     <h1 class="mb-6 text-2xl font-bold text-white">Schedule for {date}</h1>
 
-    {isToday && (
-      <div class="mb-8">
-        <PopularLiveSection allMatches={liveMatches} initialShow={15} step={15} viewAllMode="inline" />
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        {isToday && (
+          <PopularLiveSection allMatches={liveMatches} initialShow={15} step={15} viewAllMode="inline" />
+        )}
+        <div class={isToday ? 'mt-6' : ''}>
+          <ScheduleSection matches={scheduleMatches} heading="STREAM LINKS" />
+        </div>
+        <div class="mt-6">
+          <OtherMatches matches={scheduleMatches} />
+        </div>
       </div>
-    )}
-
-    <ScheduleSection matches={scheduleMatches} heading="STREAM LINKS" />
-    <div class="mt-8">
-      <OtherMatches matches={scheduleMatches} />
-    </div>
-    <div class="mt-8">
-      <Calendar activeDate={date} />
+      <div class="lg:col-span-1">
+        <Calendar activeDate={date} />
+        <div class="mt-6">
+          <BlogSidebar />
+        </div>
+      </div>
     </div>
   </main>
   <Footer />

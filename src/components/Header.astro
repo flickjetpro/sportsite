@@ -2,14 +2,11 @@
 const { currentSport } = Astro.props as { currentSport?: string };
 ---
 
-<header class="border-b border-buff-border bg-buff-darker">
+<header class="bg-buff-darker">
   <div class="mx-auto flex max-w-5xl items-center justify-between px-4 py-4">
     <a href="/" class="text-2xl font-bold tracking-tight text-buff-gold no-underline">
       Buffstreams Backup
     </a>
-    <div id="live-clock" class="font-mono text-sm text-buff-muted">
-      ET: <span id="clock-time">--:--:-- --</span>
-    </div>
   </div>
   <nav class="mx-auto flex max-w-5xl gap-1 overflow-x-auto px-4 pb-3 text-sm">
     {['nfl', 'mlb', 'nba', 'nhl', 'ufc', 'f1', 'soccer', 'tennis', 'golf'].map(
@@ -20,8 +17,8 @@ const { currentSport } = Astro.props as { currentSport?: string };
             href={`/${sport}`}
             class={`whitespace-nowrap rounded px-3 py-1.5 no-underline transition-colors ${
               currentSport === sport
-                ? 'bg-buff-gold text-black'
-                : 'text-white hover:bg-buff-card'
+                ? 'text-buff-live font-bold'
+                : 'text-white hover:text-buff-live'
             }`}
           >
             {label}

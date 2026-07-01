@@ -15,16 +15,10 @@ const sports = [
 ];
 ---
 
-<div class="mx-auto grid max-w-3xl grid-cols-3 gap-3 px-4 py-6 sm:grid-cols-4 md:grid-cols-6">
+<div class="flex items-center gap-2 overflow-x-auto px-4 py-3" id="sports">
   {sports.map((s) => (
-    <a
-      href={`/${s.id}`}
-      class="group flex flex-col items-center rounded-lg bg-buff-card p-3 text-center no-underline transition hover:bg-buff-gold hover:text-black"
-    >
-      <div class="flex h-16 w-16 items-center justify-center rounded-full bg-buff-dark text-2xl group-hover:bg-white/20">
-        {s.label.slice(0, 2)}
-      </div>
-      <span class="mt-2 text-xs font-medium text-white group-hover:text-black">{s.label}</span>
+    <a href={`/${s.id}`} title={s.label} class="shrink-0">
+      <img width="35" height="35" src={s.img} alt={s.label + ' streams'} class="object-contain" />
     </a>
   ))}
 </div>

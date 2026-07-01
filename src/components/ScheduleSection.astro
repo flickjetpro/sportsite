@@ -14,6 +14,15 @@ const headingPrefix = heading.replace(/ STREAM LINKS$/i, '');
 const premiumMatches = matches.filter((m) => m.premiumSport !== null);
 const grouped = groupBySport(premiumMatches);
 const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis', 'Golf'];
+const sportIcons: Record<string, string> = {
+  'NFL': '/images/nfl.webp',
+  'NBA': '/images/nba.webp',
+  'MLB': '/images/mlb.webp',
+  'NHL': '/images/nhl.webp',
+  'UFC': '/images/ufc.webp',
+  'F1': '/images/f1.webp',
+  'Soccer': '/images/soccer.webp',
+};
 ---
 
 {premiumMatches.length > 0 && (
@@ -25,11 +34,16 @@ const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis
         return (ai === -1 ? 999 : ai) - (bi === -1 ? 999 : bi);
       })
       .map(([sport, sportMatches]) => (
-        <section>
-          <h2 class="mb-3 text-base font-bold text-white">
-            {headingPrefix ? `${headingPrefix} ` : ''}{sport} STREAM LINKS
-            <span class="font-normal text-buff-muted"> ({sportMatches.length})</span>
-          </h2>
+        <section class="rounded-lg border border-buff-border bg-buff-darker p-4">
+          <div class="mb-3 flex items-center gap-2">
+            {sportIcons[sport] && (
+              <img width="24" height="24" src={sportIcons[sport]} alt={sport} class="rounded-full object-contain" />
+            )}
+            <h2 class="text-base font-bold text-white">
+              {headingPrefix ? `${headingPrefix} ` : ''}{sport} STREAM LINKS
+              <span class="font-normal text-buff-muted"> ({sportMatches.length})</span>
+            </h2>
+          </div>
           <div class="flex flex-col divide-y divide-dotted divide-[#eee]">
             {sportMatches
               .sort((a, b) => (b.popular ? 1 : 0) - (a.popular ? 1 : 0))

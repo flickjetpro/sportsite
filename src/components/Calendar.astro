@@ -69,7 +69,10 @@ for (let d = 1; ; d++) {
 }
 ---
 
-<div class="rounded-lg border border-buff-border bg-buff-card p-4">
+<div class="rounded-lg border border-buff-border bg-buff-darker p-4">
+  <div class="mb-3 flex items-center justify-center font-mono text-sm text-buff-muted" id="live-clock-sidebar">
+    ET: <span id="clock-time">--:--:-- --</span>
+  </div>
   <div class="mb-3 flex items-center justify-between">
     <h3 class="text-sm font-bold text-white">{monthNames[currentMonth]} {currentYear}</h3>
   </div>
@@ -86,7 +89,7 @@ for (let d = 1; ; d++) {
             href={`/schedule/${d.dateStr}`}
           class={`relative rounded py-1.5 text-sm no-underline transition ${
             d.isActive
-              ? 'bg-buff-gold font-bold text-black'
+              ? 'bg-buff-live font-bold text-black'
               : d.isNextMonth
                 ? 'opacity-60 text-buff-muted hover:bg-buff-border'
                 : 'text-white hover:bg-buff-border'

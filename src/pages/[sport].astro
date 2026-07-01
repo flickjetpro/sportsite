@@ -5,6 +5,7 @@ import Breadcrumb from '../components/Breadcrumb.astro';
 import LiveBar from '../components/LiveBar.astro';
 import ScheduleSection from '../components/ScheduleSection.astro';
 import Calendar from '../components/Calendar.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
 import Footer from '../components/Footer.astro';
 import { loadMatchesFromData, mapToPremiumSport, filterByDate } from '../lib/api';
 import { getSportSEO } from '../lib/seo';
@@ -48,17 +49,24 @@ const seoDescription = getSportSEO(sport);
       { name: sportConfig.displayName, url: `/${sport}` },
     ]} />
     <h1 class="mb-6 text-2xl font-bold text-white">{sportConfig.displayName} Schedule</h1>
-    <LiveBar matches={liveFiltered} />
-    <div class="mt-6">
-      <ScheduleSection matches={scheduleFiltered} heading="UPCOMING STREAM LINKS" />
-    </div>
-    <div class="mt-8">
-      <Calendar sport={sport} />
-    </div>
-    <div class="mt-12">
-      <article class="prose prose-invert max-w-none">
-        <p class="text-buff-muted">{seoDescription}</p>
-      </article>
+    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <LiveBar matches={liveFiltered} />
+        <div class="mt-6">
+          <ScheduleSection matches={scheduleFiltered} heading="UPCOMING STREAM LINKS" />
+        </div>
+        <div class="mt-6">
+          <article class="prose prose-invert max-w-none">
+            <p class="text-buff-muted">{seoDescription}</p>
+          </article>
+        </div>
+      </div>
+      <div class="lg:col-span-1">
+        <Calendar sport={sport} />
+        <div class="mt-6">
+          <BlogSidebar />
+        </div>
+      </div>
     </div>
   </main>
   <Footer />

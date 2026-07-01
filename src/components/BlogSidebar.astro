@@ -1,0 +1,31 @@
+---
+const blogPosts = [
+  {
+    title: "The Significance of the PFL World Championship and its Top Contenders",
+    image: "https://scdnmain.net/images/blog/the-significance-of-the-pfl-world-championship-and-its-top-contenders.webp",
+    url: "https://ibuffstreams.app/blog/the-significance-of-the-pfl-world-championship-and-its-top-contenders",
+  },
+  {
+    title: "Top 5 Most Technical Knockouts of 2023",
+    image: "https://scdnmain.net/images/blog/top-5-most-technical-knockouts-of-2023.webp",
+    url: "https://ibuffstreams.app/blog/top-5-most-technical-knockouts-of-2023",
+  },
+  {
+    title: "Corner Kings: Legendary Trainers Who Shaped Boxing's Greatest Fighters",
+    image: "https://scdnmain.net/images/blog/corner-kings-legendary-trainers-who-shaped-boxings-greatest-fighters.webp",
+    url: "https://ibuffstreams.app/blog/corner-kings-legendary-trainers-who-shaped-boxing-s-greatest-fighters",
+  },
+];
+---
+
+<div class="rounded-lg border border-buff-border bg-buff-darker p-4">
+  <h3 class="mb-3 text-sm font-bold text-white">Blog</h3>
+  <div class="flex flex-col gap-3">
+    {blogPosts.map((post) => (
+      <a href={post.url} class="group block no-underline">
+        <img src={post.image} alt="" class="mb-1 w-full rounded object-cover" loading="lazy" />
+        <h4 class="text-xs font-medium text-white group-hover:text-buff-live">{post.title}</h4>
+      </a>
+    ))}
+  </div>
+</div>
