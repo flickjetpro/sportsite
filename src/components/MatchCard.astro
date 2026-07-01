@@ -16,12 +16,16 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
 
 <a
   href={`/match/${match.id}`}
-  class="flex items-center gap-3 rounded-lg border border-buff-border bg-buff-card p-3 no-underline transition hover:border-buff-gold"
+  class="relative flex items-center gap-3 rounded-lg border border-buff-border bg-buff-card p-3 no-underline transition hover:border-buff-gold"
   data-status={status}
   data-date={match.date}
   data-date-str={getMatchDateStr(match)}
   data-uid={uniqueId}
 >
+  {match.popular && showPopularBadge && (
+    <span class="absolute left-1 top-1 text-[10px] leading-none text-buff-gold" title="Popular">★</span>
+  )}
+
   <div class="flex min-w-0 flex-1 items-center gap-2">
     {match.teams?.home?.badge && (
       <img
@@ -43,9 +47,11 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
           <span class="inline-block h-2 w-2 rounded-full bg-buff-live animate-pulse-live" />
           <span class="mc-timer">--</span>
         </span>
-        <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
-          {formatET(match.date)} ET
-        </span>
+        {badge && (
+          <span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">
+            [{badge.toUpperCase()}]
+          </span>
+        )}
       </>
     )}
     {status === 'upcoming' && (
@@ -81,15 +87,11 @@ const uniqueId = match.id.replace(/[^a-zA-Z0-9]/g, '_');
   </div>
 
   <span class="flex items-center gap-1">
-    {match.popular && showPopularBadge && (
-      <span class="text-buff-gold" title="Popular">★</span>
-    )}
-    {showCategoryBadge && badge && (
+    {status !== 'live' && showCategoryBadge && badge && (
       <span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">
         [{badge.toUpperCase()}]
       </span>
     )}
+    <span class="ml-1 text-buff-muted">&rsaquo;</span>
   </span>
-
-  <span class="ml-1 text-buff-muted">&rsaquo;</span>
 </a>
