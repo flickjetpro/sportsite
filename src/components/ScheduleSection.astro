@@ -6,9 +6,10 @@ import MatchCard from './MatchCard.astro';
 export interface Props {
   matches: PremiumMatch[];
   heading?: string;
+  sportsWithFuture?: Set<string>;
 }
 
-const { matches, heading = "SCHEDULE" } = Astro.props;
+const { matches, heading = "SCHEDULE", sportsWithFuture } = Astro.props;
 const premiumMatches = matches.filter((m) => m.premiumSport !== null);
 const grouped = groupBySport(premiumMatches);
 const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis', 'Golf'];
@@ -26,9 +27,14 @@ const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis
         })
         .map(([sport, sportMatches]) => (
           <div>
-            <h3 class="mb-2 text-sm font-semibold uppercase tracking-wider text-buff-gold">
-              {sport}
-              <span class="text-buff-muted"> ({sportMatches.length})</span>
+            <h3 class="mb-2 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-buff-gold">
+              <span>{sport}</span>
+              <span class="text-buff-muted">({sportMatches.length})</span>
+              {sportsWithFuture?.has(sport) && (
+                <a href="/schedule" class="ml-auto text-[10px] font-normal text-buff-gold no-underline hover:underline">
+                  Show more →
+                </a>
+              )}
             </h3>
             <div class="flex flex-col gap-2">
               {sportMatches

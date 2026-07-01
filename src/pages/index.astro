@@ -10,6 +10,7 @@ import FAQ from '../components/FAQ.astro';
 import Footer from '../components/Footer.astro';
 import { loadMatchesFromData } from '../lib/api';
 import type { APIMatch } from '../lib/api';
+import { formatDateParam, getMatchDateStr } from '../lib/time';
 
 const liveFile = import.meta.glob('../data/matches-live.json', { eager: true });
 const todayFile = import.meta.glob('../data/matches-today.json', { eager: true });
@@ -19,7 +20,15 @@ const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [
 const liveMatches = loadMatchesFromData(liveData);
 const allMatches = loadMatchesFromData([...liveData, ...todayData]);
 const now = Date.now();
-const scheduleMatches = allMatches.filter((m) => m.date > now);
+const todayStr = formatDateParam(now);
+const scheduleMatches = allMatches.filter((m) => m.date > now && getMatchDateStr(m) === todayStr);
+const futureMatches = allMatches.filter((m) => m.date > now && getMatchDateStr(m) !== todayStr);
+const futureSportNames = new Set<string>();
+for (const m of futureMatches) {
+  if (m.premiumSport !== null && m.premiumDisplayName) {
+    futureSportNames.add(m.premiumDisplayName);
+  }
+}
 ---
 
 <Base>
@@ -30,7 +39,7 @@ const scheduleMatches = allMatches.filter((m) => m.date > now);
       <PopularLiveSection allMatches={liveMatches} initialShow={5} step={5} viewAllMode="link" />
     </div>
     <div class="mt-8">
-      <ScheduleSection matches={scheduleMatches} heading="UPCOMING SCHEDULE" />
+      <ScheduleSection matches={scheduleMatches} heading="UPCOMING SCHEDULE" sportsWithFuture={futureSportNames} />
     </div>
     <div class="mt-8">
       <OtherMatches matches={allMatches} />

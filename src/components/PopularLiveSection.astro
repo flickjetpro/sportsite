@@ -44,14 +44,16 @@ const remaining = total - initialShow;
             ⏷ Show More
           </button>
         </div>
-        <div class="mt-4 text-center" id="pl-view-all-wrap" style="display:none">
-          <a
-            href="/schedule"
-            class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
-          >
-            → View All ({total} Live Match{total !== 1 ? 'es' : ''})
-          </a>
-        </div>
+        {total > initialShow + step && (
+          <div class="mt-4 text-center" id="pl-view-all-wrap" style="display:none">
+            <a
+              href="/schedule"
+              class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
+            >
+              → Show all live matches
+            </a>
+          </div>
+        )}
       </>
     )}
 
@@ -73,7 +75,7 @@ const remaining = total - initialShow;
     var grid = document.getElementById('popular-live-grid');
     if (!grid) return;
 
-    // Link mode: Show More (step) → View All link
+    // Link mode: Show More (step) → Show all live matches link
     var showMoreBtn = document.getElementById('pl-show-more');
     var showMoreWrap = document.getElementById('pl-show-more-wrap');
     var viewAllWrap = document.getElementById('pl-view-all-wrap');
@@ -85,9 +87,10 @@ const remaining = total - initialShow;
         for (var i = 0; i < toShow; i++) {
           hidden[i].classList.remove('pl-hidden');
         }
-        if (grid.querySelectorAll('.pl-hidden').length === 0) {
-          if (showMoreWrap) showMoreWrap.style.display = 'none';
-          if (viewAllWrap) viewAllWrap.style.display = 'block';
+        if (showMoreWrap) showMoreWrap.style.display = 'none';
+        var stillHidden = grid.querySelectorAll('.pl-hidden').length;
+        if (stillHidden > 0 && viewAllWrap) {
+          viewAllWrap.style.display = 'block';
         }
       });
     }
