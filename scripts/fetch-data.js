@@ -74,14 +74,9 @@ async function main() {
   const todayMatches = JSON.parse(
     readFileSync(join(DATA_DIR, 'matches-today.json'), 'utf-8')
   );
-  const now = Date.now();
-  const WINDOW_START = now - 2 * 60 * 1000;
-  const WINDOW_END = now + 30 * 60 * 1000;
   const todayCandidates = todayMatches.filter(
     (m) =>
       m.sources?.length > 0 &&
-      m.date >= WINDOW_START &&
-      m.date <= WINDOW_END &&
       !liveMatches.some((l) => l.id === m.id)
   );
   if (todayCandidates.length > 0) {
