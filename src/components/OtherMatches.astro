@@ -13,7 +13,7 @@ const otherMatches = matches.filter((m) => m.premiumSport === null);
 {otherMatches.length > 0 && (
   <section>
     <h2 class="mb-3 text-lg font-bold text-white">OTHER MATCHES</h2>
-    <div class="flex flex-col gap-2">
+    <div class="flex flex-col divide-y divide-dotted divide-[#eee]">
       {otherMatches.map((m) => (
         <MatchCard match={m} showCategoryBadge={true} />
       ))}
