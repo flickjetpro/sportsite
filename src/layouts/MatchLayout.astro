@@ -1,5 +1,8 @@
 ---
 import Base from './Base.astro';
+import Header from '../components/Header.astro';
+import Calendar from '../components/Calendar.astro';
+import BlogSidebar from '../components/BlogSidebar.astro';
 import type { PremiumMatch } from '../lib/api';
 
 export interface Props {
@@ -9,9 +12,20 @@ const { match } = Astro.props;
 ---
 
 <Base title={`${match.title} - Game Time & Schedule | Buffstreams Backup`} description={`${match.title} game information, match time, and schedule.`}>
-  <slot name="breadcrumb" />
-  <main class="mx-auto max-w-5xl px-4 py-6">
-    <slot name="content" />
+  <Header />
+  <main class="mx-auto max-w-7xl px-4 py-6">
+    <slot name="breadcrumb" />
+    <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <slot name="content" />
+      </div>
+      <div class="lg:col-span-1">
+        <Calendar />
+        <div class="mt-6">
+          <BlogSidebar />
+        </div>
+      </div>
+    </div>
   </main>
   <footer class="border-t border-buff-border bg-buff-darker px-4 py-8 text-center text-sm text-buff-muted">
     <p class="mx-auto max-w-3xl">

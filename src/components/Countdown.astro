@@ -4,29 +4,31 @@ export interface Props {
   sport?: string;
 }
 const { matchDate } = Astro.props;
-const target = matchDate;
 ---
 
-<div id="countdown-{matchDate}" class="font-mono text-lg text-buff-gold">
-  <span id="cd-text-{matchDate}">--</span>
+<div id="countdown" class="font-mono text-lg text-buff-gold" data-target={matchDate}>
+  <span id="cd-text">--</span>
 </div>
 
-<script>
+<script is:inline>
   (function () {
-    const target = Number({target});
-    const textEl = document.getElementById('cd-text-{matchDate}');
+    var el = document.getElementById('countdown');
+    if (!el) return;
+    var target = Number(el.getAttribute('data-target'));
+    if (!target) return;
+    var textEl = document.getElementById('cd-text');
     if (!textEl) return;
 
     function tick() {
-      const diff = target - Date.now();
+      var diff = target - Date.now();
       if (diff <= 0) {
         textEl.textContent = 'LIVE';
         return;
       }
-      const h = Math.floor(diff / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      textEl.textContent = `Starts in ${h}h ${m}m ${s}s`;
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      textEl.textContent = 'Starts in ' + h + 'h ' + m + 'm ' + s + 's';
     }
 
     tick();
