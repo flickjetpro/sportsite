@@ -103,10 +103,10 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     </div>
   </div>
 
-  <div class="mt-4 text-center" id="pl-show-more-wrap" style="display:none">
+  <div class="mt-4 text-center" id="pl-show-more-wrap">
     <button
       id="pl-show-more"
-      class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
+      class="inline-flex items-center justify-center gap-2 rounded-lg border-0 bg-buff-border/30 px-6 py-3 text-sm font-bold text-transparent animate-pulse"
     >
       ⏷ Show More
     </button>
@@ -142,6 +142,9 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var sport = grid.getAttribute('data-sport') || '';
 
     var apiUrl = 'https://stream.alphastreams.fit/api/live-now' + (sport ? '?sport=' + sport : '');
+
+    var TWENTY_FOUR_HOURS = 86400000;
+    var TWENTY_FOUR_SEVEN_RE = /(24\/7|24 hour|247|always live)/i;
 
     function escapeHtml(text) {
       if (!text && text !== 0) return '';
@@ -236,6 +239,12 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
       .then(function (data) {
         var list = Array.isArray(data) ? data : [];
 
+        // Filter out 24/7 channels
+        list = list.filter(function (m) {
+          return Date.now() - m.date <= TWENTY_FOUR_HOURS
+              && !TWENTY_FOUR_SEVEN_RE.test(m.title);
+        });
+
         if (list.length === 0) {
           section.style.display = 'none';
           return;
@@ -279,8 +288,9 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
         var hiddenCount = cardEls.length - show;
 
-        if (hiddenCount > 0 && showMoreBtn && showMoreWrap) {
-          showMoreWrap.style.display = 'block';
+        // Swap button to real styling if needed
+        if (hiddenCount > 0 && showMoreBtn) {
+          showMoreBtn.className = 'inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold';
           showMoreBtn.addEventListener('click', function () {
             var hidden = [];
             for (var i = 0; i < cardEls.length; i++) {
@@ -291,11 +301,13 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
               hidden[i].style.display = '';
             }
             var still = hidden.length - toShow;
-            showMoreWrap.style.display = 'none';
+            showMoreBtn.style.display = 'none';
             if (still > 0 && viewAllLink && viewAllWrap) {
               viewAllWrap.style.display = 'block';
             }
           });
+        } else if (showMoreBtn) {
+          showMoreBtn.style.display = 'none';
         }
       })
       .catch(function () {
