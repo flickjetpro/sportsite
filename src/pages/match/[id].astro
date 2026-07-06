@@ -144,21 +144,11 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
       </article>
     </div>
 
-    <script id="match-data" type="application/json" is:inline>{
-  "matchId": {JSON.stringify(match.id)},
-  "sources": {JSON.stringify(sources)},
-  "sourceNames": {JSON.stringify(SOURCE_NAMES)},
-  "streamDomain": {JSON.stringify(STREAM_DOMAIN)}
-}</script>
-    <script is:inline>
-  (function () {
-    var dataEl = document.getElementById('match-data');
-    if (!dataEl) return;
-    var data = JSON.parse(dataEl.textContent);
-    var matchId = data.matchId;
-    var sources = data.sources;
-    var sourceNames = data.sourceNames;
-    var streamDomain = data.streamDomain;
+    <script is:inline set:html={`(function () {
+    var matchId = ${JSON.stringify(match.id)};
+    var sources = ${JSON.stringify(sources)};
+    var sourceNames = ${JSON.stringify(SOURCE_NAMES)};
+    var streamDomain = ${JSON.stringify(STREAM_DOMAIN)};
     var grid = document.getElementById('stream-grid');
     var countEl = document.getElementById('stream-count');
     if (!grid) return;
@@ -242,7 +232,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
     }
 
     loadStreams();
-  })();
+  })();`}>
     </script>
   </div>
 </MatchLayout>
