@@ -18,16 +18,13 @@ const todayFile = import.meta.glob('../data/matches-today.json', { eager: true }
 const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
 const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
 
-const liveMatches = loadMatchesFromData(liveData);
 const allMatches = loadMatchesFromData([...liveData, ...todayData]);
-const liveIds = new Set(liveMatches.map((m) => m.id));
-const nonLiveMatches = allMatches.filter((m) => !liveIds.has(m.id));
+const liveIds = new Set(allMatches.filter((m) => m._liveSource).map((m) => m.id));
 const now = Date.now();
 const todayStr = formatDateParam(now);
-const scheduleMatches = nonLiveMatches.filter((m) => m.date > now && getMatchDateStr(m) === todayStr);
-const futureMatches = nonLiveMatches.filter((m) => m.date > now && getMatchDateStr(m) !== todayStr);
-const todayNonLive = nonLiveMatches.filter((m) => getMatchDateStr(m) === todayStr);
-const allToday = [...liveMatches, ...todayNonLive, ...scheduleMatches];
+const scheduleMatches = allMatches.filter((m) => !liveIds.has(m.id) && m.date > now && getMatchDateStr(m) === todayStr);
+const futureMatches = allMatches.filter((m) => !liveIds.has(m.id) && m.date > now && getMatchDateStr(m) !== todayStr);
+const todayNonLive = allMatches.filter((m) => !liveIds.has(m.id) && getMatchDateStr(m) === todayStr);
 const futureSportNames = new Set<string>();
 for (const m of futureMatches) {
   if (m.premiumSport !== null && m.premiumDisplayName) {
@@ -42,7 +39,7 @@ for (const m of futureMatches) {
     <SportGrid />
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <div class="lg:col-span-2">
-        <PopularLiveSection allMatches={allToday} initialShow={5} step={5} viewAllMode="link" />
+        <PopularLiveSection initialShow={5} step={5} viewAllMode="link" />
         <div class="mt-6">
           <ScheduleSection matches={scheduleMatches} heading="UPCOMING STREAM LINKS" sportsWithFuture={futureSportNames} />
         </div>

@@ -18,11 +18,9 @@ const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
 const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
 
 const allMatches = loadMatchesFromData([...liveData, ...todayData]);
-const liveMatches = loadMatchesFromData(liveData);
 const now = Date.now();
 const todayStr = formatDateParam(now);
-const filteredMatches = filterByDate(allMatches, todayStr);
-const scheduleMatches = filteredMatches.filter((m) => m.date > now);
+const scheduleMatches = filterByDate(allMatches, todayStr).filter((m) => m.date > now);
 ---
 
 <Base title="Full Sports Schedule | Buffstreams Backup" description="Browse the complete sports schedule for today. Find NFL, NBA, MLB, NHL, UFC, and more game times.">
@@ -36,7 +34,7 @@ const scheduleMatches = filteredMatches.filter((m) => m.date > now);
 
     <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
       <div class="lg:col-span-2">
-        <PopularLiveSection allMatches={liveMatches} initialShow={15} step={15} viewAllMode="inline" />
+        <PopularLiveSection initialShow={15} step={15} viewAllMode="inline" />
         <div class="mt-6">
           <ScheduleSection matches={scheduleMatches} heading="TODAY'S STREAM LINKS" />
         </div>

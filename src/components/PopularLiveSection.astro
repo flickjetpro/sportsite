@@ -1,176 +1,213 @@
 ---
-import type { PremiumMatch } from '../lib/api';
-import MatchCard from './MatchCard.astro';
-
 export interface Props {
-  allMatches: PremiumMatch[];
-  initialShow: number;
-  step: number;
-  viewAllMode: 'link' | 'inline';
+  sport?: string;
+  initialShow?: number;
+  step?: number;
+  viewAllMode?: 'link' | 'inline';
 }
 
-const { allMatches, initialShow, step, viewAllMode } = Astro.props;
-const total = allMatches.length;
-const remaining = total - initialShow;
+const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.props;
 ---
 
-{total > 0 && (
-  <section id="popular-live-section" class="rounded-lg border border-buff-border bg-buff-darker p-4">
-    <h2 id="pl-heading" class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
-      <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
-      LIVE NOW
-    </h2>
+<section id="popular-live-section" class="rounded-lg border border-buff-border bg-buff-darker p-4">
+  <h2 id="pl-heading" class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
+    <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
+    LIVE NOW
+  </h2>
 
-    <div class="flex flex-col divide-y divide-dashed divide-buff-border" id="popular-live-grid" data-pl-step={step} data-api="https://stream.alphastreams.fit/api/stream">
-      {allMatches.map((m, i) => (
-        <div class={i >= initialShow ? 'pl-hidden' : ''} data-pl-index={i} data-sources={encodeURIComponent(JSON.stringify(m.sources || []))}>
-          <MatchCard match={m} showCategoryBadge={true} />
-        </div>
-      ))}
+  <div id="popular-live-grid" data-pl-step={step} data-initial={initialShow} data-sport={sport}></div>
+
+  <div class="mt-4 text-center" id="pl-show-more-wrap" style="display:none">
+    <button
+      id="pl-show-more"
+      class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
+    >
+      ⏷ Show More
+    </button>
+  </div>
+
+  {viewAllMode === 'link' && (
+    <div class="mt-4 text-center" id="pl-view-all-wrap" style="display:none">
+      <a
+        href="/schedule"
+        class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
+      >
+        → Show all matches
+      </a>
     </div>
-
-    {viewAllMode === 'link' && remaining > 0 && (
-      <>
-        <div class="mt-4 text-center" id="pl-show-more-wrap">
-          <button
-            id="pl-show-more"
-            class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
-          >
-            ⏷ Show More
-          </button>
-        </div>
-        {total > initialShow + step && (
-          <div class="mt-4 text-center" id="pl-view-all-wrap" style="display:none">
-            <a
-              href="/schedule"
-              class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
-            >
-              → Show all matches
-            </a>
-          </div>
-        )}
-      </>
-    )}
-
-    {viewAllMode === 'inline' && remaining > 0 && (
-      <div class="mt-4 text-center" id="pl-show-all-wrap">
-        <button
-          id="pl-show-all"
-          class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black transition hover:opacity-90"
-        >
-          Show {remaining} More Match{remaining !== 1 ? 'es' : ''}
-        </button>
-      </div>
-    )}
-  </section>
-)}
+  )}
+</section>
 
 <script>
   (function () {
     var grid = document.getElementById('popular-live-grid');
     if (!grid) return;
-
-    var apiBase = grid.getAttribute('data-api');
-    var items = [].slice.call(grid.querySelectorAll('[data-pl-index]'));
-    if (items.length === 0) return;
-
-    var hiddenClass = 'pl-hidden';
-    var initialShow = 5;
-
-    function hideAfter(n) {
-      for (var i = 0; i < items.length; i++) {
-        if (i < n) {
-          items[i].classList.remove(hiddenClass);
-        } else {
-          items[i].classList.add(hiddenClass);
-        }
-      }
-    }
-
-    // Fetch viewer counts for all matches
-    var promises = items.map(function (el) {
-      var raw = el.getAttribute('data-sources');
-      if (!raw) return Promise.resolve({ el: el, viewers: 0 });
-      var sources;
-      try { sources = JSON.parse(decodeURIComponent(raw)); } catch (e) { sources = []; }
-      if (sources.length === 0) return Promise.resolve({ el: el, viewers: 0 });
-
-      var sourcePromises = sources.map(function (s) {
-        return fetch(apiBase + '/' + encodeURIComponent(s.source) + '/' + encodeURIComponent(s.id))
-          .then(function (r) { return r.json(); })
-          .then(function (data) {
-            var list = Array.isArray(data) ? data : [];
-            var sum = 0;
-            for (var k = 0; k < list.length; k++) sum += list[k].viewers || 0;
-            return sum;
-          })
-          .catch(function () { return 0; });
-      });
-
-      return Promise.all(sourcePromises).then(function (sums) {
-        var total = 0;
-        for (var k = 0; k < sums.length; k++) total += sums[k];
-        return { el: el, viewers: total };
-      });
-    });
-
-    Promise.all(promises).then(function (results) {
-      // Sort by viewers descending
-      results.sort(function (a, b) { return b.viewers - a.viewers; });
-
-      // Re-order DOM
-      for (var i = 0; i < results.length; i++) {
-        grid.appendChild(results[i].el);
-      }
-
-      // Update items reference
-      items = results.map(function (r) { return r.el; });
-
-      // Show first N, hide rest
-      hideAfter(initialShow);
-
-      // Update heading with live count
-      var liveCount = 0;
-      for (var i = 0; i < results.length; i++) {
-        if (results[i].viewers > 0) liveCount++;
-      }
-      var heading = document.getElementById('pl-heading');
-      if (heading) {
-        heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" /> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ' matches)' : '');
-      }
-    });
-
-    // Show More / Show All buttons (work on current DOM order)
+    var section = document.getElementById('popular-live-section');
+    var heading = document.getElementById('pl-heading');
+    if (!heading) return;
     var showMoreBtn = document.getElementById('pl-show-more');
     var showMoreWrap = document.getElementById('pl-show-more-wrap');
     var viewAllWrap = document.getElementById('pl-view-all-wrap');
-    if (showMoreBtn) {
-      showMoreBtn.addEventListener('click', function () {
-        var hidden = grid.querySelectorAll('.' + hiddenClass);
-        var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
-        var toShow = Math.min(hidden.length, step);
-        for (var i = 0; i < toShow; i++) {
-          hidden[i].classList.remove(hiddenClass);
-        }
-        if (showMoreWrap) showMoreWrap.style.display = 'none';
-        var stillHidden = grid.querySelectorAll('.' + hiddenClass).length;
-        if (stillHidden > 0 && viewAllWrap) {
-          viewAllWrap.style.display = 'block';
-        }
+
+    var initialShow = parseInt(grid.getAttribute('data-initial')) || 5;
+    var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
+    var sport = grid.getAttribute('data-sport') || '';
+
+    var apiUrl = 'https://stream.alphastreams.fit/api/live-now' + (sport ? '?sport=' + sport : '');
+
+    function escapeHtml(text) {
+      if (!text && text !== 0) return '';
+      var d = document.createElement('div');
+      d.textContent = text;
+      return d.innerHTML;
+    }
+
+    function formatET(date) {
+      return new Date(date).toLocaleTimeString('en-US', {
+        timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true,
       });
     }
 
-    var showAllBtn = document.getElementById('pl-show-all');
-    var showAllWrap = document.getElementById('pl-show-all-wrap');
-    if (showAllBtn) {
-      showAllBtn.addEventListener('click', function () {
-        var hidden = grid.querySelectorAll('.' + hiddenClass);
-        for (var i = 0; i < hidden.length; i++) {
-          hidden[i].classList.remove(hiddenClass);
-        }
-        if (showAllWrap) showAllWrap.style.display = 'none';
+    function formatDateShort(date) {
+      return new Date(date).toLocaleDateString('en-US', {
+        timeZone: 'America/New_York', month: 'short', day: 'numeric',
       });
     }
+
+    function getDateStr(date) {
+      return new Date(date).toLocaleDateString('en-US', { timeZone: 'America/New_York' });
+    }
+
+    function getStatus(date, viewers) {
+      var now = Date.now();
+      if (viewers > 0 || (now >= date && now <= date + 3 * 60 * 60 * 1000)) return 'live';
+      if (now < date) return 'upcoming';
+      return 'finished';
+    }
+
+    function makeBadge(category) {
+      if (!category) return '';
+      var names = {
+        'american-football': 'NFL', basketball: 'NBA', baseball: 'MLB', hockey: 'NHL',
+        fight: 'UFC', 'motor-sports': 'F1', football: 'Soccer', tennis: 'Tennis', golf: 'Golf',
+      };
+      var label = names[category] || category.charAt(0).toUpperCase() + category.slice(1);
+      return '<span class="rounded bg-buff-border px-2 py-0.5 text-xs text-buff-muted">[' + escapeHtml(label) + ']</span>';
+    }
+
+    function buildCard(m) {
+      var status = getStatus(m.date, m.totalViewers);
+      var home = m.teams && m.teams.home && m.teams.home.name ? m.teams.home : null;
+      var away = m.teams && m.teams.away && m.teams.away.name ? m.teams.away : null;
+      var homeName = home ? home.name : (m.title.split(' vs ')[0] || m.title);
+      var awayName = away ? away.name : (m.title.split(' vs ')[1] || '');
+      var homeBadge = home && home.badge ? home.badge : null;
+      var awayBadge = away && away.badge ? away.badge : null;
+      var badge = makeBadge(m.category);
+      var now = Date.now();
+      var isToday = getDateStr(m.date) === getDateStr(now);
+
+      var centerHtml = '';
+      if (status === 'live') {
+        centerHtml = '<div class="flex flex-col items-center gap-1" style="min-width:80px">' +
+          '<span class="flex items-center gap-1.5 text-xs font-bold text-buff-live">' +
+          '<span class="inline-block h-2 w-2 rounded-full bg-buff-live animate-pulse-live"></span>' +
+          '<span>' + (m.totalViewers > 0 ? m.totalViewers.toLocaleString() + ' watching' : 'LIVE') + '</span>' +
+          '</span>' + badge + '</div>';
+      } else if (status === 'upcoming') {
+        centerHtml = '<div class="flex flex-col items-center gap-1" style="min-width:80px">' +
+          (isToday
+            ? '<span class="text-xs font-bold text-buff-gold">' + escapeHtml(formatET(m.date)) + '</span>'
+            : '<span class="flex flex-col items-center font-mono text-xs text-buff-muted"><span>' + escapeHtml(formatDateShort(m.date)) + '</span><span>' + escapeHtml(formatET(m.date)) + '</span></span>'
+          ) + badge + '</div>';
+      } else {
+        centerHtml = '<div class="flex flex-col items-center gap-1" style="min-width:80px">' +
+          '<span class="rounded bg-buff-border px-2 py-0.5 text-xs font-bold text-buff-muted">FINAL</span>' +
+          '<span class="whitespace-nowrap font-mono text-xs text-buff-muted">' + escapeHtml(formatET(m.date)) + ' ET</span>' +
+          '</div>';
+      }
+
+      return '<a href="/match/' + encodeURIComponent(m.id) + '" class="relative flex items-center gap-3 bg-buff-card p-3 no-underline transition hover:bg-buff-hover" data-status="' + status + '">' +
+        '<div class="flex min-w-0 flex-1 items-center gap-2">' +
+        (homeBadge ? '<img src="/api/proxy/images/badge/' + encodeURIComponent(homeBadge) + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        '<span class="truncate text-sm font-medium text-white">' + escapeHtml(homeName) + '</span>' +
+        '</div>' +
+        centerHtml +
+        '<div class="flex min-w-0 flex-1 items-center justify-end gap-2">' +
+        '<span class="truncate text-sm font-medium text-white">' + escapeHtml(awayName) + '</span>' +
+        (awayBadge ? '<img src="/api/proxy/images/badge/' + encodeURIComponent(awayBadge) + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        '</div>' +
+        '<span class="ml-1 text-buff-muted">&rsaquo;</span>' +
+        '</a>';
+    }
+
+    heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" /> Loading...';
+
+    fetch(apiUrl)
+      .then(function (r) { return r.json(); })
+      .then(function (data) {
+        var list = Array.isArray(data) ? data : [];
+
+        if (list.length === 0) {
+          section.style.display = 'none';
+          return;
+        }
+
+        var liveCount = 0;
+        for (var i = 0; i < list.length; i++) {
+          if (getStatus(list[i].date, list[i].totalViewers) === 'live') liveCount++;
+        }
+        heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" /> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
+
+        var cardEls = list.map(function (m) {
+          var div = document.createElement('div');
+          div.innerHTML = buildCard(m);
+          return div.firstChild;
+        });
+
+        grid.innerHTML = '';
+        for (var i = 0; i < cardEls.length; i++) {
+          grid.appendChild(cardEls[i]);
+        }
+
+        var show = Math.min(cardEls.length, initialShow);
+        for (var i = 0; i < cardEls.length; i++) {
+          if (i < show) {
+            cardEls[i].classList.remove('pl-hidden');
+          } else {
+            cardEls[i].classList.add('pl-hidden');
+          }
+        }
+
+        var hiddenCount = cardEls.length - show;
+        if (hiddenCount > 0) {
+          showMoreWrap.style.display = 'block';
+        }
+
+        // Show More
+        if (showMoreBtn) {
+          showMoreBtn.addEventListener('click', function () {
+            var hidden = [];
+            for (var i = 0; i < cardEls.length; i++) {
+              if (cardEls[i].classList.contains('pl-hidden')) hidden.push(cardEls[i]);
+            }
+            var toShow = Math.min(hidden.length, step);
+            for (var i = 0; i < toShow; i++) {
+              hidden[i].classList.remove('pl-hidden');
+            }
+            var still = hidden.length - toShow;
+            if (still <= 0) {
+              showMoreWrap.style.display = 'none';
+            }
+            if (still > 0 && viewAllWrap) {
+              viewAllWrap.style.display = 'block';
+            }
+          });
+        }
+      })
+      .catch(function () {
+        section.style.display = 'none';
+      });
   })();
 </script>
 

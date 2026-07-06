@@ -35,6 +35,11 @@ body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 
 const SOURCE_NAMES = { echo: 'Echo', delta: 'Delta', golf: 'Golf', admin: 'Admin' }
 
+const SPORT_CATEGORIES = {
+  nfl: 'american-football', nba: 'basketball', mlb: 'baseball', nhl: 'hockey',
+  ufc: 'fight', f1: 'motor-sports', soccer: 'football', tennis: 'tennis', golf: 'golf',
+}
+
 function sourceLabel(source) {
   return SOURCE_NAMES[source] || source.charAt(0).toUpperCase() + source.slice(1)
 }
@@ -171,6 +176,64 @@ export default {
         headers: { 'Content-Type': 'text/html;charset=utf-8' },
         status: 404,
       })
+    }
+
+    if (path === '/api/live-now') {
+      const sport = url.searchParams.get('sport') || ''
+      const category = sport ? (SPORT_CATEGORIES[sport] || '') : (url.searchParams.get('category') || '')
+      try {
+        const [live, today] = await Promise.all([
+          fetch('https://streamed.pk/api/matches/live').then(r => r.json()).catch(() => []),
+          fetch('https://streamed.pk/api/matches/all-today').then(r => r.json()).catch(() => []),
+        ])
+        const raw = [...(Array.isArray(live) ? live : []), ...(Array.isArray(today) ? today : [])]
+        const seen = new Set()
+        const matches = []
+        for (const m of raw) {
+          if (!seen.has(m.id)) { seen.add(m.id); matches.push(m) }
+        }
+        const filtered = category ? matches.filter(m => m.category === category) : matches
+
+        // Fetch streams for all sources concurrently
+        const streamMap = {}
+        const fetches = []
+        for (const m of filtered) {
+          for (const src of (m.sources || [])) {
+            const key = m.id + ':' + src.source
+            fetches.push(
+              fetch(`https://streamed.pk/api/stream/${src.source}/${src.id}`)
+                .then(r => r.json())
+                .then(data => { streamMap[key] = Array.isArray(data) ? data : [] })
+                .catch(() => { streamMap[key] = [] })
+            )
+          }
+        }
+        await Promise.all(fetches)
+
+        const result = filtered.map(m => {
+          let totalViewers = 0
+          for (const src of (m.sources || [])) {
+            for (const s of (streamMap[m.id + ':' + src.source] || [])) {
+              totalViewers += s.viewers || 0
+            }
+          }
+          return {
+            id: m.id, title: m.title, category: m.category, date: m.date,
+            teams: m.teams || null, sources: m.sources || [],
+            popular: m.popular || false, poster: m.poster || '',
+            totalViewers: totalViewers,
+          }
+        })
+        result.sort((a, b) => b.totalViewers - a.totalViewers || a.date - b.date)
+
+        return new Response(JSON.stringify(result), {
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        })
+      } catch (e) {
+        return new Response(JSON.stringify([]), {
+          headers: { 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' },
+        })
+      }
     }
 
     const apiMatch = path.match(/^\/api\/stream\/([^/]+)\/(.+)$/)
