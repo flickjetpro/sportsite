@@ -27,6 +27,7 @@ const todayStr = formatDateParam(now);
 const scheduleMatches = nonLiveMatches.filter((m) => m.date > now && getMatchDateStr(m) === todayStr);
 const futureMatches = nonLiveMatches.filter((m) => m.date > now && getMatchDateStr(m) !== todayStr);
 const todayNonLive = nonLiveMatches.filter((m) => getMatchDateStr(m) === todayStr);
+const allToday = [...liveMatches, ...todayNonLive, ...scheduleMatches];
 const futureSportNames = new Set<string>();
 for (const m of futureMatches) {
   if (m.premiumSport !== null && m.premiumDisplayName) {
@@ -41,7 +42,7 @@ for (const m of futureMatches) {
     <SportGrid />
     <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-cols-3">
       <div class="lg:col-span-2">
-        <PopularLiveSection allMatches={liveMatches} initialShow={5} step={5} viewAllMode="link" />
+        <PopularLiveSection allMatches={allToday} initialShow={5} step={5} viewAllMode="link" />
         <div class="mt-6">
           <ScheduleSection matches={scheduleMatches} heading="UPCOMING STREAM LINKS" sportsWithFuture={futureSportNames} />
         </div>
