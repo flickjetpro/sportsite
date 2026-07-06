@@ -5,7 +5,7 @@ body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .header-title{color:#0a93ae;font-weight:700;font-size:1.1rem;letter-spacing:-.02em}
 .main{flex:1;max-width:1024px;margin:0 auto;padding:16px;width:100%}
 .iframe-wrap{position:relative;width:100%;border-radius:8px;overflow:hidden;background:#000;margin-bottom:12px}
-.iframe-wrap iframe{width:100%;height:60vh;min-height:360px;border:none;display:block}
+.iframe-wrap iframe{width:100%;border:none;display:block}
 .fallback{display:none;margin-top:8px;text-align:center}
 .fallback a{display:inline-block;background:#0a93ae;color:#000;padding:10px 24px;border-radius:6px;font-weight:700;font-size:.85rem;text-decoration:none}
 .fallback a:hover{background:#066a7a}
