@@ -11,11 +11,17 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
 <section id="popular-live-section" class="rounded-lg border border-buff-border bg-buff-darker p-4">
   <h2 id="pl-heading" class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
-    <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" />
+    <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span>
     LIVE NOW
   </h2>
 
-  <div id="popular-live-grid" data-pl-step={step} data-initial={initialShow} data-sport={sport}></div>
+  <div id="popular-live-grid" data-pl-step={step} data-initial={initialShow} data-sport={sport}>
+    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
+    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
+    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
+    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
+    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
+  </div>
 
   <div class="mt-4 text-center" id="pl-show-more-wrap" style="display:none">
     <button
@@ -54,6 +60,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var sport = grid.getAttribute('data-sport') || '';
 
     var apiUrl = 'https://stream.alphastreams.fit/api/live-now' + (sport ? '?sport=' + sport : '');
+    var cardEls = [];
 
     function escapeHtml(text) {
       if (!text && text !== 0) return '';
@@ -129,19 +136,55 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
       return '<a href="/match/' + encodeURIComponent(m.id) + '" class="relative flex items-center gap-3 bg-buff-card p-3 no-underline transition hover:bg-buff-hover" data-status="' + status + '">' +
         '<div class="flex min-w-0 flex-1 items-center gap-2">' +
-        (homeBadge ? '<img src="/api/proxy/images/badge/' + encodeURIComponent(homeBadge) + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        (homeBadge ? '<img src="/api/proxy/images/badge/' + homeBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(homeName) + '</span>' +
         '</div>' +
         centerHtml +
         '<div class="flex min-w-0 flex-1 items-center justify-end gap-2">' +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(awayName) + '</span>' +
-        (awayBadge ? '<img src="/api/proxy/images/badge/' + encodeURIComponent(awayBadge) + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        (awayBadge ? '<img src="/api/proxy/images/badge/' + awayBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
         '</div>' +
         '<span class="ml-1 text-buff-muted">&rsaquo;</span>' +
         '</a>';
     }
 
-    heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" /> Loading...';
+    function renderCards() {
+      grid.innerHTML = '';
+      for (var i = 0; i < cardEls.length; i++) {
+        grid.appendChild(cardEls[i]);
+      }
+      var show = Math.min(cardEls.length, initialShow);
+      for (var i = 0; i < cardEls.length; i++) {
+        if (i < show) {
+          cardEls[i].classList.remove('pl-hidden');
+        } else {
+          cardEls[i].classList.add('pl-hidden');
+        }
+      }
+      var hiddenCount = cardEls.length - show;
+      showMoreWrap.style.display = hiddenCount > 0 ? 'block' : 'none';
+      viewAllWrap.style.display = 'none';
+    }
+
+    function onShowMore() {
+      var hidden = [];
+      for (var i = 0; i < cardEls.length; i++) {
+        if (cardEls[i].classList.contains('pl-hidden')) hidden.push(cardEls[i]);
+      }
+      var toShow = Math.min(hidden.length, step);
+      for (var i = 0; i < toShow; i++) {
+        hidden[i].classList.remove('pl-hidden');
+      }
+      var still = hidden.length - toShow;
+      if (still <= 0) {
+        showMoreWrap.style.display = 'none';
+      }
+      if (still > 0 && viewAllWrap) {
+        viewAllWrap.style.display = 'block';
+      }
+    }
+
+    heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW <span class="text-sm font-normal text-buff-muted">Loading...</span>';
 
     fetch(apiUrl)
       .then(function (r) { return r.json(); })
@@ -153,57 +196,34 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
           return;
         }
 
+        // Keep only live matches
+        var liveMatches = [];
         var liveCount = 0;
         for (var i = 0; i < list.length; i++) {
-          if (getStatus(list[i].date, list[i].totalViewers) === 'live') liveCount++;
+          var m = list[i];
+          var st = getStatus(m.date, m.totalViewers);
+          if (st === 'live') {
+            liveCount++;
+            liveMatches.push(m);
+          }
         }
-        heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live" /> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
 
-        var cardEls = list.map(function (m) {
+        if (liveMatches.length === 0) {
+          section.style.display = 'none';
+          return;
+        }
+
+        heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
+
+        cardEls = liveMatches.map(function (m) {
           var div = document.createElement('div');
           div.innerHTML = buildCard(m);
           return div.firstChild;
         });
 
-        grid.innerHTML = '';
-        for (var i = 0; i < cardEls.length; i++) {
-          grid.appendChild(cardEls[i]);
-        }
+        renderCards();
 
-        var show = Math.min(cardEls.length, initialShow);
-        for (var i = 0; i < cardEls.length; i++) {
-          if (i < show) {
-            cardEls[i].classList.remove('pl-hidden');
-          } else {
-            cardEls[i].classList.add('pl-hidden');
-          }
-        }
-
-        var hiddenCount = cardEls.length - show;
-        if (hiddenCount > 0) {
-          showMoreWrap.style.display = 'block';
-        }
-
-        // Show More
-        if (showMoreBtn) {
-          showMoreBtn.addEventListener('click', function () {
-            var hidden = [];
-            for (var i = 0; i < cardEls.length; i++) {
-              if (cardEls[i].classList.contains('pl-hidden')) hidden.push(cardEls[i]);
-            }
-            var toShow = Math.min(hidden.length, step);
-            for (var i = 0; i < toShow; i++) {
-              hidden[i].classList.remove('pl-hidden');
-            }
-            var still = hidden.length - toShow;
-            if (still <= 0) {
-              showMoreWrap.style.display = 'none';
-            }
-            if (still > 0 && viewAllWrap) {
-              viewAllWrap.style.display = 'block';
-            }
-          });
-        }
+        if (showMoreBtn) showMoreBtn.addEventListener('click', onShowMore);
       })
       .catch(function () {
         section.style.display = 'none';
