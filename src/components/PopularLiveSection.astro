@@ -204,11 +204,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
         var show = Math.min(cardEls.length, initialShow);
         for (var i = 0; i < cardEls.length; i++) {
-          if (i < show) {
-            cardEls[i].classList.remove('pl-hidden');
-          } else {
-            cardEls[i].classList.add('pl-hidden');
-          }
+          cardEls[i].style.display = i < show ? '' : 'none';
         }
 
         var hiddenCount = cardEls.length - show;
@@ -222,11 +218,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
           showMoreBtn.addEventListener('click', function () {
             var hidden = [];
             for (var i = 0; i < cardEls.length; i++) {
-              if (cardEls[i].classList.contains('pl-hidden')) hidden.push(cardEls[i]);
+              if (cardEls[i].style.display === 'none') hidden.push(cardEls[i]);
             }
             var toShow = Math.min(hidden.length, step);
             for (var i = 0; i < toShow; i++) {
-              hidden[i].classList.remove('pl-hidden');
+              hidden[i].style.display = '';
             }
             var still = hidden.length - toShow;
             showMoreBtn.style.display = 'none';
@@ -242,9 +238,3 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
       });
   })();
 </script>
-
-<style>
-  .pl-hidden {
-    display: none;
-  }
-</style>
