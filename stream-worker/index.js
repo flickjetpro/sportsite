@@ -90,8 +90,6 @@ ${langBadge}
 </button>`
   }).join('')
 
-  const streamsJson = esc(JSON.stringify(allStreams.map(s => ({ source: s.source, streamNo: s.streamNo, hd: s.hd, language: s.language, embedUrl: s.embedUrl, viewers: s.viewers }))))
-
   return html(`<div class="header">
 <div class="header-inner">
 <span class="header-title">AlphaStreams</span>
@@ -116,7 +114,7 @@ ${cards}
 All rights reserved.
 </div>
 <script>
-var _streams = JSON.parse('${streamsJson}');
+var _streams = ${JSON.stringify(allStreams.map(s => ({ source: s.source, streamNo: s.streamNo, hd: s.hd, language: s.language, embedUrl: s.embedUrl, viewers: s.viewers })))};
 var iframe = document.getElementById('stream-iframe');
 var grid = document.getElementById('stream-grid');
 var fallback = document.getElementById('fallback-btn');
