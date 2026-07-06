@@ -15,20 +15,98 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     LIVE NOW
   </h2>
 
-  <div id="popular-live-grid" data-pl-step={step} data-initial={initialShow} data-sport={sport}>
-    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
-    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
-    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
-    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
-    <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
+  <div id="popular-live-grid" class="divide-y divide-dashed divide-buff-border" data-pl-step={step} data-initial={initialShow} data-sport={sport}>
+    <div class="flex animate-pulse items-center gap-3 bg-buff-card p-3" data-pl-sk>
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex flex-col items-center gap-1" style="min-width:80px">
+        <div class="h-4 w-20 rounded bg-buff-border/30"></div>
+        <div class="h-3 w-12 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+      </div>
+      <div class="ml-1">
+        <div class="h-4 w-4 rounded bg-buff-border/30"></div>
+      </div>
+    </div>
+    <div class="flex animate-pulse items-center gap-3 bg-buff-card p-3" data-pl-sk>
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex flex-col items-center gap-1" style="min-width:80px">
+        <div class="h-4 w-20 rounded bg-buff-border/30"></div>
+        <div class="h-3 w-12 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+      </div>
+      <div class="ml-1">
+        <div class="h-4 w-4 rounded bg-buff-border/30"></div>
+      </div>
+    </div>
+    <div class="flex animate-pulse items-center gap-3 bg-buff-card p-3" data-pl-sk>
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex flex-col items-center gap-1" style="min-width:80px">
+        <div class="h-4 w-20 rounded bg-buff-border/30"></div>
+        <div class="h-3 w-12 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+      </div>
+      <div class="ml-1">
+        <div class="h-4 w-4 rounded bg-buff-border/30"></div>
+      </div>
+    </div>
+    <div class="flex animate-pulse items-center gap-3 bg-buff-card p-3" data-pl-sk>
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex flex-col items-center gap-1" style="min-width:80px">
+        <div class="h-4 w-20 rounded bg-buff-border/30"></div>
+        <div class="h-3 w-12 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+      </div>
+      <div class="ml-1">
+        <div class="h-4 w-4 rounded bg-buff-border/30"></div>
+      </div>
+    </div>
+    <div class="flex animate-pulse items-center gap-3 bg-buff-card p-3" data-pl-sk>
+      <div class="flex min-w-0 flex-1 items-center gap-2">
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex flex-col items-center gap-1" style="min-width:80px">
+        <div class="h-4 w-20 rounded bg-buff-border/30"></div>
+        <div class="h-3 w-12 rounded bg-buff-border/30"></div>
+      </div>
+      <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
+        <div class="h-4 w-24 rounded bg-buff-border/30"></div>
+        <div class="h-8 w-8 rounded-full bg-buff-border/30"></div>
+      </div>
+      <div class="ml-1">
+        <div class="h-4 w-4 rounded bg-buff-border/30"></div>
+      </div>
+    </div>
   </div>
 
   <div class="mt-4 text-center" id="pl-show-more-wrap">
-    <div id="pl-show-more-skeleton" class="inline-block h-10 w-48 rounded-lg bg-buff-border/30 animate-pulse"></div>
     <button
       id="pl-show-more"
-      style="display:none"
-      class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
+      class="inline-flex items-center justify-center gap-2 rounded-lg border-0 bg-buff-border/30 px-6 py-3 text-sm font-bold text-transparent animate-pulse"
     >
       ⏷ Show More
     </button>
@@ -36,12 +114,10 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
   {viewAllMode === 'link' && (
     <div class="mt-4 text-center" id="pl-view-all-wrap">
-      <div id="pl-view-all-skeleton" class="inline-block h-10 w-48 rounded-lg bg-buff-border/30 animate-pulse"></div>
       <a
         id="pl-view-all-link"
-        style="display:none"
         href="/schedule"
-        class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
+        class="inline-flex items-center justify-center gap-2 rounded-lg border-0 bg-buff-border/30 px-6 py-3 text-sm font-bold text-transparent animate-pulse"
       >
         → Show all matches
       </a>
@@ -57,9 +133,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var heading = document.getElementById('pl-heading');
     if (!heading) return;
     var showMoreBtn = document.getElementById('pl-show-more');
-    var showMoreSkeleton = document.getElementById('pl-show-more-skeleton');
     var viewAllLink = document.getElementById('pl-view-all-link');
-    var viewAllSkeleton = document.getElementById('pl-view-all-skeleton');
 
     var initialShow = parseInt(grid.getAttribute('data-initial')) || 5;
     var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
@@ -154,8 +228,22 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     }
 
     function hideSkeletons() {
-      if (showMoreSkeleton) showMoreSkeleton.style.display = 'none';
-      if (viewAllSkeleton) viewAllSkeleton.style.display = 'none';
+      var sks = grid.querySelectorAll('[data-pl-sk]');
+      for (var i = 0; i < sks.length; i++) {
+        sks[i].style.display = 'none';
+      }
+    }
+
+    function setSkeletonBtn(el, on) {
+      if (!el) return;
+      if (on) {
+        el.className = 'inline-flex items-center justify-center gap-2 rounded-lg border-0 bg-buff-border/30 px-6 py-3 text-sm font-bold text-transparent animate-pulse';
+      } else {
+        var isLink = el.tagName === 'A';
+        el.className = isLink
+          ? 'inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90'
+          : 'inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold';
+      }
     }
 
     heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW <span class="text-sm font-normal text-buff-muted">Loading...</span>';
@@ -166,7 +254,6 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         var list = Array.isArray(data) ? data : [];
 
         if (list.length === 0) {
-          hideSkeletons();
           section.style.display = 'none';
           return;
         }
@@ -183,20 +270,20 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         }
 
         if (liveMatches.length === 0) {
-          hideSkeletons();
           section.style.display = 'none';
           return;
         }
 
         heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
 
+        // Build real cards
         var cardEls = liveMatches.map(function (m) {
           var div = document.createElement('div');
           div.innerHTML = buildCard(m);
           return div.firstChild;
         });
 
-        // Render cards
+        // Replace grid contents
         grid.innerHTML = '';
         for (var i = 0; i < cardEls.length; i++) {
           grid.appendChild(cardEls[i]);
@@ -209,10 +296,10 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
         var hiddenCount = cardEls.length - show;
 
-        // Hide skeletons
-        hideSkeletons();
+        // Update button/link states
+        setSkeletonBtn(showMoreBtn, false);
+        if (viewAllLink) setSkeletonBtn(viewAllLink, false);
 
-        // Show button only if more cards exist
         if (hiddenCount > 0 && showMoreBtn) {
           showMoreBtn.style.display = 'inline-flex';
           showMoreBtn.addEventListener('click', function () {
@@ -230,10 +317,12 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
               viewAllLink.style.display = 'inline-flex';
             }
           });
+        } else {
+          if (showMoreBtn) showMoreBtn.style.display = 'none';
+          if (viewAllLink) viewAllLink.style.display = 'none';
         }
       })
       .catch(function () {
-        hideSkeletons();
         section.style.display = 'none';
       });
   })();
