@@ -138,6 +138,10 @@ if (grid) {
       });
       btn.classList.add('active');
       currentIndex = idx;
+      var url = new URL(window.location.href);
+      url.searchParams.set('source', s.source);
+      url.searchParams.set('stream', s.streamNo);
+      history.replaceState(null, '', url.toString());
     }
   });
 }
