@@ -50,7 +50,7 @@ function html(body) {
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>Stream</title>
+<title>Buffstreams Backup</title>
 <style>${STYLES}</style>
 </head>
 <body>
@@ -92,7 +92,7 @@ ${langBadge}
 
   return html(`<div class="header">
 <div class="header-inner">
-<span class="header-title">AlphaStreams</span>
+<span class="header-title">Buffstreams Backup</span>
 </div>
 </div>
 <div class="main">
