@@ -23,9 +23,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     <div class="pl-skeleton"><div class="h-11 w-full rounded bg-buff-border/30 animate-pulse"></div></div>
   </div>
 
-  <div class="mt-4 text-center" id="pl-show-more-wrap" style="display:none">
+  <div class="mt-4 text-center" id="pl-show-more-wrap">
+    <div id="pl-show-more-skeleton" class="inline-block h-10 w-48 rounded-lg bg-buff-border/30 animate-pulse"></div>
     <button
       id="pl-show-more"
+      style="display:none"
       class="inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold"
     >
       ⏷ Show More
@@ -33,8 +35,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
   </div>
 
   {viewAllMode === 'link' && (
-    <div class="mt-4 text-center" id="pl-view-all-wrap" style="display:none">
+    <div class="mt-4 text-center" id="pl-view-all-wrap">
+      <div id="pl-view-all-skeleton" class="inline-block h-10 w-48 rounded-lg bg-buff-border/30 animate-pulse"></div>
       <a
+        id="pl-view-all-link"
+        style="display:none"
         href="/schedule"
         class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-6 py-3 text-sm font-bold text-black no-underline transition hover:opacity-90"
       >
@@ -52,15 +57,15 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var heading = document.getElementById('pl-heading');
     if (!heading) return;
     var showMoreBtn = document.getElementById('pl-show-more');
-    var showMoreWrap = document.getElementById('pl-show-more-wrap');
-    var viewAllWrap = document.getElementById('pl-view-all-wrap');
+    var showMoreSkeleton = document.getElementById('pl-show-more-skeleton');
+    var viewAllLink = document.getElementById('pl-view-all-link');
+    var viewAllSkeleton = document.getElementById('pl-view-all-skeleton');
 
     var initialShow = parseInt(grid.getAttribute('data-initial')) || 5;
     var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
     var sport = grid.getAttribute('data-sport') || '';
 
     var apiUrl = 'https://stream.alphastreams.fit/api/live-now' + (sport ? '?sport=' + sport : '');
-    var cardEls = [];
 
     function escapeHtml(text) {
       if (!text && text !== 0) return '';
@@ -148,40 +153,9 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         '</a>';
     }
 
-    function renderCards() {
-      grid.innerHTML = '';
-      for (var i = 0; i < cardEls.length; i++) {
-        grid.appendChild(cardEls[i]);
-      }
-      var show = Math.min(cardEls.length, initialShow);
-      for (var i = 0; i < cardEls.length; i++) {
-        if (i < show) {
-          cardEls[i].classList.remove('pl-hidden');
-        } else {
-          cardEls[i].classList.add('pl-hidden');
-        }
-      }
-      var hiddenCount = cardEls.length - show;
-      showMoreWrap.style.display = hiddenCount > 0 ? 'block' : 'none';
-      viewAllWrap.style.display = 'none';
-    }
-
-    function onShowMore() {
-      var hidden = [];
-      for (var i = 0; i < cardEls.length; i++) {
-        if (cardEls[i].classList.contains('pl-hidden')) hidden.push(cardEls[i]);
-      }
-      var toShow = Math.min(hidden.length, step);
-      for (var i = 0; i < toShow; i++) {
-        hidden[i].classList.remove('pl-hidden');
-      }
-      var still = hidden.length - toShow;
-      if (still <= 0) {
-        showMoreWrap.style.display = 'none';
-      }
-      if (still > 0 && viewAllWrap) {
-        viewAllWrap.style.display = 'block';
-      }
+    function hideSkeletons() {
+      if (showMoreSkeleton) showMoreSkeleton.style.display = 'none';
+      if (viewAllSkeleton) viewAllSkeleton.style.display = 'none';
     }
 
     heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW <span class="text-sm font-normal text-buff-muted">Loading...</span>';
@@ -192,11 +166,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         var list = Array.isArray(data) ? data : [];
 
         if (list.length === 0) {
+          hideSkeletons();
           section.style.display = 'none';
           return;
         }
 
-        // Keep only live matches
         var liveMatches = [];
         var liveCount = 0;
         for (var i = 0; i < list.length; i++) {
@@ -209,23 +183,61 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         }
 
         if (liveMatches.length === 0) {
+          hideSkeletons();
           section.style.display = 'none';
           return;
         }
 
         heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
 
-        cardEls = liveMatches.map(function (m) {
+        var cardEls = liveMatches.map(function (m) {
           var div = document.createElement('div');
           div.innerHTML = buildCard(m);
           return div.firstChild;
         });
 
-        renderCards();
+        // Render cards
+        grid.innerHTML = '';
+        for (var i = 0; i < cardEls.length; i++) {
+          grid.appendChild(cardEls[i]);
+        }
 
-        if (showMoreBtn) showMoreBtn.addEventListener('click', onShowMore);
+        var show = Math.min(cardEls.length, initialShow);
+        for (var i = 0; i < cardEls.length; i++) {
+          if (i < show) {
+            cardEls[i].classList.remove('pl-hidden');
+          } else {
+            cardEls[i].classList.add('pl-hidden');
+          }
+        }
+
+        var hiddenCount = cardEls.length - show;
+
+        // Hide skeletons
+        hideSkeletons();
+
+        // Show button only if more cards exist
+        if (hiddenCount > 0 && showMoreBtn) {
+          showMoreBtn.style.display = 'inline-flex';
+          showMoreBtn.addEventListener('click', function () {
+            var hidden = [];
+            for (var i = 0; i < cardEls.length; i++) {
+              if (cardEls[i].classList.contains('pl-hidden')) hidden.push(cardEls[i]);
+            }
+            var toShow = Math.min(hidden.length, step);
+            for (var i = 0; i < toShow; i++) {
+              hidden[i].classList.remove('pl-hidden');
+            }
+            var still = hidden.length - toShow;
+            showMoreBtn.style.display = 'none';
+            if (still > 0 && viewAllLink) {
+              viewAllLink.style.display = 'inline-flex';
+            }
+          });
+        }
       })
       .catch(function () {
+        hideSkeletons();
         section.style.display = 'none';
       });
   })();
