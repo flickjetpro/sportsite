@@ -141,7 +141,8 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
     var sport = grid.getAttribute('data-sport') || '';
 
-    var apiUrl = 'https://stream.alphastreams.fit/api/live-now' + (sport ? '?sport=' + sport : '');
+    var apiBase = 'https://stream.alphastreams.fit/api/live-now';
+    var sepQ = sport ? '&' : '?';
 
     var TWENTY_FOUR_HOURS = 86400000;
     var THREE_HOURS = 3 * 60 * 60 * 1000;
@@ -168,13 +169,6 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
     function getDateStr(date) {
       return new Date(date).toLocaleDateString('en-US', { timeZone: 'America/New_York' });
-    }
-
-    function getMatchPriority(date, viewers, popular) {
-      if (date <= 0) return 0;
-      if (viewers > 0 && date <= Date.now() + THREE_HOURS) return 1;
-      if (popular) return 2;
-      return 3;
     }
 
     function getStatus(date, viewers) {
@@ -242,44 +236,71 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
     heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW <span class="text-sm font-normal text-buff-muted">Loading...</span>';
 
-    fetch(apiUrl)
-      .then(function (r) { return r.json(); })
-      .then(function (data) {
-        var list = Array.isArray(data) ? data : [];
+    function filter247(m) {
+      if (!m.date || m.date <= 0) return false;
+      if (Date.now() - m.date > TWENTY_FOUR_HOURS) return false;
+      if (TWENTY_FOUR_SEVEN_RE.test(m.title)) return false;
+      return true;
+    }
 
-        // Filter out 24/7 channels
-        list = list.filter(function (m) {
-          if (!m.date || m.date <= 0) return false;
-          if (Date.now() - m.date > TWENTY_FOUR_HOURS) return false;
-          if (TWENTY_FOUR_SEVEN_RE.test(m.title)) return false;
-          return true;
-        });
+    var sportParam = sport ? '?sport=' + sport : '';
+    var todayUrl = apiBase + sportParam + sepQ + 'scope=all-today';
+    var popularUrl = apiBase + sportParam + sepQ + 'scope=live-popular';
+    var liveUrl = apiBase + sportParam + sepQ + 'scope=live';
 
-        if (list.length === 0) {
-          section.style.display = 'none';
-          return;
-        }
+    Promise.all([fetch(todayUrl), fetch(popularUrl), fetch(liveUrl)])
+      .then(function (responses) {
+        return Promise.all(responses.map(function (r) { return r.json(); }));
+      })
+      .then(function (results) {
+        var todayData = Array.isArray(results[0]) ? results[0] : [];
+        var popularData = Array.isArray(results[1]) ? results[1] : [];
+        var liveData = Array.isArray(results[2]) ? results[2] : [];
 
-        var liveMatches = [];
-        for (var i = 0; i < list.length; i++) {
-          var m = list[i];
-          var priority = getMatchPriority(m.date, m.totalViewers, m.popular);
-          if (priority > 0) {
-            m._priority = priority;
-            liveMatches.push(m);
+        todayData = todayData.filter(filter247);
+        popularData = popularData.filter(filter247);
+        liveData = liveData.filter(filter247);
+
+        // Tier 1: from today, viewers > 0 && date <= now + 3h
+        var tier1Ids = {};
+        var tier1 = [];
+        var now = Date.now();
+        for (var i = 0; i < todayData.length; i++) {
+          var m = todayData[i];
+          if (m.totalViewers > 0 && m.date <= now + THREE_HOURS) {
+            tier1Ids[m.id] = true;
+            tier1.push(m);
           }
         }
+        tier1.sort(function (a, b) { return (b.totalViewers || 0) - (a.totalViewers || 0); });
+
+        // Tier 2: from live/popular, exclude already in Tier 1
+        var tier2Ids = {};
+        var tier2 = [];
+        for (var i = 0; i < popularData.length; i++) {
+          var m = popularData[i];
+          if (tier1Ids[m.id]) continue;
+          tier2Ids[m.id] = true;
+          tier2.push(m);
+        }
+        tier2.sort(function (a, b) { return a.date - b.date; });
+
+        // Tier 3: from live, exclude already in Tier 1 or Tier 2
+        var tier3 = [];
+        for (var i = 0; i < liveData.length; i++) {
+          var m = liveData[i];
+          if (tier1Ids[m.id]) continue;
+          if (tier2Ids[m.id]) continue;
+          tier3.push(m);
+        }
+        tier3.sort(function (a, b) { return a.date - b.date; });
+
+        var liveMatches = tier1.concat(tier2).concat(tier3);
 
         if (liveMatches.length === 0) {
           section.style.display = 'none';
           return;
         }
-
-        liveMatches.sort(function (a, b) {
-          if (a._priority !== b._priority) return a._priority - b._priority;
-          if (a._priority === 1) return (b.totalViewers || 0) - (a.totalViewers || 0);
-          return a.date - b.date;
-        });
 
         var liveCount = liveMatches.length;
         heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');

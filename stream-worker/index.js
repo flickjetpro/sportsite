@@ -181,18 +181,31 @@ export default {
     if (path === '/api/live-now') {
       const sport = url.searchParams.get('sport') || ''
       const category = sport ? (SPORT_CATEGORIES[sport] || '') : (url.searchParams.get('category') || '')
+      const scope = url.searchParams.get('scope') || ''
+
+      const SCOPE_URLS = {
+        'all-today': 'https://streamed.pk/api/matches/all-today',
+        'live-popular': 'https://streamed.pk/api/matches/live/popular',
+        'live': 'https://streamed.pk/api/matches/live',
+      }
+
       try {
-        const [live, today] = await Promise.all([
-          fetch('https://streamed.pk/api/matches/live').then(r => r.json()).catch(() => []),
-          fetch('https://streamed.pk/api/matches/all-today').then(r => r.json()).catch(() => []),
-        ])
-        const raw = [...(Array.isArray(live) ? live : []), ...(Array.isArray(today) ? today : [])]
-        const seen = new Set()
-        const matches = []
-        for (const m of raw) {
-          if (!seen.has(m.id)) { seen.add(m.id); matches.push(m) }
+        let raw = []
+        if (scope && SCOPE_URLS[scope]) {
+          const data = await fetch(SCOPE_URLS[scope]).then(r => r.json()).catch(() => [])
+          raw = Array.isArray(data) ? data : []
+        } else {
+          const [live, today] = await Promise.all([
+            fetch('https://streamed.pk/api/matches/live').then(r => r.json()).catch(() => []),
+            fetch('https://streamed.pk/api/matches/all-today').then(r => r.json()).catch(() => []),
+          ])
+          const combined = [...(Array.isArray(live) ? live : []), ...(Array.isArray(today) ? today : [])]
+          const seen = new Set()
+          for (const m of combined) {
+            if (!seen.has(m.id)) { seen.add(m.id); raw.push(m) }
+          }
         }
-        const filtered = category ? matches.filter(m => m.category === category) : matches
+        const filtered = category ? raw.filter(m => m.category === category) : raw
 
         // Fetch streams for all sources concurrently
         const streamMap = {}
