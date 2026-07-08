@@ -85,7 +85,7 @@ async function main() {
   if (todayCandidates.length > 0) {
     console.log(`  Fetching viewer counts for ${todayCandidates.length} today matches...`);
     const enriched = await processBatch(todayCandidates, fetchMatchViewers);
-    const withViewers = enriched.filter((m) => m.totalViewers > 0);
+    const withViewers = enriched.filter((m) => m.totalViewers > 0).map((m) => ({ ...m, _liveSource: true }));
     if (withViewers.length > 0) {
       liveMatches = [...liveMatches, ...withViewers];
       writeFileSync(join(DATA_DIR, 'matches-live.json'), JSON.stringify(liveMatches, null, 2));

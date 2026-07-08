@@ -23,7 +23,7 @@ export async function getStaticPaths() {
 
 const { match } = Astro.props as { match: APIMatch };
 const premiumMatch = mapToPremiumSport(match);
-const status = getMatchStatus(match);
+const status = match._liveSource ? 'live' : getMatchStatus(match);
 const statusColors: Record<string, string> = {
   live: 'text-buff-live',
   upcoming: 'text-buff-gold',
