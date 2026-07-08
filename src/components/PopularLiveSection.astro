@@ -189,7 +189,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     }
 
     function buildCard(m) {
-      var status = getStatus(m.date, m.totalViewers);
+      var status = m._displayLive ? 'live' : getStatus(m.date, m.totalViewers);
       var home = m.teams && m.teams.home && m.teams.home.name ? m.teams.home : null;
       var away = m.teams && m.teams.away && m.teams.away.name ? m.teams.away : null;
       var homeName = home ? home.name : (m.title.split(' vs ')[0] || m.title);
@@ -281,6 +281,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
           var m = popularData[i];
           if (tier1Ids[m.id]) continue;
           tier2Ids[m.id] = true;
+          m._displayLive = true;
           tier2.push(m);
         }
         tier2.sort(function (a, b) { return a.date - b.date; });
@@ -291,6 +292,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
           var m = liveData[i];
           if (tier1Ids[m.id]) continue;
           if (tier2Ids[m.id]) continue;
+          m._displayLive = true;
           tier3.push(m);
         }
         tier3.sort(function (a, b) { return a.date - b.date; });
