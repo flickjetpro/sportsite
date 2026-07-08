@@ -144,6 +144,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var apiUrl = 'https://stream.alphastreams.fit/api/live-now' + (sport ? '?sport=' + sport : '');
 
     var TWENTY_FOUR_HOURS = 86400000;
+    var THREE_HOURS = 3 * 60 * 60 * 1000;
     var TWENTY_FOUR_SEVEN_RE = /(24\/7|24 hour|247|always live)/i;
 
     function escapeHtml(text) {
@@ -167,6 +168,13 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
     function getDateStr(date) {
       return new Date(date).toLocaleDateString('en-US', { timeZone: 'America/New_York' });
+    }
+
+    function getMatchPriority(date, viewers, popular) {
+      if (date <= 0) return 0;
+      if (viewers > 0 && date <= Date.now() + THREE_HOURS) return 1;
+      if (popular) return 2;
+      return 3;
     }
 
     function getStatus(date, viewers) {
@@ -241,8 +249,10 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
         // Filter out 24/7 channels
         list = list.filter(function (m) {
-          return Date.now() - m.date <= TWENTY_FOUR_HOURS
-              && !TWENTY_FOUR_SEVEN_RE.test(m.title);
+          if (!m.date || m.date <= 0) return false;
+          if (Date.now() - m.date > TWENTY_FOUR_HOURS) return false;
+          if (TWENTY_FOUR_SEVEN_RE.test(m.title)) return false;
+          return true;
         });
 
         if (list.length === 0) {
@@ -251,12 +261,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         }
 
         var liveMatches = [];
-        var liveCount = 0;
         for (var i = 0; i < list.length; i++) {
           var m = list[i];
-          var st = getStatus(m.date, m.totalViewers);
-          if (st === 'live') {
-            liveCount++;
+          var priority = getMatchPriority(m.date, m.totalViewers, m.popular);
+          if (priority > 0) {
+            m._priority = priority;
             liveMatches.push(m);
           }
         }
@@ -266,6 +275,13 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
           return;
         }
 
+        liveMatches.sort(function (a, b) {
+          if (a._priority !== b._priority) return a._priority - b._priority;
+          if (a._priority === 1) return (b.totalViewers || 0) - (a.totalViewers || 0);
+          return a.date - b.date;
+        });
+
+        var liveCount = liveMatches.length;
         heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
 
         // Build real cards

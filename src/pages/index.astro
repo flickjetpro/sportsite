@@ -22,7 +22,7 @@ const allMatches = loadMatchesFromData([...liveData, ...todayData]);
 const liveIds = new Set(allMatches.filter((m) => m._liveSource).map((m) => m.id));
 const now = Date.now();
 const todayStr = formatDateParam(now);
-const scheduleMatches = allMatches.filter((m) => !liveIds.has(m.id) && m.date > now && getMatchDateStr(m) === todayStr);
+const scheduleMatches = allMatches.filter((m) => !liveIds.has(m.id) && m.date > now && m.date <= now + 24 * 60 * 60 * 1000);
 const futureMatches = allMatches.filter((m) => !liveIds.has(m.id) && m.date > now && getMatchDateStr(m) !== todayStr);
 const todayNonLive = allMatches.filter((m) => !liveIds.has(m.id) && getMatchDateStr(m) === todayStr);
 const futureSportNames = new Set<string>();

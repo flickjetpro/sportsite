@@ -2,6 +2,7 @@ const TWENTY_FOUR_HOURS = 86_400_000;
 const TWENTY_FOUR_SEVEN_RE = /(24\/7|24 hour|247|always live)/i;
 
 export function is247Channel(match: { date: number; title: string }): boolean {
+  if (match.date <= 0) return true;
   const age = Date.now() - match.date;
   if (age > TWENTY_FOUR_HOURS) return true;
   if (TWENTY_FOUR_SEVEN_RE.test(match.title)) return true;

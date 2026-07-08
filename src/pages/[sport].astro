@@ -32,10 +32,11 @@ const allMatches = [...liveData, ...todayData]
   .map((m) => mapToPremiumSport(m))
   .filter((m) => m.premiumSport === sport);
 
+const liveIds = new Set(liveData.map((m) => m.id));
 const dateParam = Astro.url.searchParams.get('date');
 const filteredMatches = dateParam ? filterByDate(allMatches, dateParam) : allMatches;
 const now = Date.now();
-const scheduleFiltered = filteredMatches.filter((m) => m.date > now);
+const scheduleFiltered = filteredMatches.filter((m) => !liveIds.has(m.id) && m.date > now);
 
 const seoDescription = getSportSEO(sport);
 ---
