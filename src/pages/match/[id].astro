@@ -99,7 +99,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
         </span>
       </div>
 
-      {status !== 'finished' && (
+      {status === 'upcoming' && (
         <Countdown matchDate={match.date} />
       )}
     </div>
