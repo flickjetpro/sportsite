@@ -1,191 +1,141 @@
 [
   {
-    "id": "cleveland-guardians-vs-texas-rangers-2388175",
-    "title": "Cleveland Guardians vs Texas Rangers",
-    "category": "baseball",
-    "date": 1782925800000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTtw5kAJqWCEImeuFFs8aEHCQhtIOcAAMIbiD46YuECks6rUgsCQU+w2fRRgVKLh-L0ssryZaMA8xUQggA.webp",
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Cleveland Guardians",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkuhDwwSMABN1CtCG4hNICCBggUh4yBLnTBCkz4ouYMmvrzRzprTCuxohBAA"
-      },
-      "away": {
-        "name": "Texas Rangers",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpm6QQKMLwAM7ENxAlcekCZQhE+wxMIxgTPii5gy8IvNGOmtMM7GiIQA"
-      }
-    },
-    "sources": [
-      {
-        "source": "admin",
-        "id": "ppv-texas-rangers-vs-cleveland-guardians"
-      },
-      {
-        "source": "echo",
-        "id": "cleveland-guardians-vs-texas-rangers-baseball-179310"
-      },
-      {
-        "source": "golf",
-        "id": "23511"
-      }
-    ],
-    "totalViewers": 183,
-    "_liveSource": true
-  },
-  {
-    "id": "forge-vs-vancouver-fc-2427367",
-    "title": "Forge vs Vancouver FC",
+    "id": "zir--vs-torpedo-kutaisi-2491803",
+    "title": "Zirə vs Torpedo Kutaisi",
     "category": "football",
-    "date": 1782925200000,
+    "date": 1783526400000,
+    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAY29lBWSUYAUwVmDTAE5p5gJhqDh61hh1OPgBDYLKQRcOJBt15cyAE1LBCETI3BiOzNCFngcvEGKQhdWECd3STIRKcsskFLCLmMUYVSh6vyjanPf5WwGCu4mIQQA.webp",
     "popular": false,
     "teams": {
       "home": {
-        "name": "Forge",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkuhAQQIMQAYQMUCG4gS63IZB8T6gCaGCFJnxRcwZeEXmjHTWmGdjREIA"
+        "name": "Zirə",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkh3o5eaEHzAATENxAkQRmCBOHDKTXoIUmfFFzBl4ReaIdNaYJ2NEQgA"
       },
       "away": {
-        "name": "Vancouver FC",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAksJ6wQAEzDrQIbiD76QMXSEQ4DemAQpM+KLmDLwi80faa0wjsaIhA"
+        "name": "Torpedo Kutaisi",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpM6J4YFGxDcQJEIggg+IE8b0ATEOYIUmfTWzBl19eaM1NaYJ2NEQgA"
       }
     },
     "sources": [
       {
         "source": "echo",
-        "id": "forge-vs-vancouver-fc-football-1517303"
-      }
-    ],
-    "totalViewers": 11,
-    "_liveSource": true
-  },
-  {
-    "id": "baltimore-orioles-vs-chicago-white-sox-2388177",
-    "title": "Baltimore Orioles vs Chicago White Sox",
-    "category": "baseball",
-    "date": 1782923700000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTtw5kAJqWCEImeuFFs8rPkTJwsYECG4g+ekDFwgU54xfNMkFPsNn0UYFSi6vy9LLPdNaYK5iohBAA.webp",
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Baltimore Orioles",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkphTRVfMABMwJENxAQQifTl18QMEFZAEKTPii47y9eaMdNaYHWNEQgA"
-      },
-      "away": {
-        "name": "Chicago White Sox",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkphRhVSEKPogQ3Tfoi6QhmDrMQCFJnxRcwZeEXmjbTWmHtitQA"
-      }
-    },
-    "sources": [
-      {
-        "source": "admin",
-        "id": "ppv-chicago-white-sox-vs-baltimore-orioles"
-      },
-      {
-        "source": "echo",
-        "id": "baltimore-orioles-vs-chicago-white-sox-baseball-179312"
-      },
-      {
-        "source": "golf",
-        "id": "23510"
-      }
-    ],
-    "totalViewers": 451,
-    "_liveSource": true
-  },
-  {
-    "id": "england-vs-dr-congo-2503391",
-    "title": "England vs DR Congo",
-    "category": "football",
-    "date": 1782921600000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAY29lBWSUYAUwVmDTAE5p5gJhqDh61hh1OPgBDYLKQRcOJBt15cyAE1LBCETI3BiOzNCGogx4WrxoheILCFNbpIRBEsgUtlkgpYRcxijCqUPD+UbU5XviswGAe4mIQQA.webp",
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "England",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpgAmwFSDJR6ibiD64QGvRo0HEKAhSZ8UXMGXhF5ou01pgHY0RCA"
-      },
-      "away": {
-        "name": "DR Congo",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpkQgQopMCRg+IbiF041uiCBQgYuXAQpM+KLmDLwi80Q6a0wTsaIhA"
-      }
-    },
-    "sources": [
-      {
-        "source": "admin",
-        "id": "ppv-england-vs-congo-dr"
-      },
-      {
-        "source": "echo",
-        "id": "england-vs-congo-dr-football-1567307"
-      },
-      {
-        "source": "golf",
-        "id": "23482"
-      }
-    ],
-    "totalViewers": 162452,
-    "_liveSource": true
-  },
-  {
-    "id": "england-vs-india-first-t20-international-cricket-1",
-    "title": "England vs India",
-    "category": "other",
-    "date": 1782921600000,
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "England",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1gATChUiNiwMOPQjcRLAnQgiIGPXIMAxs3E94IqtwJdWYMLnxmgA"
-      },
-      "away": {
-        "name": "India",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1HiEwAAzdI-IsDCT0Y3BMnx0ICCBggAxiBD1yDdc0k94YqtwJdWYMLnw2gA"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "england-vs-india-first-t20-international-cricket-1"
-      }
-    ],
-    "totalViewers": 1019,
-    "_liveSource": true
-  },
-  {
-    "id": "gold-coast-suns-vs-collingwood-magpies-australian-football-3482",
-    "title": "Gold Coast Suns vs Collingwood Magpies",
-    "category": "afl",
-    "date": 1782914400000,
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Gold Coast Suns",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREAGN65BgqzCe8MVXGEGrMGFz5DQA"
-      },
-      "away": {
-        "name": "Collingwood Magpies",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQEeuQYBjZsJ7wxVcYQaswYXPn1A"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "gold-coast-suns-vs-collingwood-magpies-australian-football-3482"
+        "id": "zira-vs-torpedo-kutaisi-football-1554414"
       }
     ],
     "totalViewers": 0,
     "_liveSource": true
   },
   {
-    "id": "port-adelaide-power-vs-north-melbourne-kangaroos-australian-football-3485",
-    "title": "Port Adelaide Power vs North Melbourne Kangaroos",
+    "id": "flora-tallinn-vs-saburtalo-football-1554363",
+    "title": "Flora Tallinn vs Saburtalo",
+    "category": "football",
+    "date": 1783526400000,
+    "popular": false,
+    "teams": {
+      "home": {
+        "name": "Flora Tallinn",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1gATChUiNiwMOPQjcRLAnQh+IZQGN65Bmqzie8EVW4EurMGFz5zQA"
+      },
+      "away": {
+        "name": "Saburtalo",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1gATChUiNiwMOPQjcRLAnQhE2EDBBM65BgGNm4nvBFVuBLqzBhc+S0A"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "flora-tallinn-vs-saburtalo-football-1554363"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "kairat-almaty-vs-sutjeska-2491733",
+    "title": "Kairat Almaty vs Sutjeska",
+    "category": "football",
+    "date": 1783522800000,
+    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAY29lBWSUYAUwVmDTAE5p5gJhqDh61hh1OPgBDYLKQRcOJBt15cyAE1LBCETI3BiOzNCEGMADCBCsEIXpr1GQ004iwmYLJBSwi5jFGFUoeb8o2pyP+VmAwN3ExCCA.webp",
+    "popular": false,
+    "teams": {
+      "home": {
+        "name": "Kairat Almaty",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpnhgkIMihAztGkHxBacIPTH0mCFJnxRcwZVfXmjbTWmHtjREIA"
+      },
+      "away": {
+        "name": "Sutjeska",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkhyT8w4biHhgkITSRAATEAZQgYWkGYggrhGMCZ8UXMGW315ol01pg3YqIQQA"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "kairat-almaty-vs-sutjeska-football-1554365"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "st-kilda-saints-vs-port-adelaide-power-australian-football-3496",
+    "title": "St Kilda Saints vs Port Adelaide Power",
     "category": "afl",
-    "date": 1782914400000,
+    "date": 1783519200000,
     "popular": true,
     "teams": {
       "home": {
+        "name": "St Kilda Saints",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREFLrkGAY2bCe8MVXGEGrMGFz5DQA"
+      },
+      "away": {
         "name": "Port Adelaide Power",
         "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQRGfXIMAxs2E94YquMINWYMLnwGgA"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "st-kilda-saints-vs-port-adelaide-power-australian-football-3496"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "western-bulldogs-vs-west-coast-eagles-australian-football-3497",
+    "title": "Western Bulldogs vs West Coast Eagles",
+    "category": "afl",
+    "date": 1783519200000,
+    "popular": true,
+    "teams": {
+      "home": {
+        "name": "Western Bulldogs",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREAPrkGAY2bCe8MVXGEGrMGFz5DQA"
+      },
+      "away": {
+        "name": "West Coast Eagles",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQRENnrkGAY2bCe8MVXGEGrMGFz5DQA"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "western-bulldogs-vs-west-coast-eagles-australian-football-3497"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "collingwood-magpies-vs-north-melbourne-kangaroos-australian-football-3492",
+    "title": "Collingwood Magpies vs North Melbourne Kangaroos",
+    "category": "afl",
+    "date": 1783519200000,
+    "popular": true,
+    "teams": {
+      "home": {
+        "name": "Collingwood Magpies",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQEeuQYBjZsJ7wxVcYQaswYXPn1A"
       },
       "away": {
         "name": "North Melbourne Kangaroos",
@@ -195,92 +145,17 @@
     "sources": [
       {
         "source": "echo",
-        "id": "port-adelaide-power-vs-north-melbourne-kangaroos-australian-football-3485"
+        "id": "collingwood-magpies-vs-north-melbourne-kangaroos-australian-football-3492"
       }
     ],
     "totalViewers": 0,
     "_liveSource": true
   },
   {
-    "id": "essendon-bombers-vs-st-kilda-saints-australian-football-3480",
-    "title": "Essendon Bombers vs St Kilda Saints",
+    "id": "greater-western-sydney-giants-vs-geelong-cats-australian-football-3494",
+    "title": "Greater Western Sydney Giants vs Geelong Cats",
     "category": "afl",
-    "date": 1782914400000,
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Essendon Bombers",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQ2euQYBjZsJ7wxVcYQaswYXPn1A"
-      },
-      "away": {
-        "name": "St Kilda Saints",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREFLrkGAY2bCe8MVXGEGrMGFz5DQA"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "essendon-bombers-vs-st-kilda-saints-australian-football-3480"
-      }
-    ],
-    "totalViewers": 0,
-    "_liveSource": true
-  },
-  {
-    "id": "richmond-tigers-vs-carlton-blues-australian-football-3486",
-    "title": "Richmond Tigers vs Carlton Blues",
-    "category": "afl",
-    "date": 1782914400000,
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Richmond Tigers",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREEzrkGAY2bCe8MVXGEGrMGFz5DQA"
-      },
-      "away": {
-        "name": "Carlton Blues",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQUuuQYBjZsJ7wxVcYQaswYXPn1A"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "richmond-tigers-vs-carlton-blues-australian-football-3486"
-      }
-    ],
-    "totalViewers": 0,
-    "_liveSource": true
-  },
-  {
-    "id": "sydney-swans-vs-western-bulldogs-australian-football-3487",
-    "title": "Sydney Swans vs Western Bulldogs",
-    "category": "afl",
-    "date": 1782914400000,
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Sydney Swans",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREBHrkGAY2bCe8MVXGEGrMGFz5DQA"
-      },
-      "away": {
-        "name": "Western Bulldogs",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREAPrkGAY2bCe8MVXGEGrMGFz5DQA"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "sydney-swans-vs-western-bulldogs-australian-football-3487"
-      }
-    ],
-    "totalViewers": 0,
-    "_liveSource": true
-  },
-  {
-    "id": "greater-western-sydney-giants-vs-fremantle-dockers-australian-football-3483",
-    "title": "Greater Western Sydney Giants vs Fremantle Dockers",
-    "category": "afl",
-    "date": 1782914400000,
+    "date": 1783519200000,
     "popular": true,
     "teams": {
       "home": {
@@ -288,64 +163,114 @@
         "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQRECHrkGAY2bCe8MVXGEGrMGFz5DQA"
       },
       "away": {
-        "name": "Fremantle Dockers",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQA+uQYBjZsJ7wxVcYQaswYXPn1A"
+        "name": "Geelong Cats",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQAY3rkGcrMJ7wxVcYQaswYXPn1A"
       }
     },
     "sources": [
       {
         "source": "echo",
-        "id": "greater-western-sydney-giants-vs-fremantle-dockers-australian-football-3483"
+        "id": "greater-western-sydney-giants-vs-geelong-cats-australian-football-3494"
       }
     ],
     "totalViewers": 0,
     "_liveSource": true
   },
   {
-    "id": "west-coast-eagles-vs-adelaide-crows-australian-football-3488",
-    "title": "West Coast Eagles vs Adelaide Crows",
+    "id": "melbourne-demons-vs-richmond-tigers-australian-football-3495",
+    "title": "Melbourne Demons vs Richmond Tigers",
     "category": "afl",
-    "date": 1782914400000,
+    "date": 1783519200000,
     "popular": true,
     "teams": {
       "home": {
-        "name": "West Coast Eagles",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQRENnrkGAY2bCe8MVXGEGrMGFz5DQA"
-      },
-      "away": {
-        "name": "Adelaide Crows",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQJOuQYBjZsJ7wxVcYQaswYXPn1A"
-      }
-    },
-    "sources": [
-      {
-        "source": "echo",
-        "id": "west-coast-eagles-vs-adelaide-crows-australian-football-3488"
-      }
-    ],
-    "totalViewers": 0,
-    "_liveSource": true
-  },
-  {
-    "id": "hawthorn-hawks-vs-melbourne-demons-australian-football-3484",
-    "title": "Hawthorn Hawks vs Melbourne Demons",
-    "category": "afl",
-    "date": 1782914400000,
-    "popular": true,
-    "teams": {
-      "home": {
-        "name": "Hawthorn Hawks",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQIeuQYBjZsJ7wxVcYQaswYXPn1A"
-      },
-      "away": {
         "name": "Melbourne Demons",
         "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQKeuQYBjZsJ7wxVcYQaswYXPn1A"
+      },
+      "away": {
+        "name": "Richmond Tigers",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREEzrkGAY2bCe8MVXGEGrMGFz5DQA"
       }
     },
     "sources": [
       {
         "source": "echo",
-        "id": "hawthorn-hawks-vs-melbourne-demons-australian-football-3484"
+        "id": "melbourne-demons-vs-richmond-tigers-australian-football-3495"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "adelaide-crows-vs-gold-coast-suns-australian-football-3489",
+    "title": "Adelaide Crows vs Gold Coast Suns",
+    "category": "afl",
+    "date": 1783519200000,
+    "popular": true,
+    "teams": {
+      "home": {
+        "name": "Adelaide Crows",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQJOuQYBjZsJ7wxVcYQaswYXPn1A"
+      },
+      "away": {
+        "name": "Gold Coast Suns",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQREAGN65BgqzCe8MVXGEGrMGFz5DQA"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "adelaide-crows-vs-gold-coast-suns-australian-football-3489"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "brisbane-lions-vs-essendon-bombers-australian-football-3490",
+    "title": "Brisbane Lions vs Essendon Bombers",
+    "category": "afl",
+    "date": 1783519200000,
+    "popular": true,
+    "teams": {
+      "home": {
+        "name": "Brisbane Lions",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQTOuQYBjZsJ7wxVcYQaswYXPn1A"
+      },
+      "away": {
+        "name": "Essendon Bombers",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQ2euQYBjZsJ7wxVcYQaswYXPn1A"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "brisbane-lions-vs-essendon-bombers-australian-football-3490"
+      }
+    ],
+    "totalViewers": 0,
+    "_liveSource": true
+  },
+  {
+    "id": "carlton-blues-vs-hawthorn-hawks-australian-football-3491",
+    "title": "Carlton Blues vs Hawthorn Hawks",
+    "category": "afl",
+    "date": 1783519200000,
+    "popular": true,
+    "teams": {
+      "home": {
+        "name": "Carlton Blues",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQUuuQYBjZsJ7wxVcYQaswYXPn1A"
+      },
+      "away": {
+        "name": "Hawthorn Hawks",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzuFgpsCwVgBDQhWYNMATkhQFZgrDh49g773hta1jgAJsDDpI3fsPjoQIeuQYBjZsJ7wxVcYQaswYXPn1A"
+      }
+    },
+    "sources": [
+      {
+        "source": "echo",
+        "id": "carlton-blues-vs-hawthorn-hawks-australian-football-3491"
       }
     ],
     "totalViewers": 0,
@@ -355,7 +280,7 @@
     "id": "wimbledon-championships-2026-roland-2026",
     "title": "Wimbledon Championships 2026 🎾",
     "category": "other",
-    "date": 1782900000000,
+    "date": 1783512000000,
     "popular": true,
     "sources": [
       {
@@ -363,73 +288,47 @@
         "id": "wimbledon-championships-2026-roland-2026"
       }
     ],
-    "totalViewers": 8,
+    "totalViewers": 222,
     "_liveSource": true
   },
   {
-    "id": "boston-red-sox-vs-washington-nationals-2388173",
-    "title": "Boston Red Sox vs Washington Nationals",
-    "category": "baseball",
-    "date": 1782927300000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTtw5kAJqWCEImeuFFs8rEiE056M7iD19NIGLhAozR8yQLAkFPsNn0UYFSi6vy9LLPdNaYK5iohBAA.webp",
+    "id": "uci-tour-de-france-uci-world-tour-game-13622",
+    "title": "UCI Tour de France | UCI World Tour 🏁",
+    "category": "other",
+    "date": 1783508700000,
     "popular": true,
-    "teams": {
-      "home": {
-        "name": "Boston Red Sox",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpnjQ4qsom4gIuECRDacMPduWEYwJnxRcwmovNG2mtMPbGiIQA"
-      },
-      "away": {
-        "name": "Washington Nationals",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpj6ww3amQghuIbTkQATECj0g+IYxAIUmfFFzBl4ReaIdNaYJ2NEQgA"
-      }
-    },
     "sources": [
       {
-        "source": "admin",
-        "id": "ppv-washington-nationals-vs-boston-red-sox"
-      },
-      {
         "source": "echo",
-        "id": "boston-red-sox-vs-washington-nationals-baseball-179308"
-      },
-      {
-        "source": "golf",
-        "id": "23513"
+        "id": "uci-tour-de-france-uci-world-tour-game-13622"
       }
     ],
-    "totalViewers": 27
+    "totalViewers": 0,
+    "_liveSource": true
   },
   {
-    "id": "new-york-yankees-vs-detroit-tigers-2388170",
-    "title": "New York Yankees vs Detroit Tigers",
-    "category": "baseball",
-    "date": 1782927300000,
-    "poster": "/api/images/proxy/GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTtw5kAJqWCEImeuFFs8VFLjADwvRNxB8QRmLhAaNRjY2BIKfYbPoowKlFxfl6WWW6a0wLmKiEEA.webp",
+    "id": "queensland-maroons-vs-new-south-wales-blues-2435988",
+    "title": "Queensland Maroons vs New South Wales Blues",
+    "category": "rugby",
+    "date": 1783505100000,
     "popular": true,
     "teams": {
       "home": {
-        "name": "New York Yankees",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkpj5huYVavAgQ3EBFwhEBvjpCmAJiAsEKTPii5gy8IvNGOmtMM7GiIQA"
+        "name": "Queensland Maroons",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkplqjEfEChDdtIDTq0RdMXUfgEKTPii5gy8IvNE2mtMHbGiIQA"
       },
       "away": {
-        "name": "Detroit Tigers",
-        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkuhAoxanABNKIbiBL6QEEDBCIcevmYIUmfNWzBl4ReaLVNaYJ2NEQgA"
+        "name": "New South Wales Blues",
+        "badge": "GwZg7AZpYEZgHCAjAJgCzrAThFlBWSUYAUwVmDW2nmAmD32FrWGHXbeAENgBjUgg5sSdTt0z1Rvdqyw8xAkphTAAJmCXqQEENxB89IFDqMwjOY4RjAmfVWzBl4ReaNVNaYJ2NEQgA"
       }
     },
     "sources": [
       {
-        "source": "admin",
-        "id": "ppv-detroit-tigers-vs-new-york-yankees"
-      },
-      {
         "source": "echo",
-        "id": "new-york-yankees-vs-detroit-tigers-baseball-179305"
-      },
-      {
-        "source": "golf",
-        "id": "23512"
+        "id": "queensland-vs-new-south-wales-game-3373252"
       }
     ],
-    "totalViewers": 41
+    "totalViewers": 0,
+    "_liveSource": true
   }
 ]

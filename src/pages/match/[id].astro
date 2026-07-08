@@ -14,7 +14,10 @@ export async function getStaticPaths() {
   const todayFile = import.meta.glob('../../data/matches-today.json', { eager: true });
   const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
   const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
-  const allMatches = [...liveData, ...todayData];
+  const allMap = new Map<string, APIMatch>();
+  for (const m of liveData) allMap.set(m.id, m);
+  for (const m of todayData) if (!allMap.has(m.id)) allMap.set(m.id, m);
+  const allMatches = [...allMap.values()];
   return allMatches.map((m) => ({
     params: { id: m.id },
     props: { match: m },
