@@ -3,7 +3,7 @@ import MatchLayout from '../../layouts/MatchLayout.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Countdown from '../../components/Countdown.astro';
 import { mapToPremiumSport } from '../../lib/api';
-import { formatET, formatETWithDate, getMatchStatus } from '../../lib/time';
+import { formatET, formatETWithDate } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
 import { STREAM_DOMAIN, SOURCE_NAMES, formatStreamLabel } from '../../lib/config';
 import type { APIMatch } from '../../lib/api';
@@ -26,7 +26,7 @@ export async function getStaticPaths() {
 
 const { match } = Astro.props as { match: APIMatch };
 const premiumMatch = mapToPremiumSport(match);
-const status = match._liveSource ? 'live' : getMatchStatus(match);
+const status = Date.now() < match.date ? 'upcoming' : 'live';
 const statusColors: Record<string, string> = {
   live: 'text-buff-live',
   upcoming: 'text-buff-gold',
