@@ -172,7 +172,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
     function getMatchPriority(date, viewers, popular) {
       if (date <= 0) return 0;
-      if (viewers > 0 && date <= Date.now() + THREE_HOURS) return 1;
+      var now = Date.now();
+      var isLive = (viewers > 0) || (now >= date && now <= date + THREE_HOURS);
+
+      if (viewers > 0 && date <= now + THREE_HOURS) return 1;
+      if (!isLive) return 0;
       if (popular) return 2;
       return 3;
     }
