@@ -110,26 +110,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
           <h2 class="text-lg font-bold text-white">Stream Links</h2>
           <span class="text-sm text-buff-muted" id="stream-count">Loading...</span>
         </div>
-        <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3" id="stream-grid">
-          {sources.map((s) => {
-            const name = sourceName(s.source);
-            return (
-              <a
-                href={`https://${STREAM_DOMAIN}/match/${match.id}?source=${s.source}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                data-source={s.source}
-                data-sid={s.id}
-                class="stream-card group flex flex-col gap-1 rounded-lg border border-buff-border bg-buff-card p-4 no-underline transition hover:border-buff-gold"
-              >
-                <div class="flex items-center justify-between">
-                  <span class="text-sm font-bold text-buff-gold">{name}</span>
-                </div>
-                <span class="text-xs text-buff-muted">Loading streams...</span>
-              </a>
-            );
-          })}
-        </div>
+        <div id="stream-grid" class="flex flex-col gap-4"></div>
       </section>
     )}
 
@@ -190,47 +171,65 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
       }
 
       if (allStreams.length === 0) {
-        var cards = grid.querySelectorAll('.stream-card');
-        for (var k = 0; k < cards.length; k++) {
-          var desc = cards[k].querySelector('.text-xs');
-          if (desc) desc.textContent = 'No streams available';
-        }
+        grid.innerHTML = '<div class="rounded-lg border border-buff-border bg-buff-card px-6 py-8 text-center text-sm text-buff-muted">No streams available</div>';
         if (countEl) countEl.textContent = '0 streams';
         return;
       }
 
       if (countEl) countEl.textContent = allStreams.length + ' ' + (allStreams.length === 1 ? 'stream' : 'streams') + ' available';
 
+      // Group by source
+      var sourceGroups = {};
+      for (var i = 0; i < allStreams.length; i++) {
+        var s = allStreams[i];
+        if (!sourceGroups[s.source]) sourceGroups[s.source] = [];
+        sourceGroups[s.source].push(s);
+      }
+
       grid.innerHTML = '';
 
-      for (var m = 0; m < allStreams.length; m++) {
-        var s2 = allStreams[m];
-        var label = sourceLabel(s2.source) + ' #' + s2.streamNo;
-        var quality = s2.hd ? 'HD' : 'SD';
-        var lang = s2.language;
-        var href = 'https://' + streamDomain + '/match/' + matchId + '?source=' + s2.source + '&stream=' + s2.streamNo;
+      var sourceKeys = Object.keys(sourceGroups);
+      for (var si = 0; si < sourceKeys.length; si++) {
+        var srcName = sourceKeys[si];
+        var streams = sourceGroups[srcName];
 
-        var card = document.createElement('a');
-        card.href = href;
-        card.target = '_blank';
-        card.rel = 'noopener noreferrer';
-        card.className = 'group flex flex-col gap-1.5 rounded-lg border border-buff-border bg-buff-card p-4 no-underline transition hover:border-buff-gold';
+        var section = document.createElement('div');
+        section.className = 'rounded-lg border border-buff-border bg-buff-darker';
 
-        var badges = '';
-        badges += '<span class="inline-block rounded bg-buff-dark px-1.5 py-0.5 text-xs font-bold ' + (quality === 'HD' ? 'text-buff-gold' : 'text-buff-muted') + '">' + quality + '</span>';
-        if (lang) {
-          badges += '<span class="inline-block rounded bg-buff-dark px-1.5 py-0.5 text-xs text-buff-muted">' + escapeHtml(lang) + '</span>';
+        // Header
+        var header = document.createElement('div');
+        header.className = 'flex items-center justify-between border-b border-buff-border px-4 py-3';
+        header.innerHTML = '<span class="text-sm font-bold text-buff-gold">' + escapeHtml(sourceLabel(srcName)) + '</span>' +
+          '<span class="text-xs text-buff-muted">' + streams.length + ' ' + (streams.length === 1 ? 'stream' : 'streams') + '</span>';
+        section.appendChild(header);
+
+        // Rows
+        for (var ri = 0; ri < streams.length; ri++) {
+          var st = streams[ri];
+          var isLast = ri === streams.length - 1;
+          var href = 'https://' + streamDomain + '/match/' + matchId + '?source=' + st.source + '&stream=' + st.streamNo;
+          var quality = st.hd ? 'HD' : 'SD';
+          var qClass = st.hd ? 'text-buff-gold' : 'text-buff-muted';
+          var viewersColor = st.viewers > 0 ? 'color:#22c55e' : 'color:#888';
+          var viewersText = st.viewers > 0 ? st.viewers.toLocaleString() + ' watching' : '0 watching';
+
+          var row = document.createElement('a');
+          row.href = href;
+          row.target = '_blank';
+          row.rel = 'noopener noreferrer';
+          row.className = 'relative flex items-center gap-3 bg-buff-card p-3 no-underline transition hover:bg-buff-hover' +
+            (isLast ? '' : ' border-b border-buff-border/50');
+
+          row.innerHTML =
+            '<span class="min-w-0 flex-1 text-sm font-medium text-white">' + escapeHtml(st.language || 'Unknown') + '</span>' +
+            '<span class="inline-block rounded bg-buff-dark px-1.5 py-0.5 text-xs font-bold ' + qClass + '">' + quality + '</span>' +
+            '<span class="text-xs font-semibold" style="' + viewersColor + '">' + viewersText + '</span>' +
+            '<span class="ml-1 text-buff-muted">&rsaquo;</span>';
+
+          section.appendChild(row);
         }
 
-        var viewersHtml = '';
-        if (s2.viewers > 0) {
-          viewersHtml = '<span class="text-xs font-semibold" style="color:#22c55e">' + s2.viewers.toLocaleString() + ' watching</span>';
-        } else {
-          viewersHtml = '<span class="text-xs text-buff-muted">0 watching</span>';
-        }
-
-        card.innerHTML = '<div class="flex items-center justify-between"><span class="text-sm font-bold text-buff-gold">' + escapeHtml(label) + '</span><div class="flex gap-1">' + badges + '</div></div><div class="flex items-center justify-between"><span class="text-xs text-buff-muted">' + escapeHtml(s2.source) + '</span>' + viewersHtml + '</div>';
-        grid.appendChild(card);
+        grid.appendChild(section);
       }
     }
 

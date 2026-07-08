@@ -12,22 +12,22 @@ body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .stream-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
 .stream-header h2{color:#fff;font-size:1.05rem;font-weight:700}
 .stream-header span{color:#aaa;font-size:.8rem}
-.stream-grid{display:grid;gap:10px;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));margin-bottom:24px}
-.stream-btn{background:#1a1a1a;border:1px solid #2a2a2a;border-radius:8px;padding:14px;text-align:left;cursor:pointer;transition:border-color .2s;color:inherit;font:inherit;display:flex;flex-direction:column;gap:6px}
-.stream-btn:hover{border-color:#0a93ae}
-.stream-btn.active{border-color:#0a93ae}
-.stream-btn-top{display:flex;align-items:center;justify-content:space-between}
-.stream-btn-label{color:#0a93ae;font-size:.85rem;font-weight:700}
-.stream-btn-badges{display:flex;gap:4px}
-.stream-badge{display:inline-block;border-radius:4px;padding:1px 6px;font-size:.65rem;font-weight:700;background:#0d0d0d}
-.stream-badge-hd{color:#0a93ae}
-.stream-badge-sd{color:#aaa}
-.stream-badge-lang{color:#aaa;font-weight:400}
-.stream-btn-bottom{display:flex;align-items:center;justify-content:space-between}
-.stream-btn-source{color:#666;font-size:.7rem;text-transform:lowercase}
-.stream-btn-views{font-size:.75rem;font-weight:600}
-.stream-btn-views-live{color:#22c55e}
-.stream-btn-views-none{color:#666}
+.source-section{border-radius:8px;border:1px solid #2a2a2a;background:#0d0d0d;margin-bottom:12px}
+.source-header{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-bottom:1px solid #2a2a2a}
+.source-name{color:#0a93ae;font-weight:700;font-size:.9rem}
+.source-count{color:#666;font-size:.8rem}
+.stream-row{display:flex;align-items:center;gap:12px;padding:12px 16px;background:#1a1a1a;border:none;border-bottom:1px solid #2a2a2a;color:inherit;font:inherit;cursor:pointer;transition:background .2s;width:100%;text-align:left;text-decoration:none}
+.stream-row:last-child{border-bottom:none}
+.stream-row:hover{background:#222}
+.stream-row.active{background:#1a2a2a}
+.stream-row .lang{min-width:0;flex:1;font-size:.875rem;font-weight:500;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stream-row .qbadge{display:inline-block;border-radius:4px;padding:2px 8px;font-size:.7rem;font-weight:700;background:#0d0d0d}
+.stream-row .qbadge-hd{color:#0a93ae}
+.stream-row .qbadge-sd{color:#888}
+.stream-row .views{font-size:.75rem;font-weight:600}
+.stream-row .views-live{color:#22c55e}
+.stream-row .views-none{color:#888}
+.stream-row .arrow{color:#666;margin-left:4px;font-size:1.1rem}
 .footer{border-top:1px solid #2a2a2a;background:#0a0a0a;padding:24px 16px;text-align:center;font-size:.8rem;color:#666;margin-top:auto}
 .down-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0d0d0d;padding:20px;text-align:center}
 .down-icon{font-size:2.5rem;margin-bottom:16px}
@@ -72,28 +72,45 @@ function downPage(msg) {
 }
 
 function streamPage(matchTitle, allStreams, selected, fallbackUrl) {
-  const cards = allStreams.map((s, i) => {
-    const active = i === selected
-    const label = streamLabel(s.source, s.streamNo)
-    const quality = s.hd ? 'HD' : 'SD'
-    const qClass = s.hd ? 'stream-badge-hd' : 'stream-badge-sd'
-    const langBadge = s.language ? `<span class="stream-badge stream-badge-lang">${esc(s.language)}</span>` : ''
-    const viewsClass = s.viewers > 0 ? 'stream-btn-views-live' : 'stream-btn-views-none'
-    const viewsText = s.viewers > 0 ? s.viewers.toLocaleString() + ' watching' : '0 watching'
-    return `<button class="stream-btn${active ? ' active' : ''}" data-index="${i}">
-<div class="stream-btn-top">
-<span class="stream-btn-label">${esc(label)}</span>
-<div class="stream-btn-badges">
-<span class="stream-badge ${qClass}">${quality}</span>
-${langBadge}
-</div>
-</div>
-<div class="stream-btn-bottom">
-<span class="stream-btn-source">${esc(s.source)}</span>
-<span class="stream-btn-views ${viewsClass}">${viewsText}</span>
-</div>
+  // Group streams by source
+  const groups = {}
+  for (let i = 0; i < allStreams.length; i++) {
+    const s = allStreams[i]
+    if (!groups[s.source]) groups[s.source] = []
+    groups[s.source].push({ ...s, _idx: i })
+  }
+  const sourceKeys = Object.keys(groups)
+
+  let sectionsHtml = ''
+  for (let si = 0; si < sourceKeys.length; si++) {
+    const src = sourceKeys[si]
+    const streams = groups[src]
+    const label = sourceLabel(src)
+
+    let rowsHtml = ''
+    for (let ri = 0; ri < streams.length; ri++) {
+      const st = streams[ri]
+      const quality = st.hd ? 'HD' : 'SD'
+      const qClass = st.hd ? 'qbadge-hd' : 'qbadge-sd'
+      const viewsClass = st.viewers > 0 ? 'views-live' : 'views-none'
+      const viewsText = st.viewers > 0 ? st.viewers.toLocaleString() + ' watching' : '0 watching'
+
+      rowsHtml += `<button class="stream-row${st._idx === selected ? ' active' : ''}" data-index="${st._idx}">
+<span class="lang">${esc(st.language || 'Unknown')}</span>
+<span class="qbadge ${qClass}">${quality}</span>
+<span class="views ${viewsClass}">${viewsText}</span>
+<span class="arrow">›</span>
 </button>`
-  }).join('')
+    }
+
+    sectionsHtml += `<div class="source-section">
+<div class="source-header">
+<span class="source-name">${esc(label)}</span>
+<span class="source-count">${streams.length} ${streams.length === 1 ? 'stream' : 'streams'}</span>
+</div>
+${rowsHtml}
+</div>`
+  }
 
   return html(`<div class="header">
 <div class="header-inner">
@@ -108,11 +125,11 @@ ${langBadge}
 <a href="${esc(fallbackUrl)}" target="_blank" rel="noopener noreferrer">Open in new tab ↗</a>
 </div>
 <div class="stream-header">
-<h2>Stream Links</h2>
+<h2>${esc(matchTitle)}</h2>
 <span>${allStreams.length} ${allStreams.length === 1 ? 'stream' : 'streams'} available</span>
 </div>
-<div class="stream-grid" id="stream-grid">
-${cards}
+<div id="stream-grid">
+${sectionsHtml}
 </div>
 </div>
 <div class="footer">
@@ -127,7 +144,7 @@ var currentIndex = ${selected};
 
 if (grid) {
   grid.addEventListener('click', function(e) {
-    var btn = e.target.closest('.stream-btn');
+    var btn = e.target.closest('.stream-row');
     if (!btn) return;
     var idx = parseInt(btn.dataset.index);
     if (idx === currentIndex) return;
@@ -136,7 +153,7 @@ if (grid) {
       iframe.src = s.embedUrl;
       fallback.querySelector('a').href = s.embedUrl;
       fallback.style.display = 'none';
-      document.querySelectorAll('.stream-btn').forEach(function(b) {
+      document.querySelectorAll('.stream-row').forEach(function(b) {
         b.classList.remove('active');
       });
       btn.classList.add('active');
