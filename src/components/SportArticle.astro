@@ -1,0 +1,113 @@
+---
+import type { SportArticleContent } from '../data/sport-articles';
+import { getSportArticle, getFAQSchema } from '../data/sport-articles';
+import AlternativesSection from './articles/shared/AlternativesSection.astro';
+import TestimonialsSection from './articles/shared/TestimonialsSection.astro';
+import sportsData from '../data/sports.json';
+
+export interface Props {
+  sport: string;
+}
+
+const { sport } = Astro.props;
+const sportConfig = (sportsData.premiumSports as Record<string, any>)[sport];
+const article: SportArticleContent | null = getSportArticle(sport);
+const faqSchema = getFAQSchema(sport);
+const displayName = sportConfig?.displayName || sport.toUpperCase();
+const icon = sportConfig?.icon || '';
+const category = sportConfig?.category || '';
+const route = sportConfig?.route || `/${sport}`;
+
+if (!article) return;
+
+const { features, coverage, scheduleNote, tags, alternativesIntro, faqs, relatedSports } = article;
+---
+
+<article class="prose prose-invert max-w-none">
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
+
+  <!-- Why Choose Buffstreams -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Why Sports Fans Choose Buffstreams for {displayName}</h2>
+    <p class="mb-6 text-sm text-buff-muted">Buffstreams has become the preferred destination for {displayName} streaming in 2026. Here is what makes Buffstreams the top choice for fans of the sport.</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {features.map((feature) => (
+        <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+          <div class="mb-3 text-2xl">{feature.emoji}</div>
+          <h3 class="mb-2 text-base font-bold text-white">{feature.title}</h3>
+          <p class="text-sm text-buff-muted">{feature.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Coverage -->
+  <section class="not-prose mt-12">
+    <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams {displayName} Coverage</h2>
+    <p class="mb-6 text-sm text-buff-muted">
+      {icon && <span class="mr-1">{icon}</span>}
+      {displayName} · Free Live Streaming
+    </p>
+    <div class="mb-5 rounded-lg border border-buff-border bg-buff-darker p-5">
+      <div class="text-sm text-buff-muted leading-relaxed space-y-3">
+        {coverage.split('\n\n').map((paragraph) => {
+          const html = paragraph.trim().replace(/(Buffstreams)(?![^<]*>)/g, '<a href="/" class="text-buff-gold no-underline hover:underline">$1</a>');
+          return <p set:html={html} />;
+        })}
+      </div>
+    </div>
+    <div class="flex flex-wrap gap-2">
+      {tags.map((tag) => (
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">{tag}</span>
+      ))}
+    </div>
+  </section>
+
+  <!-- Schedule -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">{displayName} Schedule & Game Times on Buffstreams</h2>
+    <p class="text-sm text-buff-muted leading-relaxed">{scheduleNote}</p>
+    <div class="mt-4">
+      <a href={route} class="inline-flex items-center gap-2 rounded-lg border border-buff-gold bg-buff-gold px-5 py-2.5 text-sm font-bold text-black no-underline transition hover:opacity-90">
+        View Full {displayName} Schedule →
+      </a>
+    </div>
+  </section>
+
+  <!-- Alternatives -->
+  <AlternativesSection displayName={displayName} intro={alternativesIntro} />
+
+  <!-- Testimonials -->
+  <TestimonialsSection displayName={displayName} />
+
+  <!-- CTA -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-gradient-to-r from-buff-darker to-buff-card p-8 text-center">
+    <h2 class="mb-3 text-2xl font-bold text-white">Watch {displayName} Live on Buffstreams</h2>
+    <p class="mb-6 text-sm text-buff-muted">
+      <a href="/" class="text-buff-gold no-underline hover:underline font-bold">Buffstreams</a> delivers free {displayName} streams in HD quality with no subscriptions, no sign-ups, and no hidden costs. Join millions of fans who trust Buffstreams for their live sports streaming.
+    </p>
+    <div class="flex flex-wrap justify-center gap-2">
+      <a href={route} class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted no-underline hover:bg-buff-darker hover:text-buff-gold transition-colors">{icon} {displayName}</a>
+      {relatedSports.slice(0, 3).map((rs) => (
+        <a href={rs.url} class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted no-underline hover:bg-buff-darker hover:text-buff-gold transition-colors">{rs.displayName}</a>
+      ))}
+      <a href="/" class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted no-underline hover:bg-buff-darker hover:text-buff-gold transition-colors">All Sports</a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="not-prose mt-12">
+    <h2 class="mb-2 text-2xl font-bold text-white">Frequently Asked Questions About Buffstreams {displayName}</h2>
+    <p class="mb-6 text-sm text-buff-muted">Clear answers to the most common questions about streaming {displayName} on Buffstreams.</p>
+    <div class="flex flex-col gap-3">
+      {faqs.map((faq) => (
+        <details class="rounded-lg border border-buff-border bg-buff-card">
+          <summary class="cursor-pointer px-4 py-3 font-medium text-white">{faq.question}</summary>
+          <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">{faq.answer}</p>
+        </details>
+      ))}
+    </div>
+  </section>
+</article>

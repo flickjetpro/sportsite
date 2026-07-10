@@ -1,0 +1,47 @@
+---
+export interface Props {
+  displayName: string;
+}
+
+const { displayName } = Astro.props;
+---
+
+<section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+  <h2 class="mb-2 text-center text-2xl font-bold text-white">Fans Keep Coming Back to Buffstreams for {displayName}</h2>
+  <p class="mb-6 text-center text-sm text-buff-muted">Real stories from sports fans who rely on Buffstreams for their {displayName} streaming.</p>
+  <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+      <div class="mb-2 text-sm text-buff-gold">★★★★★</div>
+      <p class="mb-3 text-sm text-buff-muted italic">"Buffstreams has been rock solid for every NFL Sunday this season. Never had a major issue and the quality is consistently great."</p>
+      <div class="flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-buff-gold text-sm font-bold text-black">MJ</div>
+        <div>
+          <div class="text-sm font-bold text-white">Marcus J.</div>
+          <div class="text-xs text-buff-muted">Sports Fan · Chicago, IL</div>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+      <div class="mb-2 text-sm text-buff-gold">★★★★★</div>
+      <p class="mb-3 text-sm text-buff-muted italic">"As an international sports fan, Buffstreams is a lifesaver. All the games I want, in good quality, and completely free."</p>
+      <div class="flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-buff-gold text-sm font-bold text-black">SL</div>
+        <div>
+          <div class="text-sm font-bold text-white">Sophie L.</div>
+          <div class="text-xs text-buff-muted">Sports Fan · London, UK</div>
+        </div>
+      </div>
+    </div>
+    <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+      <div class="mb-2 text-sm text-buff-gold">★★★★★</div>
+      <p class="mb-3 text-sm text-buff-muted italic">"One weekend I watched Premier League, an F1 race, and a UFC event all on Buffstreams without any hassle. The variety is unmatched."</p>
+      <div class="flex items-center gap-2">
+        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-buff-gold text-sm font-bold text-black">RO</div>
+        <div>
+          <div class="text-sm font-bold text-white">Ricardo O.</div>
+          <div class="text-xs text-buff-muted">Multi-Sport Fan · São Paulo, BR</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
