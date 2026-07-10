@@ -28,6 +28,8 @@ body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 .stream-row .views-live{color:#22c55e}
 .stream-row .views-none{color:#888}
 .stream-row .arrow{color:#666;margin-left:4px;font-size:1.1rem}
+.ad-container{display:flex;justify-content:center;overflow:hidden;min-height:90px;margin-bottom:12px}
+.ad-container iframe{max-width:100%}
 .footer{border-top:1px solid #2a2a2a;background:#0a0a0a;padding:24px 16px;text-align:center;font-size:.8rem;color:#666;margin-top:auto}
 .down-page{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;background:#0d0d0d;padding:20px;text-align:center}
 .down-icon{font-size:2.5rem;margin-bottom:16px}
@@ -75,6 +77,7 @@ hs.src = ('//s10.histats.com/js15_as.js');
 })();</script>
 <noscript><a href="/" target="_blank"><img  src="//sstatic1.histats.com/0.gif?5038559&101" alt="free webpage hit counter" border="0"></a></noscript>
 <!-- Histats.com  END  -->
+<script src="https://pl30301252.effectivecpmnetwork.com/0e/87/be/0e87bebad3c6bfd89b3ad56448fd8742.js"></script>
 </head>
 <body>
 ${body}
@@ -136,6 +139,20 @@ ${rowsHtml}
 </div>
 </div>
 <div class="main">
+<!-- Watch subdomain banner ad -->
+<div class="ad-container">
+<script>
+var atOptions = atOptions || {};
+atOptions = {
+'key' : '2671913632fa60644b9141d46a8b78b4',
+'format' : 'iframe',
+'height' : 90,
+'width' : 728,
+'params' : {}
+};
+</script>
+<script src="https://www.highperformanceformat.com/2671913632fa60644b9141d46a8b78b4/invoke.js"></script>
+</div>
 <div class="iframe-wrap">
 <iframe id="stream-iframe" src="${esc(fallbackUrl)}" allowfullscreen></iframe>
 </div>
