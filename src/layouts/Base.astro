@@ -20,10 +20,13 @@ const schema = buildWebSiteSchema();
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={Astro.url.href} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/images/buffstreams.png" />
+    <link rel="apple-touch-icon" href="/images/buffstreams.png" />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content="https://buffstreamsbackup.world/images/buffstreams.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://buffstreamsbackup.world/images/buffstreams.png" />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body class="min-h-screen bg-buff-dark text-white antialiased">
