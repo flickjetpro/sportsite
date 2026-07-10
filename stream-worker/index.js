@@ -36,8 +36,14 @@ body{background:#0d0d0d;color:#fff;font-family:-apple-system,BlinkMacSystemFont,
 const SOURCE_NAMES = { echo: 'Echo', delta: 'Delta', golf: 'Golf', admin: 'Admin' }
 
 const SPORT_CATEGORIES = {
-  nfl: 'american-football', nba: 'basketball', mlb: 'baseball', nhl: 'hockey',
-  ufc: 'fight', f1: 'motor-sports', soccer: 'football', tennis: 'tennis', golf: 'golf',
+  nfl: 'american-football', ncaaf: 'american-football',
+  mlb: 'baseball',
+  nba: 'basketball', ncaab: 'basketball', wnba: 'basketball',
+  nhl: 'hockey',
+  ufc: 'fight', boxing: 'fight', wwe: 'fight', mma: 'fight',
+  f1: 'motor-sports', nascar: 'motor-sports', indycar: 'motor-sports',
+  mls: 'football', soccer: 'football',
+  tennis: 'tennis', golf: 'golf',
 }
 
 function sourceLabel(source) {

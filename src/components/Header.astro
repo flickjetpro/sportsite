@@ -1,5 +1,11 @@
 ---
 const { currentSport } = Astro.props as { currentSport?: string };
+const navLabels: Record<string, string> = {
+  nfl: 'NFL', ncaaf: 'NCAAF', mlb: 'MLB', nba: 'NBA',
+  ncaab: 'NCAAB', wnba: 'WNBA', nhl: 'NHL', ufc: 'UFC',
+  boxing: 'Boxing', wwe: 'WWE', mma: 'MMA', f1: 'F1',
+  mls: 'MLS', tennis: 'Tennis'
+};
 ---
 
 <header class="bg-buff-darker">
@@ -13,9 +19,9 @@ const { currentSport } = Astro.props as { currentSport?: string };
       </svg>
     </button>
     <nav id="nav-menu" class="hidden gap-1 sm:flex">
-      {['nfl', 'mlb', 'nba', 'nhl', 'ufc', 'f1', 'soccer', 'tennis', 'golf'].map(
+      {['nfl', 'ncaaf', 'mlb', 'nba', 'ncaab', 'wnba', 'nhl', 'ufc', 'boxing', 'wwe', 'mma', 'f1', 'mls', 'tennis'].map(
         (sport) => {
-          const label = sport === 'ufc' ? 'UFC' : sport === 'f1' ? 'F1' : sport.charAt(0).toUpperCase() + sport.slice(1);
+          const label = navLabels[sport] || sport.charAt(0).toUpperCase() + sport.slice(1);
           return (
             <a
               href={`/${sport}`}
@@ -34,9 +40,9 @@ const { currentSport } = Astro.props as { currentSport?: string };
   </div>
   <div id="mobile-menu" class="hidden border-t border-buff-border bg-buff-dark px-4 py-2 sm:hidden">
     <div class="flex flex-col gap-1">
-      {['nfl', 'mlb', 'nba', 'nhl', 'ufc', 'f1', 'soccer', 'tennis', 'golf'].map(
+      {['nfl', 'ncaaf', 'mlb', 'nba', 'ncaab', 'wnba', 'nhl', 'ufc', 'boxing', 'wwe', 'mma', 'f1', 'mls', 'tennis'].map(
         (sport) => {
-          const label = sport === 'ufc' ? 'UFC' : sport === 'f1' ? 'F1' : sport.charAt(0).toUpperCase() + sport.slice(1);
+          const label = navLabels[sport] || sport.charAt(0).toUpperCase() + sport.slice(1);
           return (
             <a
               href={`/${sport}`}
