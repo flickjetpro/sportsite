@@ -1,6 +1,7 @@
 import sportsData from '../data/sports.json';
 import liveData from '../data/matches-live.json';
 import todayData from '../data/matches-today.json';
+import { blogPosts } from '../data/blog-posts';
 
 export async function GET() {
   const allMatches = [...liveData, ...todayData];
@@ -11,7 +12,8 @@ export async function GET() {
     ...Object.keys(sportsData.premiumSports).map((s) => `/${s}`),
   ];
   const matchPages = Array.from(matchIds).map((id: string) => `/match/${id}`);
-  const allUrls = [...staticPages, ...matchPages];
+  const blogPages = blogPosts.map((p) => `/blog/${p.slug}`);
+  const allUrls = [...staticPages, ...matchPages, ...blogPages];
 
   const body = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
