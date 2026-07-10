@@ -1,6 +1,6 @@
-export const STREAM_DOMAIN = 'stream.alphastreams.fit'
+export const STREAM_DOMAIN = 'watch.buffstreamsbackup.world'
 
-export const MAIN_DOMAIN = 'alphastreams.fit'
+export const MAIN_DOMAIN = 'buffstreamsbackup.world'
 
 export const SOURCE_NAMES: Record<string, string> = {
   echo: 'Echo',

@@ -2,7 +2,7 @@ import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
 
 export default defineConfig({
-  site: 'https://alphastreams.fit',
+  site: 'https://buffstreamsbackup.world',
   output: 'static',
   vite: {
     plugins: [tailwindcss()],
