@@ -1,5 +1,7 @@
 ---
-const sports = [
+const headerSports = new Set(['nfl', 'ncaaf', 'mlb', 'nba', 'ncaab', 'wnba', 'nhl', 'ufc', 'boxing', 'wwe', 'mma', 'f1', 'mls', 'tennis']);
+
+const allSports = [
   { id: 'nfl', label: 'NFL', img: '/images/nfl.webp' },
   { id: 'ncaaf', label: 'NCAAF', img: '/images/ncaaf.webp' },
   { id: 'mlb', label: 'MLB', img: '/images/mlb.webp' },
@@ -19,6 +21,8 @@ const sports = [
   { id: 'tennis', label: 'Tennis', img: '/images/tennis.webp' },
   { id: 'golf', label: 'Golf', img: '/images/golf.webp' },
 ];
+
+const sports = allSports.filter((s) => headerSports.has(s.id));
 ---
 
 <div class="flex items-center gap-5 overflow-x-auto px-4 py-1 scroll-smooth" id="sports">
