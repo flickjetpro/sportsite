@@ -107,8 +107,8 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
 
     <!-- Main site banner ad -->
     <div class="mx-auto mb-6 flex justify-center overflow-hidden" style="min-height: 90px;">
-      <script>
-        atOptions = {
+      <script is:inline>
+        window.atOptions = {
           'key' : '241db7bdcb4b8a8b1ec2148fa3758b17',
           'format' : 'iframe',
           'height' : 90,
@@ -116,7 +116,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
           'params' : {}
         };
       </script>
-      <script src="https://www.highperformanceformat.com/241db7bdcb4b8a8b1ec2148fa3758b17/invoke.js"></script>
+      <script is:inline src="https://www.highperformanceformat.com/241db7bdcb4b8a8b1ec2148fa3758b17/invoke.js"></script>
     </div>
 
     {sources.length > 0 && (
