@@ -39,7 +39,7 @@ const scheduleMatches = isToday ? filteredMatches.filter((m) => m.date > now) : 
 
 <Base title={`Sports Schedule for ${date} | Buffstreams Backup`} description={`Browse the sports schedule for ${date}. Find NFL, NBA, MLB, NHL, UFC, and more game times.`}>
   <Header />
-  <main class="mx-auto max-w-7xl px-4 py-6">
+  <main class="mx-auto max-w-7xl px-2 py-6 sm:px-4">
     <Breadcrumb items={[
       { name: 'Home', url: '/' },
       { name: 'Schedule', url: '/schedule' },
