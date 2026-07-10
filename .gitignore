@@ -3,3 +3,4 @@ dist/
 .astro/
 credentials-*.json
 *.env
+competitor_article.html
