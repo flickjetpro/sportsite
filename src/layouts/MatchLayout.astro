@@ -11,7 +11,7 @@ export interface Props {
 const { match } = Astro.props;
 ---
 
-<Base title={`${match.title} - Game Time & Schedule | Buffstreams Backup`} description={`${match.title} game information, match time, and schedule.`}>
+<Base title={`${match.title} - Game Time & Schedule | Buffstreams`} description={`${match.title} game information, match time, and schedule.`}>
   <Header />
   <main class="mx-auto max-w-7xl px-4 py-6">
     <slot name="breadcrumb" />
@@ -29,8 +29,8 @@ const { match } = Astro.props;
   </main>
   <footer class="border-t border-buff-border bg-buff-darker px-4 py-8 text-center text-sm text-buff-muted">
     <p class="mx-auto max-w-3xl">
-      Buffstreams Backup is a sports information directory. We provide game schedules, match times, and sports calendar data for informational purposes only. We do not host, stream, embed, or link to any video or audio content. Stream source links displayed on match pages are provided by third-party services. All trademarks, team names, and logos are property of their respective owners. For official broadcasts, visit the respective league's authorized platform.
+      Buffstreams is a sports information directory. We provide game schedules, match times, and sports calendar data for informational purposes only. We do not host, stream, embed, or link to any video or audio content. Stream source links displayed on match pages are provided by third-party services. All trademarks, team names, and logos are property of their respective owners. For official broadcasts, visit the respective league's authorized platform.
     </p>
-    <p class="mt-4">&copy; 2026 Buffstreams Backup. All rights reserved.</p>
+    <p class="mt-4">&copy; 2026 Buffstreams. All rights reserved.</p>
   </footer>
 </Base>

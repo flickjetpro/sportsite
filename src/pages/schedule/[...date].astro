@@ -37,7 +37,7 @@ const isToday = date === todayStr;
 const scheduleMatches = isToday ? filteredMatches.filter((m) => m.date > now) : filteredMatches;
 ---
 
-<Base title={`Sports Schedule for ${date} | Buffstreams Backup`} description={`Browse the sports schedule for ${date}. Find NFL, NBA, MLB, NHL, UFC, and more game times.`}>
+<Base title={`Sports Schedule for ${date} | Buffstreams`} description={`Browse the sports schedule for ${date}. Find NFL, NBA, MLB, NHL, UFC, and more game times.`}>
   <Header />
   <main class="mx-auto max-w-7xl px-2 py-6 sm:px-4">
     <Breadcrumb items={[
