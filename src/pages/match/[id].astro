@@ -1,5 +1,6 @@
 ---
 import MatchLayout from '../../layouts/MatchLayout.astro';
+import MatchArticle from '../../components/MatchArticle.astro';
 import Breadcrumb from '../../components/Breadcrumb.astro';
 import Countdown from '../../components/Countdown.astro';
 import { mapToPremiumSport } from '../../lib/api';
@@ -123,9 +124,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
     )}
 
     <div class="mt-12">
-      <article class="prose prose-invert max-w-none">
-        <p class="text-buff-muted">{getMatchSEO(match)}</p>
-      </article>
+      <MatchArticle match={premiumMatch} />
     </div>
 
     <script is:inline set:html={`(function () {

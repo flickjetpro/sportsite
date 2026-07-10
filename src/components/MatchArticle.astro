@@ -1,0 +1,76 @@
+---
+import type { PremiumMatch } from '../lib/api';
+import { formatDateWithTime } from '../lib/time';
+import sportsData from '../data/sports.json';
+import {
+  getCategoryContent,
+  getNonPremiumDescription,
+  isTeamCategory,
+  generateMatchFAQSchema,
+  generateMatchQA,
+} from '../data/match-article-content';
+
+export interface Props {
+  match: PremiumMatch;
+}
+
+const { match } = Astro.props;
+const premiumSport = match.premiumSport;
+const displayName = match.premiumDisplayName || match.categoryBadge || 'Sports';
+const icon = premiumSport ? (sportsData.premiumSports as Record<string, any>)[premiumSport]?.icon : null;
+const { title } = match;
+const homeName = match.teams?.home?.name;
+const awayName = match.teams?.away?.name;
+const category = match.category;
+const hasTeams = !!(homeName && awayName) && isTeamCategory(category);
+const route = premiumSport ? `/${premiumSport}` : '#';
+const matchDateTime = formatDateWithTime(match.date);
+const categoryContent = getCategoryContent(category);
+const sportType = categoryContent?.sportType || 'sporting event';
+const leaguesList = categoryContent?.leagues || getNonPremiumDescription(category);
+const faqSchema = generateMatchFAQSchema(title, displayName);
+const faqQA = generateMatchQA(title, displayName);
+const aboutText = categoryContent?.about || `Buffstreams offers free ${displayName} streams throughout the season covering every matchup and event.`;
+
+const watchHtml = hasTeams
+  ? `Fans can watch the ${displayName} matchup between the ${homeName} and ${awayName} live on <a href="/">Buffstreams</a>. This ${sportType} is scheduled for ${matchDateTime} ET and features two competitive teams battling for victory. ${icon ? icon + ' ' : ''}<a href="/">Buffstreams</a> provides free HD quality streams for ${leaguesList} with no subscription required.`
+  : `Fans can watch ${title} live on <a href="/">Buffstreams</a>. This ${displayName} ${sportType} is scheduled for ${matchDateTime} ET and promises exciting action for sports fans. ${icon ? icon + ' ' : ''}<a href="/">Buffstreams</a> provides free HD quality streams for ${leaguesList} with no subscription required.`;
+
+const aboutSectionHtml = hasTeams
+  ? `${aboutText} Whether you are following the ${homeName} or just enjoy ${displayName} action, <a href="${route}">browse all ${displayName} games on Buffstreams</a> for the full schedule. All streams are accessible on mobile, tablet, and desktop with no registration or credit card needed.`
+  : `${aboutText} Fans can <a href="${route}">browse all ${displayName} events on Buffstreams</a> for the complete schedule and upcoming matchups. All streams are accessible on mobile, tablet, and desktop with no registration or credit card needed.`;
+
+const howToWatchHtml1 = `To watch ${hasTeams ? `this ${displayName} game` : `this ${displayName} event`} on <a href="/">Buffstreams</a>, scroll down to the stream links section below. Each link is labeled by source and quality. For the best experience, select an HD stream with a higher viewer count. If one link stops working, simply try one of the available backup streams.`;
+
+const howToWatchHtml2 = `All <a href="/">Buffstreams</a> streams are completely free with no sign-up required. The platform updates stream links regularly to ensure reliable access throughout the event. No app download is needed — streams work directly in your browser on any device.`;
+
+const moreHtml = `Looking for more ${displayName} action? <a href="${route}">Check the full ${displayName} schedule on Buffstreams</a> for upcoming games, match times, and event details. Buffstreams updates game times regularly so fans always know when their next favorite matchup is on.`;
+---
+
+<article class="prose prose-invert max-w-none">
+  {faqSchema && (
+    <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+  )}
+
+  <h2>Watch {title} Live on Buffstreams</h2>
+  <p set:html={watchHtml} />
+
+  <h2>About {displayName} Streaming on Buffstreams</h2>
+  <p set:html={aboutSectionHtml} />
+
+  <h2>How to Stream {hasTeams ? `${homeName} vs ${awayName}` : title}</h2>
+  <p set:html={howToWatchHtml1} />
+  <p set:html={howToWatchHtml2} />
+
+  <h2>More {displayName} Events on Buffstreams</h2>
+  <p set:html={moreHtml} />
+
+  <h2>Frequently Asked Questions</h2>
+  <p>Quick answers to common questions about streaming {displayName} on Buffstreams.</p>
+  {faqQA.map((faq) => (
+    <details>
+      <summary>{faq.question}</summary>
+      <p>{faq.answer}</p>
+    </details>
+  ))}
+</article>
