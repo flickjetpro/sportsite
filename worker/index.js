@@ -14,29 +14,47 @@ export default {
     }
 
     if (path.startsWith('/api/proxy/matches/live')) {
-      const resp = await fetch('https://streamed.pk/api/matches/live');
-      const data = await resp.json();
-      return new Response(JSON.stringify(data), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
-      });
+      try {
+        const resp = await fetch('https://streamed.pk/api/matches/live');
+        const data = await resp.json();
+        return new Response(JSON.stringify(data), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
+        });
+      } catch {
+        return new Response('[]', {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
     if (path.startsWith('/api/proxy/matches/today')) {
-      const resp = await fetch('https://streamed.pk/api/matches/all-today');
-      const data = await resp.json();
-      return new Response(JSON.stringify(data), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60' },
-      });
+      try {
+        const resp = await fetch('https://streamed.pk/api/matches/all-today');
+        const data = await resp.json();
+        return new Response(JSON.stringify(data), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=60' },
+        });
+      } catch {
+        return new Response('[]', {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
     const streamMatch = path.match(/^\/api\/proxy\/stream\/([^/]+)\/(.+)$/);
     if (streamMatch) {
       const [, source, id] = streamMatch;
-      const resp = await fetch(`https://streamed.pk/api/stream/${source}/${id}`);
-      const data = await resp.json();
-      return new Response(JSON.stringify(data), {
-        headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
-      });
+      try {
+        const resp = await fetch(`https://streamed.pk/api/stream/${source}/${id}`);
+        const data = await resp.json();
+        return new Response(JSON.stringify(data), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json', 'Cache-Control': 'public, max-age=30' },
+        });
+      } catch {
+        return new Response('[]', {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+        });
+      }
     }
 
     const badgeMatch = path.match(/^\/api\/proxy\/images\/badge\/(.+)\.webp$/);
