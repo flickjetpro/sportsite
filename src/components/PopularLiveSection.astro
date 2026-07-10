@@ -9,14 +9,14 @@ export interface Props {
 const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.props;
 ---
 
-<section id="popular-live-section" class="rounded-lg border border-buff-border bg-buff-darker p-2 sm:p-4">
+<section id="popular-live-section" class="rounded-lg border border-buff-border bg-buff-darker py-2 px-0 sm:p-4">
   <h2 id="pl-heading" class="mb-4 flex items-center gap-2 text-lg font-bold text-white">
     <span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span>
     LIVE NOW
   </h2>
 
   <div id="popular-live-grid" class="divide-y divide-dashed divide-buff-border" data-pl-step={step} data-initial={initialShow} data-sport={sport}>
-    <div class="flex animate-pulse items-center gap-2 bg-buff-card p-0 sm:gap-3 sm:p-3" data-pl-sk>
+    <div class="flex animate-pulse items-center gap-2 bg-buff-card py-2 px-0 sm:gap-3 sm:p-3" data-pl-sk>
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="h-8 w-8 shrink-0 rounded-full bg-buff-border/30"></div>
         <div class="h-4 w-full max-w-32 rounded bg-buff-border/30"></div>
@@ -33,7 +33,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         <div class="h-4 w-4 rounded bg-buff-border/30"></div>
       </div>
     </div>
-    <div class="flex animate-pulse items-center gap-2 bg-buff-card p-0 sm:gap-3 sm:p-3" data-pl-sk>
+    <div class="flex animate-pulse items-center gap-2 bg-buff-card py-2 px-0 sm:gap-3 sm:p-3" data-pl-sk>
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="h-8 w-8 shrink-0 rounded-full bg-buff-border/30"></div>
         <div class="h-4 w-full max-w-32 rounded bg-buff-border/30"></div>
@@ -50,7 +50,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         <div class="h-4 w-4 rounded bg-buff-border/30"></div>
       </div>
     </div>
-    <div class="flex animate-pulse items-center gap-2 bg-buff-card p-0 sm:gap-3 sm:p-3" data-pl-sk>
+    <div class="flex animate-pulse items-center gap-2 bg-buff-card py-2 px-0 sm:gap-3 sm:p-3" data-pl-sk>
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="h-8 w-8 shrink-0 rounded-full bg-buff-border/30"></div>
         <div class="h-4 w-full max-w-32 rounded bg-buff-border/30"></div>
@@ -67,7 +67,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         <div class="h-4 w-4 rounded bg-buff-border/30"></div>
       </div>
     </div>
-    <div class="flex animate-pulse items-center gap-2 bg-buff-card p-0 sm:gap-3 sm:p-3" data-pl-sk>
+    <div class="flex animate-pulse items-center gap-2 bg-buff-card py-2 px-0 sm:gap-3 sm:p-3" data-pl-sk>
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="h-8 w-8 shrink-0 rounded-full bg-buff-border/30"></div>
         <div class="h-4 w-full max-w-32 rounded bg-buff-border/30"></div>
@@ -84,7 +84,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         <div class="h-4 w-4 rounded bg-buff-border/30"></div>
       </div>
     </div>
-    <div class="flex animate-pulse items-center gap-2 bg-buff-card p-0 sm:gap-3 sm:p-3" data-pl-sk>
+    <div class="flex animate-pulse items-center gap-2 bg-buff-card py-2 px-0 sm:gap-3 sm:p-3" data-pl-sk>
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="h-8 w-8 shrink-0 rounded-full bg-buff-border/30"></div>
         <div class="h-4 w-full max-w-32 rounded bg-buff-border/30"></div>
@@ -220,7 +220,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
           '</div>';
       }
 
-      return '<a href="/match/' + encodeURIComponent(m.id) + '" class="relative flex items-center gap-2 bg-buff-card p-0 no-underline transition hover:bg-buff-hover sm:gap-3 sm:p-3" data-status="' + status + '">' +
+      return '<a href="/match/' + encodeURIComponent(m.id) + '" class="relative flex items-center gap-2 bg-buff-card py-2 px-0 no-underline transition hover:bg-buff-hover sm:gap-3 sm:p-3" data-status="' + status + '">' +
         '<div class="flex min-w-0 flex-1 items-center gap-2">' +
         (homeBadge ? '<img src="/api/proxy/images/badge/' + homeBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(homeName) + '</span>' +
