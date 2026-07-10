@@ -43,8 +43,7 @@ export function mapToPremiumSport(
 
     if (
       (sport.category === 'tennis') ||
-      (sport.category === 'golf') ||
-      (sport.category === 'football')
+      (sport.category === 'golf')
     ) {
       return {
         ...match,
@@ -82,6 +81,15 @@ export function mapToPremiumSport(
         }
       }
     }
+  }
+
+  if (match.category === 'football') {
+    return {
+      ...match,
+      premiumSport: 'soccer',
+      premiumDisplayName: 'Soccer',
+      categoryBadge: null,
+    };
   }
 
   const nonPremium = (
