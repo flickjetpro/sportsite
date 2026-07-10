@@ -1,0 +1,58 @@
+---
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
+import BlogSidebar from '../../components/BlogSidebar.astro';
+import { blogPosts } from '../../data/blog-posts';
+
+const post = blogPosts[1];
+---
+
+<Base title={`${post.title} | Buffstreams`} description={post.excerpt}>
+  <Header />
+  <main class="mx-auto max-w-7xl px-2 py-6 sm:px-4">
+    <Breadcrumb items={[
+      { name: 'Home', url: '/' },
+      { name: 'Blog', url: '/blog/nfl-preview' },
+      { name: post.title, url: `/blog/${post.slug}` },
+    ]} />
+    <div class="grid grid-cols-1 gap-8 lg:grid-cols-3">
+      <article class="lg:col-span-2">
+        <img src={post.image} alt={post.title} class="mb-6 w-full rounded-lg object-cover" loading="eager" />
+        <p class="mb-2 text-xs text-buff-muted">{post.date}</p>
+        <h1 class="mb-6 text-2xl font-bold text-white">{post.title}</h1>
+
+        <p class="mb-4 text-sm text-buff-muted leading-relaxed">
+          The 2026 NFL season is shaping up to be one of the most exciting in recent memory. With new quarterback moves, emerging dynasties, and a competitive draft class, fans have plenty to look forward to. Whether you are a die-hard supporter or a casual viewer, <a href="/" class="text-buff-gold no-underline hover:underline">Buffstreams</a> has you covered with free HD streams for every game.
+        </p>
+
+        <h2 class="mb-3 mt-8 text-xl font-bold text-white">AFC Conference Outlook</h2>
+        <p class="mb-4 text-sm text-buff-muted leading-relaxed">
+          The AFC remains stacked with talent. The Kansas City Chiefs continue to lead the charge behind their elite offense, while the Buffalo Bills and Cincinnati Bengals are hungry for a Super Bowl return. The Baltimore Ravens have retooled their receiving corps, and the Miami Dolphins boast one of the fastest offenses in the league. In the AFC South, the Jacksonville Jaguars and Houston Texans are both on the rise with young quarterbacks leading the way. The Denver Jets and Las Vegas Raiders are looking to bounce back after disappointing campaigns.
+        </p>
+
+        <h2 class="mb-3 mt-8 text-xl font-bold text-white">NFC Conference Outlook</h2>
+        <p class="mb-4 text-sm text-buff-muted leading-relaxed">
+          The NFC is wide open. The San Francisco 49ers and Philadelphia Eagles remain the teams to beat after deep playoff runs. The Dallas Cowboys have retooled their defense and are aiming for a conference title. The Detroit Lions are coming off a breakthrough season and look ready to compete with the best. In the NFC South, the Atlanta Falcons and New Orleans Saints are in rebuilding mode, while the Chicago Bears and Green Bay Packers are both trending upward in the NFC North. The Los Angeles Rams and Seattle Seahawks round out a competitive NFC West.
+        </p>
+
+        <h2 class="mb-3 mt-8 text-xl font-bold text-white">Key Regular Season Matchups</h2>
+        <p class="mb-4 text-sm text-buff-muted leading-relaxed">
+          This season features several must-watch games. The Chiefs travel to Buffalo in Week 6 for a rematch of recent playoff classics. The 49ers face the Eagles in Week 8 in a battle of NFC heavyweights. The Cowboys host the Giants on Thanksgiving Day in a rivalry that never disappoints. The Bengals take on the Ravens twice this season in what should be two hard-fought AFC North battles. The Super Bowl rematch between the Chiefs and 49ers is scheduled for Week 12 and could have major playoff seeding implications.
+        </p>
+
+        <h2 class="mb-3 mt-8 text-xl font-bold text-white">How to Stream NFL Games for Free</h2>
+        <p class="mb-4 text-sm text-buff-muted leading-relaxed">
+          Every NFL game this season is available to stream on <a href="/" class="text-buff-gold no-underline hover:underline">Buffstreams</a>. From Thursday Night Football to Monday Night Football, and from early Sunday kickoffs to the Sunday night prime-time slot, <a href="/" class="text-buff-gold no-underline hover:underline">Buffstreams</a> delivers HD quality streams with multiple backup links. No subscription, no sign-up, and no credit card required. Just visit the <a href="/nfl" class="text-buff-gold no-underline hover:underline">NFL schedule page on Buffstreams</a> to find your game and start watching.
+        </p>
+
+        <p class="mb-4 text-sm text-buff-muted leading-relaxed">
+          The postseason will be fully covered too, from Super Wild Card Weekend all the way through the Super Bowl. Mark your calendars for the key matchups and get ready for another unforgettable NFL season. Bookmark <a href="/nfl" class="text-buff-gold no-underline hover:underline">Buffstreams NFL page</a> to stay updated with the latest game times and streaming links.
+        </p>
+      </article>
+      <aside class="lg:col-span-1">
+        <BlogSidebar currentSlug={post.slug} />
+      </aside>
+    </div>
+  </main>
+</Base>
