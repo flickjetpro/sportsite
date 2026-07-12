@@ -26,7 +26,7 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
   <div class="flex min-w-0 flex-1 items-center gap-2">
     {match.teams?.home?.badge && (
       <img
-        src={`/api/proxy/images/badge/${match.teams.home.badge}.webp`}
+        src={`/badges/${match.teams.home.badge}.webp`}
         alt=""
         class="max-sm:hidden h-8 w-8 rounded-full object-contain"
         loading="lazy"
@@ -84,7 +84,7 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
     </span>
     {match.teams?.away?.badge && (
       <img
-        src={`/api/proxy/images/badge/${match.teams.away.badge}.webp`}
+        src={`/badges/${match.teams.away.badge}.webp`}
         alt=""
         class="max-sm:hidden h-8 w-8 rounded-full object-contain"
         loading="lazy"

@@ -6,7 +6,7 @@ import Countdown from '../../components/Countdown.astro';
 import { mapToPremiumSport } from '../../lib/api';
 import { formatET, formatETWithDate } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
-import { STREAM_DOMAIN, SOURCE_NAMES, formatStreamLabel } from '../../lib/config';
+import { SOURCE_NAMES, formatStreamLabel } from '../../lib/config';
 import type { APIMatch } from '../../lib/api';
 import sportsData from '../../data/sports.json';
 
@@ -61,7 +61,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
             <div class="flex flex-col items-center gap-2">
               {match.teams.home.badge && (
                 <img
-                  src={`/api/proxy/images/badge/${match.teams.home.badge}.webp`}
+                  src={`/badges/${match.teams.home.badge}.webp`}
                   alt={match.teams.home.name}
                   class="h-16 w-16 rounded-full object-contain"
                 />
@@ -74,7 +74,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
             <div class="flex flex-col items-center gap-2">
               {match.teams.away.badge && (
                 <img
-                  src={`/api/proxy/images/badge/${match.teams.away.badge}.webp`}
+                  src={`/badges/${match.teams.away.badge}.webp`}
                   alt={match.teams.away.name}
                   class="h-16 w-16 rounded-full object-contain"
                 />
@@ -145,7 +145,6 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
     var matchId = ${JSON.stringify(match.id)};
     var sources = ${JSON.stringify(sources)};
     var sourceNames = ${JSON.stringify(SOURCE_NAMES)};
-    var streamDomain = ${JSON.stringify(STREAM_DOMAIN)};
     var grid = document.getElementById('stream-grid');
     var countEl = document.getElementById('stream-count');
     if (!grid) return;
@@ -166,7 +165,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
       for (var i = 0; i < sources.length; i++) {
         var src = sources[i];
         try {
-          var res = await fetch('/api/proxy/stream/' + src.source + '/' + src.id);
+          var res = await fetch('https://streamed.pk/api/stream/' + src.source + '/' + src.id);
           var data2 = await res.json();
           var list = Array.isArray(data2) ? data2 : (data2.value || []);
           for (var j = 0; j < list.length; j++) {
@@ -220,7 +219,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
         for (var ri = 0; ri < streams.length; ri++) {
           var st = streams[ri];
           var isLast = ri === streams.length - 1;
-          var href = 'https://' + streamDomain + '/match/' + matchId + '?source=' + st.source + '&stream=' + st.streamNo;
+          var href = 'https://watch.buffstreamsbackup.world/?id=' + matchId + '&source=' + st.source + '&stream=' + st.streamNo;
           var quality = st.hd ? 'HD' : 'SD';
           var qClass = st.hd ? 'text-buff-gold' : 'text-buff-muted';
           var viewersColor = st.viewers > 0 ? 'color:#22c55e' : 'color:#888';

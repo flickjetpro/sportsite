@@ -1,5 +1,3 @@
-export const STREAM_DOMAIN = 'watch.buffstreamsbackup.world'
-
 export const MAIN_DOMAIN = 'buffstreamsbackup.world'
 
 export const SOURCE_NAMES: Record<string, string> = {

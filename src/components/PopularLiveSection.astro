@@ -141,8 +141,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var step = parseInt(grid.getAttribute('data-pl-step')) || 5;
     var sport = grid.getAttribute('data-sport') || '';
 
-    var apiBase = 'https://watch.buffstreamsbackup.world/api/live-now';
-    var sepQ = sport ? '&' : '?';
+    var base = 'https://streamed.pk/api/matches';
 
     var TWENTY_FOUR_HOURS = 86400000;
     var THREE_HOURS = 3 * 60 * 60 * 1000;
@@ -222,13 +221,13 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
       return '<a href="/match/' + encodeURIComponent(m.id) + '" class="relative flex items-center gap-2 bg-buff-card py-2 px-0 no-underline transition hover:bg-buff-hover sm:gap-3 sm:p-3" data-status="' + status + '">' +
         '<div class="flex min-w-0 flex-1 items-center gap-2">' +
-        (homeBadge ? '<img src="/api/proxy/images/badge/' + homeBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        (homeBadge ? '<img src="/badges/' + homeBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(homeName) + '</span>' +
         '</div>' +
         centerHtml +
         '<div class="flex min-w-0 flex-1 items-center justify-end gap-2">' +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(awayName) + '</span>' +
-        (awayBadge ? '<img src="/api/proxy/images/badge/' + awayBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        (awayBadge ? '<img src="/badges/' + awayBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
         '</div>' +
         '<span class="ml-1 text-buff-muted">&rsaquo;</span>' +
         '</a>';
@@ -243,10 +242,9 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
       return true;
     }
 
-    var sportParam = sport ? '?sport=' + sport : '';
-    var todayUrl = apiBase + sportParam + sepQ + 'scope=all-today';
-    var popularUrl = apiBase + sportParam + sepQ + 'scope=live-popular';
-    var liveUrl = apiBase + sportParam + sepQ + 'scope=live';
+    var todayUrl = base + '/all-today';
+    var popularUrl = base + '/live/popular';
+    var liveUrl = base + '/live';
 
     Promise.all([fetch(todayUrl), fetch(popularUrl), fetch(liveUrl)])
       .then(function (responses) {

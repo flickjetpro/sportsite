@@ -2,6 +2,8 @@ name: Deploy
 on:
   push:
     branches: [main]
+  schedule:
+    - cron: '0 */6 * * *'
   workflow_dispatch:
 
 jobs:
@@ -9,23 +11,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - name: Install dependencies
-        run: npm ci
-      - name: Fetch and filter data
-        run: node scripts/fetch-data.js
-      - name: Build site
-        run: npm run build
-      - name: Deploy main site worker
-        run: npx wrangler deploy
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
-      - name: Deploy stream worker
-        run: npx wrangler deploy --config wrangler-stream.jsonc
-        env:
-          CLOUDFLARE_API_TOKEN: ${{ secrets.CF_API_TOKEN }}
-          CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - run: npm ci
+      - run: pip install requests Pillow
+
+      - run: node scripts/fetch-data.js
+      - run: python scripts/fetch-badges.py
+
+      - run: |
+          git config user.name "bot"
+          git config user.email "bot@noreply.github.com"
+          git add public/badges/ scripts/badge-map.json
+          git diff --cached --quiet || git commit -m "sync badges [skip ci]" && git push
+
+      - run: npm run build
+
+      - uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          cname: buffstreamsbackup.world
