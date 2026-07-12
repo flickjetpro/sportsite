@@ -6,7 +6,10 @@ export interface Props {
   viewAllMode?: 'link' | 'inline';
 }
 
+import sportsData from '../data/sports.json';
+
 const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.props;
+const resolvedCategory = sport ? (sportsData.premiumSports as Record<string, any>)[sport]?.category || '' : '';
 ---
 
 <section id="popular-live-section" class="rounded-lg border border-buff-border bg-buff-darker py-2 px-0 sm:p-4">
@@ -15,7 +18,7 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     LIVE NOW
   </h2>
 
-  <div id="popular-live-grid" class="divide-y divide-dashed divide-buff-border" data-pl-step={step} data-initial={initialShow} data-sport={sport}>
+  <div id="popular-live-grid" class="divide-y divide-dashed divide-buff-border" data-pl-step={step} data-initial={initialShow} data-sport={sport} data-category={resolvedCategory}>
     <div class="flex animate-pulse items-center gap-2 bg-buff-card py-2 px-0 sm:gap-3 sm:p-3" data-pl-sk>
       <div class="flex min-w-0 flex-1 items-center gap-2">
         <div class="h-8 w-8 shrink-0 rounded-full bg-buff-border/30"></div>
@@ -263,6 +266,14 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         todayData = todayData.filter(filter247);
         popularData = popularData.filter(filter247);
         liveData = liveData.filter(filter247);
+
+        // Filter by category when on a sport-specific page
+        var category = grid.getAttribute('data-category') || '';
+        if (sport && category) {
+          todayData = todayData.filter(function(m) { return m.category === category; });
+          popularData = popularData.filter(function(m) { return m.category === category; });
+          liveData = liveData.filter(function(m) { return m.category === category; });
+        }
 
         // Build unique match map for viewer count fetching
         var matchMap = {};
