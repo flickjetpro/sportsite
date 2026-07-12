@@ -73,13 +73,11 @@ export function isLive(match: { date: number }): boolean {
   return now >= start && now <= end;
 }
 
-export function getMatchStatus(match: { date: number }): 'live' | 'upcoming' | 'finished' {
+export function getMatchStatus(match: { date: number }): 'live' | 'upcoming' {
   const now = Date.now();
   const start = match.date;
   const end = start + 3 * 60 * 60 * 1000;
-  if (now >= start && now <= end) return 'live';
-  if (now < start) return 'upcoming';
-  return 'finished';
+  return (now >= start && now <= end) ? 'live' : 'upcoming';
 }
 
 export function formatTimeAgo(matchDate: number): string {

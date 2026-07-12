@@ -70,14 +70,6 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
         )}
       </>
     )}
-    {status === 'finished' && (
-      <>
-        <span class="rounded bg-buff-border px-2 py-0.5 text-xs font-bold text-buff-muted">FINAL</span>
-        <span class="whitespace-nowrap font-mono text-xs text-buff-muted">
-          {formatET(match.date)} ET
-        </span>
-      </>
-    )}
   </div>
 
   <div class="flex min-w-0 flex-1 items-center justify-end gap-2">
