@@ -259,93 +259,116 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
         popularData = popularData.filter(filter247);
         liveData = liveData.filter(filter247);
 
-        // Tier 1: from today, viewers > 0 && date <= now + 3h
-        var tier1Ids = {};
-        var tier1 = [];
-        var now = Date.now();
-        for (var i = 0; i < todayData.length; i++) {
-          var m = todayData[i];
-          if (m.totalViewers > 0 && m.date <= now + THREE_HOURS) {
-            tier1Ids[m.id] = true;
-            tier1.push(m);
-          }
-        }
-        tier1.sort(function (a, b) { return (b.totalViewers || 0) - (a.totalViewers || 0); });
-
-        // Tier 2: from live/popular, exclude already in Tier 1
-        var tier2Ids = {};
-        var tier2 = [];
-        for (var i = 0; i < popularData.length; i++) {
-          var m = popularData[i];
-          if (tier1Ids[m.id]) continue;
-          tier2Ids[m.id] = true;
-          m._displayLive = true;
-          tier2.push(m);
-        }
-        tier2.sort(function (a, b) { return a.date - b.date; });
-
-        // Tier 3: from live, exclude already in Tier 1 or Tier 2
-        var tier3 = [];
-        for (var i = 0; i < liveData.length; i++) {
-          var m = liveData[i];
-          if (tier1Ids[m.id]) continue;
-          if (tier2Ids[m.id]) continue;
-          m._displayLive = true;
-          tier3.push(m);
-        }
-        tier3.sort(function (a, b) { return a.date - b.date; });
-
-        var liveMatches = tier1.concat(tier2).concat(tier3);
-
-        if (liveMatches.length === 0) {
-          section.style.display = 'none';
-          return;
-        }
-
-        var liveCount = liveMatches.length;
-        heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
-
-        // Build real cards
-        var cardEls = liveMatches.map(function (m) {
-          var div = document.createElement('div');
-          div.innerHTML = buildCard(m);
-          return div.firstChild;
+        // Build unique match map for viewer count fetching
+        var matchMap = {};
+        [todayData, popularData, liveData].forEach(function(arr) {
+          arr.forEach(function(m) { if (m.id && !matchMap[m.id]) matchMap[m.id] = m; });
         });
+        var uniqueIds = Object.keys(matchMap);
 
-        // Replace grid contents
-        grid.innerHTML = '';
-        for (var i = 0; i < cardEls.length; i++) {
-          grid.appendChild(cardEls[i]);
-        }
-
-        var show = Math.min(cardEls.length, initialShow);
-        for (var i = 0; i < cardEls.length; i++) {
-          cardEls[i].style.display = i < show ? '' : 'none';
-        }
-
-        var hiddenCount = cardEls.length - show;
-
-        // Swap button to real styling if needed
-        if (hiddenCount > 0 && showMoreBtn) {
-          showMoreBtn.className = 'inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold';
-          showMoreBtn.addEventListener('click', function () {
-            var hidden = [];
-            for (var i = 0; i < cardEls.length; i++) {
-              if (cardEls[i].style.display === 'none') hidden.push(cardEls[i]);
-            }
-            var toShow = Math.min(hidden.length, step);
-            for (var i = 0; i < toShow; i++) {
-              hidden[i].style.display = '';
-            }
-            var still = hidden.length - toShow;
-            showMoreBtn.style.display = 'none';
-            if (still > 0 && viewAllLink && viewAllWrap) {
-              viewAllWrap.style.display = 'block';
-            }
+        // Fetch viewer counts for all unique matches
+        return Promise.all(uniqueIds.map(function(id) {
+          var m = matchMap[id];
+          if (!m.sources || m.sources.length === 0) { m.totalViewers = 0; return; }
+          return Promise.all(m.sources.map(function(s) {
+            return fetch('https://streamed.pk/api/stream/' + s.source + '/' + s.id)
+              .then(function(r) { return r.json(); })
+              .then(function(streams) {
+                return Array.isArray(streams) ? streams.reduce(function(sum, st) { return sum + (st.viewers || 0); }, 0) : 0;
+              })
+              .catch(function() { return 0; });
+          })).then(function(counts) {
+            m.totalViewers = counts.reduce(function(a,b){return a+b;}, 0);
           });
-        } else if (showMoreBtn) {
-          showMoreBtn.style.display = 'none';
-        }
+        })).then(function() {
+          // Tier 1: from today, viewers > 0 && date <= now + 3h
+          var tier1Ids = {};
+          var tier1 = [];
+          var now = Date.now();
+          for (var i = 0; i < todayData.length; i++) {
+            var m = todayData[i];
+            if (m.totalViewers > 0 && m.date <= now + THREE_HOURS) {
+              tier1Ids[m.id] = true;
+              tier1.push(m);
+            }
+          }
+          tier1.sort(function (a, b) { return (b.totalViewers || 0) - (a.totalViewers || 0); });
+
+          // Tier 2: from live/popular, exclude already in Tier 1
+          var tier2Ids = {};
+          var tier2 = [];
+          for (var i = 0; i < popularData.length; i++) {
+            var m = popularData[i];
+            if (tier1Ids[m.id]) continue;
+            tier2Ids[m.id] = true;
+            m._displayLive = true;
+            tier2.push(m);
+          }
+          tier2.sort(function (a, b) { return a.date - b.date; });
+
+          // Tier 3: from live, exclude already in Tier 1 or Tier 2
+          var tier3 = [];
+          for (var i = 0; i < liveData.length; i++) {
+            var m = liveData[i];
+            if (tier1Ids[m.id]) continue;
+            if (tier2Ids[m.id]) continue;
+            m._displayLive = true;
+            tier3.push(m);
+          }
+          tier3.sort(function (a, b) { return a.date - b.date; });
+
+          var liveMatches = tier1.concat(tier2).concat(tier3);
+
+          if (liveMatches.length === 0) {
+            section.style.display = 'none';
+            return;
+          }
+
+          var liveCount = liveMatches.length;
+          heading.innerHTML = '<span class="inline-block h-3 w-3 rounded-full bg-buff-live animate-pulse-live"></span> LIVE NOW' + (liveCount > 0 ? ' (' + liveCount + ')' : '');
+
+          // Build real cards
+          var cardEls = liveMatches.map(function (m) {
+            var div = document.createElement('div');
+            div.innerHTML = buildCard(m);
+            return div.firstChild;
+          });
+
+          // Replace grid contents
+          grid.innerHTML = '';
+          for (var i = 0; i < cardEls.length; i++) {
+            grid.appendChild(cardEls[i]);
+          }
+
+          var show = Math.min(cardEls.length, initialShow);
+          for (var i = 0; i < cardEls.length; i++) {
+            cardEls[i].style.display = i < show ? '' : 'none';
+          }
+
+          var hiddenCount = cardEls.length - show;
+
+          // Swap button to real styling if needed
+          if (hiddenCount > 0 && showMoreBtn) {
+            showMoreBtn.className = 'inline-flex cursor-pointer items-center gap-2 rounded-lg border border-buff-border bg-buff-card px-6 py-3 text-sm font-bold text-buff-gold transition hover:border-buff-gold';
+            showMoreBtn.addEventListener('click', function () {
+              var hidden = [];
+              for (var i = 0; i < cardEls.length; i++) {
+                if (cardEls[i].style.display === 'none') hidden.push(cardEls[i]);
+              }
+              var toShow = Math.min(hidden.length, step);
+              for (var i = 0; i < toShow; i++) {
+                hidden[i].style.display = '';
+              }
+              var still = hidden.length - toShow;
+              showMoreBtn.style.display = 'none';
+              if (still > 0 && viewAllLink && viewAllWrap) {
+                viewAllWrap.style.display = 'block';
+              }
+            });
+          } else if (showMoreBtn) {
+            showMoreBtn.style.display = 'none';
+          }
+        });
       })
       .catch(function () {
         section.style.display = 'none';
