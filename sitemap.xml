@@ -111,6 +111,11 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://buffstreamsbackup.world/match/23745</loc>
+    <changefreq>hourly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
     <loc>https://buffstreamsbackup.world/match/ppv-event-01-amsoil-championship-off-road-ppv-01</loc>
     <changefreq>hourly</changefreq>
     <priority>0.6</priority>
@@ -142,11 +147,6 @@
   </url>
   <url>
     <loc>https://buffstreamsbackup.world/match/wimbledon-championships-2026-roland-2026</loc>
-    <changefreq>hourly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://buffstreamsbackup.world/match/tour-de-france-stage-9-2447756</loc>
     <changefreq>hourly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -291,12 +291,12 @@
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://buffstreamsbackup.world/match/atletico-ottawa-vs-supra-du-quebec-football-1544674</loc>
+    <loc>https://buffstreamsbackup.world/match/forge-vs-saint-laurent-football-1544848</loc>
     <changefreq>hourly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://buffstreamsbackup.world/match/forge-fc-vs-cs-saint-laurent-4726108</loc>
+    <loc>https://buffstreamsbackup.world/match/atletico-ottawa-vs-supra-du-quebec-football-1544674</loc>
     <changefreq>hourly</changefreq>
     <priority>0.6</priority>
   </url>
