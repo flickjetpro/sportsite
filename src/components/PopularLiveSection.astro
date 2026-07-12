@@ -144,7 +144,6 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
     var base = 'https://streamed.pk/api/matches';
 
     var TWENTY_FOUR_HOURS = 86400000;
-    var THREE_HOURS = 3 * 60 * 60 * 1000;
     var TWENTY_FOUR_SEVEN_RE = /(24\/7|24 hour|247|always live)/i;
 
     function escapeHtml(text) {
@@ -281,13 +280,12 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
             m.totalViewers = counts.reduce(function(a,b){return a+b;}, 0);
           });
         })).then(function() {
-          // Tier 1: from today, viewers > 0 && date <= now + 3h
+          // Tier 1: any match with viewers > 0
           var tier1Ids = {};
           var tier1 = [];
-          var now = Date.now();
-          for (var i = 0; i < todayData.length; i++) {
-            var m = todayData[i];
-            if (m.totalViewers > 0 && m.date <= now + THREE_HOURS) {
+          for (var id in matchMap) {
+            var m = matchMap[id];
+            if (m.totalViewers > 0) {
               tier1Ids[m.id] = true;
               tier1.push(m);
             }
