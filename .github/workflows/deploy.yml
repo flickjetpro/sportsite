@@ -6,9 +6,19 @@ on:
     - cron: '0 */6 * * *'
   workflow_dispatch:
 
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
 
@@ -27,16 +37,13 @@ jobs:
       - run: node scripts/fetch-data.js
       - run: python scripts/fetch-badges.py
 
-      - run: |
-          git config user.name "bot"
-          git config user.email "bot@noreply.github.com"
-          git add public/badges/ scripts/badge-map.json
-          git diff --cached --quiet || git commit -m "sync badges [skip ci]" && git push
-
       - run: npm run build
 
-      - uses: peaceiris/actions-gh-pages@v3
+      - run: cp CNAME dist/CNAME
+
+      - uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          cname: buffstreamsbackup.world
+          path: ./dist
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
