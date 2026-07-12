@@ -7,6 +7,7 @@ import { mapToPremiumSport } from '../../lib/api';
 import { formatET, formatETWithDate } from '../../lib/time';
 import { getMatchSEO } from '../../lib/seo';
 import { SOURCE_NAMES, formatStreamLabel } from '../../lib/config';
+import { slugifyTeam } from '../../lib/images';
 import type { APIMatch } from '../../lib/api';
 import sportsData from '../../data/sports.json';
 
@@ -57,28 +58,24 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
     <div class="flex flex-col items-center gap-4 py-8 text-center">
       {match.teams?.home?.name || match.teams?.away?.name ? (
         <div class="flex items-center gap-6">
-          {match.teams?.home?.name && (
+              {match.teams?.home?.name && (
             <div class="flex flex-col items-center gap-2">
-              {match.teams.home.badge && (
-                <img
-                  src={`/badges/${match.teams.home.badge}.webp`}
-                  alt={match.teams.home.name}
-                  class="h-16 w-16 rounded-full object-contain"
-                />
-              )}
+              <img
+                src={`/badges/${slugifyTeam(match.teams.home.name)}.webp`}
+                alt={match.teams.home.name}
+                class="h-16 w-16 rounded-full object-contain"
+              />
               <span class="text-sm font-medium text-white">{match.teams.home.name}</span>
             </div>
           )}
           <span class="text-2xl font-bold text-buff-muted">VS</span>
           {match.teams?.away?.name && (
             <div class="flex flex-col items-center gap-2">
-              {match.teams.away.badge && (
-                <img
-                  src={`/badges/${match.teams.away.badge}.webp`}
-                  alt={match.teams.away.name}
-                  class="h-16 w-16 rounded-full object-contain"
-                />
-              )}
+              <img
+                src={`/badges/${slugifyTeam(match.teams.away.name)}.webp`}
+                alt={match.teams.away.name}
+                class="h-16 w-16 rounded-full object-contain"
+              />
               <span class="text-sm font-medium text-white">{match.teams.away.name}</span>
             </div>
           )}

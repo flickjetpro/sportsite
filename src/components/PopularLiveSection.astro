@@ -154,6 +154,11 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
       return d.innerHTML;
     }
 
+    function slugify(name) {
+      if (!name) return '';
+      return name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+    }
+
     function formatET(date) {
       return new Date(date).toLocaleTimeString('en-US', {
         timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit', hour12: true,
@@ -193,8 +198,8 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
       var away = m.teams && m.teams.away && m.teams.away.name ? m.teams.away : null;
       var homeName = home ? home.name : (m.title.split(' vs ')[0] || m.title);
       var awayName = away ? away.name : (m.title.split(' vs ')[1] || '');
-      var homeBadge = home && home.badge ? home.badge : null;
-      var awayBadge = away && away.badge ? away.badge : null;
+      var homeBadge = home && home.name ? slugify(home.name) : null;
+      var awayBadge = away && away.name ? slugify(away.name) : null;
       var badge = makeBadge(m.category);
       var now = Date.now();
       var isToday = getDateStr(m.date) === getDateStr(now);

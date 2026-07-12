@@ -1,6 +1,7 @@
 ---
 import type { PremiumMatch } from '../lib/api';
 import { formatET, formatDateShort, getMatchStatus, getMatchDateStr, formatDateParam } from '../lib/time';
+import { slugifyTeam } from '../lib/images';
 
 export interface Props {
   match: PremiumMatch;
@@ -24,9 +25,9 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
   data-uid={uniqueId}
 >
   <div class="flex min-w-0 flex-1 items-center gap-2">
-    {match.teams?.home?.badge && (
+    {match.teams?.home?.name && (
       <img
-        src={`/badges/${match.teams.home.badge}.webp`}
+        src={`/badges/${slugifyTeam(match.teams.home.name)}.webp`}
         alt=""
         class="max-sm:hidden h-8 w-8 rounded-full object-contain"
         loading="lazy"
@@ -82,9 +83,9 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
     <span class="truncate text-sm font-medium text-white">
       {match.teams?.away?.name || match.title.split(' vs ')[1]}
     </span>
-    {match.teams?.away?.badge && (
+    {match.teams?.away?.name && (
       <img
-        src={`/badges/${match.teams.away.badge}.webp`}
+        src={`/badges/${slugifyTeam(match.teams.away.name)}.webp`}
         alt=""
         class="max-sm:hidden h-8 w-8 rounded-full object-contain"
         loading="lazy"
