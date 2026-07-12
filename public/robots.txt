@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
+Disallow: /badges/
+Disallow: /images/
+Disallow: /_astro/
 
 Sitemap: https://buffstreamsbackup.world/sitemap.xml

@@ -64,6 +64,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
                 src={`/badges/${slugifyTeam(match.teams.home.name)}.webp`}
                 alt={match.teams.home.name}
                 class="h-16 w-16 rounded-full object-contain"
+                onerror="this.style.display='none'"
               />
               <span class="text-sm font-medium text-white">{match.teams.home.name}</span>
             </div>
@@ -75,6 +76,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
                 src={`/badges/${slugifyTeam(match.teams.away.name)}.webp`}
                 alt={match.teams.away.name}
                 class="h-16 w-16 rounded-full object-contain"
+                onerror="this.style.display='none'"
               />
               <span class="text-sm font-medium text-white">{match.teams.away.name}</span>
             </div>

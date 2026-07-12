@@ -31,6 +31,7 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
         alt=""
         class="max-sm:hidden h-8 w-8 rounded-full object-contain"
         loading="lazy"
+        onerror="this.style.display='none'"
       />
     )}
     <span class="truncate text-sm font-medium text-white">
@@ -89,6 +90,7 @@ const isToday = getMatchDateStr(match) === isTodayScreen;
         alt=""
         class="max-sm:hidden h-8 w-8 rounded-full object-contain"
         loading="lazy"
+        onerror="this.style.display='none'"
       />
     )}
   </div>

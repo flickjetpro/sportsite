@@ -226,13 +226,13 @@ const { sport = '', initialShow = 5, step = 5, viewAllMode = 'link' } = Astro.pr
 
       return '<a href="/match/' + encodeURIComponent(m.id) + '" class="relative flex items-center gap-2 bg-buff-card py-2 px-0 no-underline transition hover:bg-buff-hover sm:gap-3 sm:p-3" data-status="' + status + '">' +
         '<div class="flex min-w-0 flex-1 items-center gap-2">' +
-        (homeBadge ? '<img src="/badges/' + homeBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        (homeBadge ? '<img src="/badges/' + homeBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy" onerror="this.style.display=\'none\'">' : '') +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(homeName) + '</span>' +
         '</div>' +
         centerHtml +
         '<div class="flex min-w-0 flex-1 items-center justify-end gap-2">' +
         '<span class="truncate text-sm font-medium text-white">' + escapeHtml(awayName) + '</span>' +
-        (awayBadge ? '<img src="/badges/' + awayBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy">' : '') +
+        (awayBadge ? '<img src="/badges/' + awayBadge + '.webp" alt="" class="max-sm:hidden h-8 w-8 rounded-full object-contain" loading="lazy" onerror="this.style.display=\'none\'">' : '') +
         '</div>' +
         '<span class="ml-1 text-buff-muted">&rsaquo;</span>' +
         '</a>';
