@@ -27,7 +27,11 @@ const todayFile = import.meta.glob('../../data/matches-today.json', { eager: tru
 const liveData: APIMatch[] = (Object.values(liveFile)[0] as any)?.default || [];
 const todayData: APIMatch[] = (Object.values(todayFile)[0] as any)?.default || [];
 
-const allMatches = loadMatchesFromData([...liveData, ...todayData]);
+const dedupMap = new Map<string, APIMatch>();
+for (const m of [...todayData, ...liveData]) {
+  if (m.id && !dedupMap.has(m.id)) dedupMap.set(m.id, m);
+}
+const allMatches = loadMatchesFromData([...dedupMap.values()]);
 const liveMatches = loadMatchesFromData(liveData);
 const filteredMatches = filterByDate(allMatches, date);
 const now = Date.now();
