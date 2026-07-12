@@ -10,7 +10,7 @@ export interface Props {
 }
 
 const { matches, heading = "STREAM LINKS", sportsWithFuture } = Astro.props;
-const headingPrefix = heading.replace(/ STREAM LINKS$/i, '');
+const headingPrefix = heading.replace(/\s*STREAM LINKS$/i, '');
 const premiumMatches = matches.filter((m) => m.premiumSport !== null);
 const grouped = groupBySport(premiumMatches);
 const premiumOrder = ['NFL', 'NBA', 'MLB', 'NHL', 'UFC', 'F1', 'Soccer', 'Tennis', 'Golf'];
