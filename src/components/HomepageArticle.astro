@@ -83,12 +83,100 @@ const faqSchema = {
         text: 'Yes, Buffstreams remains fully operational and active in 2026. The platform continues to provide free sports streams for millions of fans worldwide with regular updates for all major leagues and events including NFL, NBA, NHL, MLB, UFC, soccer, and F1.',
       },
     },
+    {
+      '@type': 'Question',
+      name: 'What internet speed is recommended for Buffstreams?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'A minimum internet speed of 5 Mbps is recommended for standard definition streams on Buffstreams. For 720p HD streaming, 10 Mbps or higher is recommended. For 1080p full HD streams, a connection of 15 Mbps or more provides the smoothest experience with minimal buffering.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does Buffstreams work with a VPN?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams works with most VPN services. Using a VPN can provide additional privacy and may help bypass regional restrictions or ISP throttling. A VPN is not required to access Buffstreams but is recommended for users who prioritize online privacy while streaming live sports.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How often are Buffstreams streams updated?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams stream links are updated in real time as events go live and throughout each game or match. The platform refreshes schedule information every 30 minutes during active seasons and stream sources are verified continuously to maintain reliable access to live sports content.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I watch Buffstreams on a smart TV?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams can be accessed on smart TVs through the built-in web browser on most models including Samsung, LG, Sony, and Vizio TVs. Roku and Amazon Fire TV users can use the web browser or screen mirroring from a mobile device to stream Buffstreams content on the big screen.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does Buffstreams have a mobile app?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams does not require a mobile app. The platform is fully optimized for mobile browsers on iOS and Android devices. Users can access Buffstreams directly through Safari, Chrome, or any modern browser without downloading or installing any application.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'What leagues and events does Buffstreams cover?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams covers the NFL, NBA, NHL, MLB, MLS, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, UEFA Champions League, Europa League, UFC, Bellator, PFL, ONE Championship, WWE, Formula 1, NASCAR, IndyCar, ATP Tour, WTA Tour, Grand Slam tennis, PGA Tour, LIV Golf, DP World Tour, NCAA football, and NCAA basketball across both FBS and Division I levels.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Are there ads on Buffstreams?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams displays advertisements to support the free streaming service. The platform does not have mid-stream pop-ups that interrupt game action and provides multiple backup stream links in case any ad experience affects playback quality.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Can I watch replays of past games on Buffstreams?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams focuses primarily on live sports streaming. Some stream sources may remain accessible after events conclude depending on availability. The platform is optimized for live game coverage and real-time event access rather than on-demand replay libraries.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Is Buffstreams legal to use?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams operates as a sports schedule directory and streaming resource that aggregates publicly available information about live sporting events. Users are encouraged to verify the legality of streaming in their jurisdiction and to use a VPN for privacy protection when accessing any free streaming platform.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'Does Buffstreams cover college sports?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Buffstreams provides comprehensive coverage of NCAA sports including college football across all FBS conferences, NCAA basketball including March Madness and conference tournaments, College Football Playoff games, bowl games, and select FCS and lower division matchups throughout the season.',
+      },
+    },
   ],
 };
 ---
 
 <article class="prose prose-invert max-w-none">
   <script type="application/ld+json" set:html={JSON.stringify(faqSchema)} />
+
+  <!-- ══ PLATFORM OVERVIEW ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams: The Definitive Free Sports Streaming Platform in 2026</h2>
+    <p class="mb-4 text-sm text-buff-muted">Buffstreams is a comprehensive free sports streaming platform delivering live coverage of the world's most popular sports leagues and events. From NFL football and NBA basketball to Premier League soccer, UFC fights, Formula 1 racing, and WWE entertainment, Buffstreams provides high-definition streams for every major sporting competition without requiring subscriptions, registration, or payment.</p>
+    <p class="mb-4 text-sm text-buff-muted">The platform covers over 14 major sports categories spanning dozens of leagues across American sports, international football, combat sports, motorsports, tennis, golf, and college athletics. Buffstreams organizes live and upcoming events by sport and league with real-time schedule updates, multiple stream sources per event, and automatic stream link refreshes throughout game day. Each event page displays match timing, league context, and multiple backup streaming options to ensure uninterrupted access.</p>
+    <p class="text-sm text-buff-muted">Buffstreams has become a primary destination for sports fans seeking free live sports streaming alternatives to expensive cable packages and subscription services. The platform's device-agnostic design works across phones, tablets, laptops, desktop computers, and smart TVs through any modern web browser. Stream quality ranges from standard definition to full 1080p HD depending on source availability, with prioritization of high-bitrate feeds for the best viewing experience.</p>
+  </section>
 
   <!-- ══ WHY BUFFSTREAMS ══ -->
   <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
@@ -125,13 +213,104 @@ const faqSchema = {
         <h3 class="mb-2 text-base font-bold text-white">Simple & Transparent</h3>
         <p class="text-sm text-buff-muted">Buffstreams offers no mid-game redirects and no surprise paywalls. Just honest, free access to live sports with multiple backup links for every event.</p>
       </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <div class="mb-3 text-2xl">🔄</div>
+        <h3 class="mb-2 text-base font-bold text-white">Real-Time Link Updates</h3>
+        <p class="text-sm text-buff-muted">Buffstreams refreshes stream links in real time throughout every game. As sources become available or change, the platform updates automatically so viewers always have working access to live action.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <div class="mb-3 text-2xl">🔀</div>
+        <h3 class="mb-2 text-base font-bold text-white">Multi-Source Redundancy</h3>
+        <p class="text-sm text-buff-muted">Every event on Buffstreams includes multiple stream sources from different providers. If one link experiences issues, alternative streams are instantly available ensuring uninterrupted viewing throughout the entire game or match.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <div class="mb-3 text-2xl">🕶️</div>
+        <h3 class="mb-2 text-base font-bold text-white">No Tracking Required</h3>
+        <p class="text-sm text-buff-muted">Buffstreams does not require any personal data, cookies consent for streaming, or tracking permissions. Users visit the site and watch immediately without surrendering privacy information.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ HOW BUFFSTREAMS WORKS ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">How Buffstreams Works</h2>
+    <p class="mb-4 text-sm text-buff-muted">Buffstreams aggregates live sports streaming links from multiple independent sources, organizes them by sport and event, and presents them in a clean schedule interface. The platform does not host or transmit video content directly. Instead, Buffstreams functions as a sports schedule directory and stream aggregator that collects, verifies, and categorizes publicly available streaming links for live sporting events.</p>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Source Aggregation</h3>
+        <p class="text-sm text-buff-muted">Buffstreams pulls stream links from multiple backend sources including Echo, Delta, and Golf sources. Each source provides independent streaming infrastructure. This multi-source architecture ensures that if one source encounters downtime or bandwidth limitations, alternative sources remain available for every event on the platform.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Real-Time Schedule Management</h3>
+        <p class="text-sm text-buff-muted">Buffstreams updates event schedules and match data from live data feeds every 30 minutes during active sports seasons. Game times, team matchups, league information, and stream availability are refreshed automatically. Live events are flagged and prioritized on the homepage for immediate access.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Stream Verification Pipeline</h3>
+        <p class="text-sm text-buff-muted">Each stream link on Buffstreams passes through availability checks before being displayed. Links that fail to load or return errors are flagged and replaced with verified alternatives. This pipeline operates continuously during live events to maintain a reliable set of working streams for every match.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Device Detection & Optimization</h3>
+        <p class="text-sm text-buff-muted">Buffstreams detects the user's device type and screen resolution to optimize the interface. Mobile users receive a touch-friendly layout with enlarged stream selection buttons. Desktop users see the full schedule grid with detailed match information. Stream iframes automatically scale to the available viewport.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ STREAMING QUALITY & TECHNOLOGY ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams Streaming Quality & Technology</h2>
+    <p class="mb-4 text-sm text-buff-muted">Buffstreams prioritizes stream quality and playback reliability across every event on the platform. Streams are sourced from multiple providers with different encoding configurations, bitrates, and CDN delivery networks to provide the best possible viewing experience for every sport.</p>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">HD Quality Standards</h3>
+        <p class="text-sm text-buff-muted">Buffstreams streams are available in 720p and 1080p HD resolutions depending on source availability. HD streams use H.264 encoding with variable bitrates typically ranging from 1500 kbps for 720p to 4000 kbps for 1080p feeds. Standard definition fallback streams are provided when HD sources are unavailable or bandwidth constrained.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">CDN Delivery & Latency</h3>
+        <p class="text-sm text-buff-muted">Streams on Buffstreams are delivered through multiple content delivery networks to reduce buffering and latency. Typical stream latency ranges from 15 to 45 seconds behind real-time depending on the source and CDN configuration. This latency is standard for web-based streaming and allows for buffer management during bandwidth fluctuations.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Adaptive Streaming Support</h3>
+        <p class="text-sm text-buff-muted">Many Buffstreams sources support adaptive bitrate streaming that automatically adjusts video quality based on available bandwidth. When network conditions change, the stream quality scales up or down without manual intervention, reducing buffering events during peak usage periods and maintaining continuous playback.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Multiple Backup Architecture</h3>
+        <p class="text-sm text-buff-muted">Each event on Buffstreams is served by multiple independent stream sources. The platform displays all available streams in a unified interface. Users can switch between sources with a single click if their current stream experiences buffering, quality degradation, or connection issues. This redundancy is the core reliability feature of Buffstreams.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ DEVICE COMPATIBILITY ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams Device Compatibility</h2>
+    <p class="mb-4 text-sm text-buff-muted">Buffstreams is designed to work across the full spectrum of consumer devices without requiring any software installation. The platform leverages standard web technologies including HTML5 video iframes and responsive CSS layouts to deliver a consistent streaming experience regardless of the device or operating system.</p>
+    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4 text-center">
+        <div class="mb-2 text-2xl">📱</div>
+        <h3 class="mb-1 text-sm font-bold text-white">Smartphones</h3>
+        <p class="text-xs text-buff-muted">iOS Safari & Chrome<br>Android Chrome & Firefox<br>Touch-optimized interface</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4 text-center">
+        <div class="mb-2 text-2xl">💻</div>
+        <h3 class="mb-1 text-sm font-bold text-white">Desktop & Laptop</h3>
+        <p class="text-xs text-buff-muted">Chrome, Firefox, Edge, Safari<br>Full schedule grid view<br>Keyboard navigation</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4 text-center">
+        <div class="mb-2 text-2xl">📺</div>
+        <h3 class="mb-1 text-sm font-bold text-white">Smart TVs</h3>
+        <p class="text-xs text-buff-muted">Samsung, LG, Sony, Vizio<br>Built-in browser access<br>Screen mirroring supported</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4 text-center">
+        <div class="mb-2 text-2xl">📟</div>
+        <h3 class="mb-1 text-sm font-bold text-white">Streaming Devices</h3>
+        <p class="text-xs text-buff-muted">Roku browser & mirroring<br>Fire TV Silk browser<br>Apple TV Safari</p>
+      </div>
     </div>
   </section>
 
   <!-- ══ SPORTS COVERAGE ══ -->
   <section class="not-prose mt-12">
     <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams Sports Coverage</h2>
-    <p class="mb-6 text-sm text-buff-muted">Buffstreams delivers comprehensive live coverage across all major sports leagues and events. Each sport features multiple streaming options with HD quality and reliable backup links.</p>
+    <p class="mb-6 text-sm text-buff-muted">Buffstreams delivers comprehensive live coverage across all major sports leagues and events. Each sport features multiple streaming options with HD quality and reliable backup links updated in real time.</p>
 
     <!-- NFL -->
     <div class="mb-5 rounded-lg border border-buff-border bg-buff-darker p-5">
@@ -143,6 +322,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free NFL streams for every regular season game, Thursday Night Football, Monday Night Football, Sunday Night Football, playoffs, the Super Bowl, and NFL RedZone in HD quality. No subscription required and no blackout restrictions. Multiple reliable backup links are updated daily for uninterrupted football action from kickoff to the final whistle.</p>
+      <p class="mb-4 text-sm text-buff-muted">The entire NFL postseason from Super Wild Card Weekend through the Divisional Round, AFC and NFC Championship Games, and Super Bowl is fully covered on Buffstreams. Fans can watch every snap of playoff football across all 32 NFL franchises including the Kansas City Chiefs, San Francisco 49ers, Dallas Cowboys, Philadelphia Eagles, Baltimore Ravens, Buffalo Bills, Cincinnati Bengals, Detroit Lions, Miami Dolphins, and every other team without blackout restrictions or pay-per-view charges. Buffstreams NFL RedZone access provides commercial-free Sunday afternoon coverage with live look-ins at every touchdown from across the league.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All 32 Teams</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Super Bowl Included</span>
@@ -150,6 +330,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Mobile Friendly</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">RedZone Access</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No Registration</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Thursday & Monday Night</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Playoff Coverage</span>
       </div>
     </div>
 
@@ -163,6 +345,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams offers free NBA streams covering the full regular season, Christmas Day games, All-Star Weekend, Play-In Tournament, NBA Playoffs, and NBA Finals in crystal-clear HD. Every Lakers, Celtics, Warriors, Knicks, and Thunder matchup is available without paying or signing up. Multiple working links with no lag and full mobile support.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams covers all 30 NBA franchises throughout the 82-game season including the Boston Celtics, Los Angeles Lakers, Golden State Warriors, New York Knicks, Miami Heat, Milwaukee Bucks, Denver Nuggets, Phoenix Suns, Philadelphia 76ers, and Oklahoma City Thunder. The NBA Play-In Tournament, First Round through Conference Finals, and NBA Finals receive dedicated stream sections with multiple source options. NBA All-Star Weekend including the Rising Stars Challenge, Skills Challenge, Three-Point Contest, Slam Dunk Contest, and All-Star Game are streamed live in HD.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Complete Season</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Playoffs & Finals</span>
@@ -170,6 +353,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No Cable Needed</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Multi-Device</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Christmas Day Games</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Play-In Tournament</span>
       </div>
     </div>
 
@@ -183,6 +368,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free soccer streams for the Premier League, La Liga, Serie A, Bundesliga, Ligue 1, UEFA Champions League, Europa League, UEFA Conference League, MLS, Liga MX, World Cup qualifiers, international friendlies, and major domestic cups in HD. No paywall and no registration required with multiple mirror links and mobile-optimized football streaming updated every matchday.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams soccer coverage spans every major European domestic league including the English Premier League with all 20 clubs, Spain's La Liga featuring Barcelona and Real Madrid, Italy's Serie A with Juventus, AC Milan, and Inter Milan, Germany's Bundesliga with Bayern Munich and Borussia Dortmund, and France's Ligue 1 with Paris Saint-Germain. UEFA Champions League group stage through the final at the Allianz Arena is fully covered. MLS coverage includes all Western and Eastern Conference matchups. International tournament coverage includes the FIFA World Cup, UEFA European Championship, Copa América, and Africa Cup of Nations.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Premier League</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Champions League</span>
@@ -190,6 +376,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">World Cup</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Weekend & Midweek</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Streams</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">La Liga & Serie A</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">MLS & Liga MX</span>
       </div>
     </div>
 
@@ -203,6 +391,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free NHL streams for every regular season hockey game, Winter Classic, Stadium Series, All-Star Game, Stanley Cup Playoffs, and Stanley Cup Final in high definition. All 32 teams are covered including the Maple Leafs, Oilers, Bruins, Rangers, and Avalanche without subscription fees. Reliable backups with no geo-blocks and full mobile compatibility.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams NHL coverage includes every regular season matchup across all four divisions including the Atlantic, Metropolitan, Central, and Pacific. Original Six franchises including the Toronto Maple Leafs, Montreal Canadiens, Boston Bruins, New York Rangers, Chicago Blackhawks, and Detroit Red Wings receive dedicated coverage alongside newer franchises like the Seattle Kraken and Vegas Golden Knights. The Stanley Cup Playoffs feature all four rounds with multiple stream sources per game, outdoor events including the Winter Classic and Stadium Series, and the NHL All-Star Weekend skills competition and All-Star Game.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Full Regular Season</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Stanley Cup Playoffs</span>
@@ -210,6 +399,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Multiple Mirrors</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Global Access</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Winter Classic</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Original Six</span>
       </div>
     </div>
 
@@ -223,6 +414,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free MLB streams for the full baseball season including Spring Training, Opening Day, All-Star Game, postseason, Wild Card, Division Series, League Championship Series, and the World Series in HD. Every team and matchup is covered from the Yankees and Dodgers to the Braves and Cubs with no blackout restrictions and no sign-up required.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams covers all 30 MLB franchises across both the American League and National League. Spring Training coverage from Grapefruit and Cactus Leagues runs through February and March. The MLB All-Star Week including the Futures Game, Home Run Derby, and All-Star Game is streamed live from the host ballpark. Postseason coverage begins with the Wild Card Series through the Division Series, League Championship Series, and the World Series. Every pitch of playoff baseball is available with multiple HD stream sources and backup links.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Full Regular Season</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">World Series</span>
@@ -230,6 +422,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All 30 Teams</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Available</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Playoff Coverage</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Spring Training</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Home Run Derby</span>
       </div>
     </div>
 
@@ -243,6 +437,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free UFC fight streams for every PPV event, Fight Night, and numbered card live in HD including main cards, prelims, and early prelims. Every fight card from Jon Jones, Islam Makhachev, Alex Pereira, and Conor McGregor to rising stars is available with no PPV cost. Multiple mirrors with low buffering and mobile-ready streaming.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams covers every UFC numbered event and Fight Night card from the Apex in Las Vegas and arenas worldwide. All weight divisions from heavyweight through flyweight are represented including championship bouts and top contender matchups. UFC PPV events that typically cost $79.99 on traditional providers are available free on Buffstreams with full main card, prelim, and early prelim coverage. Dana White Contender Series and The Ultimate Fighter finales are also streamed throughout the year.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All PPV Events</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Fight Night</span>
@@ -250,6 +445,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No PPV Cost</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Multiple Links</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All Weight Classes</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Championship Fights</span>
       </div>
     </div>
 
@@ -263,13 +460,16 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free F1 streams for every Formula 1 Grand Prix, Sprint race, qualifying session, and practice session live in HD from Bahrain to Abu Dhabi. Follow Max Verstappen, Lewis Hamilton, Charles Leclerc, McLaren, Ferrari, Red Bull, and Mercedes throughout the full F1 calendar. No PPV required with multiple reliable mirrors and low latency.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams covers every round of the Formula 1 World Championship including all practice sessions, qualifying, Sprint qualifying, Sprint races, and the Grand Prix itself. All 24 circuits are represented from Bahrain International Circuit and Jeddah Corniche Circuit to Monaco, Silverstone, Spa-Francorchamps, Monza, Suzuka, Marina Bay, Circuit of the Americas, Interlagos, and the Yas Marina season finale. F2 and F3 support races are also available during Grand Prix weekends. Pre-season testing coverage from Bahrain is included before the season opener.</p>
       <div class="flex flex-wrap gap-2">
-        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All Race Weekends</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All 24 Races</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Practice & Qualifying</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Sprint Races</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Feeds</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Full Calendar</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">F2 & F3</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Pre-Season Testing</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No F1 TV Needed</span>
       </div>
     </div>
 
@@ -283,6 +483,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free boxing streams for major PPV fights, undercards, title bouts, heavyweight showdowns, and international cards in high definition. Every Canelo Álvarez, Tyson Fury, Oleksandr Usyk, Anthony Joshua, and Ryan Garcia fight is available with no subscription required. Backup streams ensure uninterrupted access to every round.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams covers all major boxing promotions including Matchroom Boxing, Queensberry Promotions, Golden Boy Promotions, Top Rank, and Premier Boxing Champions. Fights from Riyadh Season cards in Saudi Arabia, London's O2 Arena and Wembley Stadium, Las Vegas's T-Mobile Arena and MGM Grand, and New York's Madison Square Garden are streamed live. Heavyweight championship bouts, super middleweight title fights, lightweight unification bouts, and women's championship boxing across all weight divisions receive full coverage with multiple stream sources.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Title Fights</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">PPV Events</span>
@@ -290,6 +491,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Multiple Mirrors</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">International Cards</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Heavyweight Bouts</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All Promotions</span>
       </div>
     </div>
 
@@ -303,6 +506,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free WWE streams for Monday Night Raw, Friday Night SmackDown, NXT, Premium Live Events, Royal Rumble, Elimination Chamber, WrestleMania, SummerSlam, and Survivor Series live in HD. Full shows and highlights are available without any subscription. Reliable mirrors with no login required.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams streams every WWE Premium Live Event including WrestleMania, Royal Rumble, SummerSlam, Survivor Series, Elimination Chamber, Money in the Bank, Hell in a Cell, and Clash at the Castle without requiring a Peacock or WWE Network subscription. Weekly television coverage includes Monday Night Raw, Friday Night SmackDown, and WWE NXT. NXT Premium Live Events including Stand & Deliver, Deadline, and Halloween Havoc are also covered. The WWE Draft, Hall of Fame induction ceremonies, and special milestone episodes receive dedicated stream sections.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Raw & SmackDown</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">WrestleMania</span>
@@ -310,6 +514,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No Subscription</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Mobile Ready</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">NXT Coverage</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Royal Rumble</span>
       </div>
     </div>
 
@@ -323,6 +529,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free MMA streams for UFC PPV events, UFC Fight Night, Dana White Contender Series, PFL championships, Bellator, ONE Championship, and international MMA cards live in HD. Every main event and prelim fight is available free with no sign-up required and multiple working links optimized for mobile viewing.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams MMA coverage extends beyond UFC to include the Professional Fighters League regular season and playoff events where fighters compete for million-dollar prizes, Bellator Champions Series cards across all weight divisions, ONE Championship events featuring both MMA and Muay Thai from Singapore and Thailand, and regional promotions including Japan's RIZIN, Brazil's Jungle Fight, and Cage Warriors from the United Kingdom. Every main card and preliminary bout is available with multiple stream sources and backup links.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">UFC & Bellator</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">ONE & PFL</span>
@@ -330,6 +537,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No PPV Cost</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Multiple Links</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">International MMA</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">RIZIN & Cage Warriors</span>
       </div>
     </div>
 
@@ -343,6 +552,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free tennis streams for all four Grand Slam tournaments including the Australian Open, French Open, Wimbledon, and US Open. ATP Tour and WTA Tour events are covered throughout the season with HD quality streams and multiple backup links for every match.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams tennis coverage spans the full ATP Tour calendar including Masters 1000 events at Indian Wells, Miami, Monte Carlo, Madrid, Rome, Canada, Cincinnati, Shanghai, and Paris-Bercy. WTA Tour coverage includes WTA 1000 events and the WTA Finals. Grand Slam coverage features all courts during the Australian Open at Melbourne Park, French Open at Roland Garros, Wimbledon at the All England Club, and US Open at Flushing Meadows. Every singles, doubles, and mixed doubles match is available with multiple stream sources.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Grand Slams</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">ATP Tour</span>
@@ -350,6 +560,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">All Courts</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">No Sign-Up</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Masters 1000</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Davis Cup</span>
       </div>
     </div>
 
@@ -363,6 +575,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free golf streams for PGA Tour events, DP World Tour, LIV Golf, and major championships including the Masters, PGA Championship, US Open, and The Open Championship in HD quality. Featured groups and marquee pairings are covered throughout every tournament weekend.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams covers the PGA Tour season including The Sentry, WM Phoenix Open, Players Championship, and FedEx Cup Playoffs. All four major championships receive dedicated coverage: the Masters at Augusta National, PGA Championship, US Open, and The Open Championship. LIV Golf League events including team and individual competitions are streamed alongside DP World Tour events and the Ryder Cup. Featured group coverage and marquee pairing streams are available for the biggest tournament rounds.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">PGA Tour</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Major Championships</span>
@@ -370,6 +583,8 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">LIV Golf</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Quality</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Featured Groups</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">The Masters</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Ryder Cup</span>
       </div>
     </div>
 
@@ -383,6 +598,7 @@ const faqSchema = {
         </div>
       </div>
       <p class="mb-4 text-sm text-buff-muted">Buffstreams provides free NCAA streams for college football and college basketball including regular season games, conference championships, bowl games, March Madness, the College Football Playoff, and the National Championship. Every FBS and FCS matchup is covered along with NCAAB Division I conference tournaments.</p>
+      <p class="mb-4 text-sm text-buff-muted">Buffstreams NCAA football coverage includes every FBS conference including the SEC, Big Ten, ACC, Big 12, and Pac-12 with powerhouse programs like Alabama, Georgia, Ohio State, Michigan, Texas, USC, Clemson, LSU, and Notre Dame featured weekly. The College Football Playoff Semifinals, National Championship, and all New Year's Six bowl games are fully covered. NCAA basketball coverage spans the entire regular season across all power conferences with March Madness coverage from the First Four through the Final Four and National Championship. Conference tournaments including the ACC, Big Ten, SEC, Big 12, and Big East tournaments receive dedicated stream sections during Championship Week.</p>
       <div class="flex flex-wrap gap-2">
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">College Football</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">March Madness</span>
@@ -390,6 +606,143 @@ const faqSchema = {
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">CFP Playoff</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Conference Tourneys</span>
         <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">HD Streams</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">SEC & Big Ten</span>
+        <span class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted">Final Four</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ MOST POPULAR SPORTS ON BUFFSTREAMS ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Most Popular Sports on Buffstreams</h2>
+    <p class="mb-6 text-sm text-buff-muted">Buffstreams serves millions of sports fans across multiple leagues and categories. The platform sees the highest streaming volume during NFL Sundays, UFC pay-per-view events, NBA playoff games, Premier League matchdays, and major championship finals across all sports.</p>
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-lg">🏈</span>
+          <span class="text-xs font-bold text-buff-gold">#1 Most Streamed</span>
+        </div>
+        <h3 class="text-sm font-bold text-white">NFL Football</h3>
+        <p class="text-xs text-buff-muted">Peak viewership on Sundays · RedZone & Primetime drives highest traffic</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-lg">⚽</span>
+          <span class="text-xs font-bold text-buff-gold">#2 Most Streamed</span>
+        </div>
+        <h3 class="text-sm font-bold text-white">Soccer / Football</h3>
+        <p class="text-xs text-buff-muted">Premier League & Champions League · Global audience year-round</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-lg">🏀</span>
+          <span class="text-xs font-bold text-buff-gold">#3 Most Streamed</span>
+        </div>
+        <h3 class="text-sm font-bold text-white">NBA Basketball</h3>
+        <p class="text-xs text-buff-muted">Playoffs & Finals peak · Christmas Day games drive high volume</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-1 flex items-center justify-between">
+          <span class="text-lg">🥊</span>
+          <span class="text-xs font-bold text-buff-gold">#4 Most Streamed</span>
+        </div>
+        <h3 class="text-sm font-bold text-white">UFC & Combat Sports</h3>
+        <p class="text-xs text-buff-muted">PPV event nights · Title fights draw millions of concurrent viewers</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ BUFFSTREAMS VS PAID SERVICES ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams vs Premium Sports Streaming Services</h2>
+    <p class="mb-6 text-sm text-buff-muted">Buffstreams offers a free alternative to paid sports streaming services that typically require monthly subscriptions ranging from $10 to $80 per month. The platform covers the same major leagues and events without the financial commitment.</p>
+    <div class="overflow-x-auto">
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="border-b border-buff-border">
+            <th class="p-3 text-left font-bold text-white">Service</th>
+            <th class="p-3 text-left font-bold text-white">Monthly Cost</th>
+            <th class="p-3 text-left font-bold text-white">Leagues Covered</th>
+            <th class="p-3 text-left font-bold text-white">Registration</th>
+            <th class="p-3 text-left font-bold text-white">Device Limit</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="border-b border-buff-border">
+            <td class="p-3 font-bold text-buff-gold">Buffstreams</td>
+            <td class="p-3 text-buff-muted">Free</td>
+            <td class="p-3 text-buff-muted">NFL, NBA, NHL, MLB, UFC, Soccer, F1, WWE, MMA, Tennis, Golf, NCAA</td>
+            <td class="p-3 text-buff-muted">None required</td>
+            <td class="p-3 text-buff-muted">Unlimited</td>
+          </tr>
+          <tr class="border-b border-buff-border">
+            <td class="p-3 font-bold text-white">ESPN+</td>
+            <td class="p-3 text-buff-muted">$11.99</td>
+            <td class="p-3 text-buff-muted">NHL, MLB, UFC, Soccer, College Sports</td>
+            <td class="p-3 text-buff-muted">Required</td>
+            <td class="p-3 text-buff-muted">3 devices</td>
+          </tr>
+          <tr class="border-b border-buff-border">
+            <td class="p-3 font-bold text-white">NBA League Pass</td>
+            <td class="p-3 text-buff-muted">$14.99</td>
+            <td class="p-3 text-buff-muted">NBA, WNBA</td>
+            <td class="p-3 text-buff-muted">Required</td>
+            <td class="p-3 text-buff-muted">2 devices</td>
+          </tr>
+          <tr class="border-b border-buff-border">
+            <td class="p-3 font-bold text-white">NFL Sunday Ticket</td>
+            <td class="p-3 text-buff-muted">$349/season</td>
+            <td class="p-3 text-buff-muted">NFL out-of-market games</td>
+            <td class="p-3 text-buff-muted">Required</td>
+            <td class="p-3 text-buff-muted">1 device</td>
+          </tr>
+          <tr class="border-b border-buff-border">
+            <td class="p-3 font-bold text-white">DAZN</td>
+            <td class="p-3 text-buff-muted">$24.99</td>
+            <td class="p-3 text-buff-muted">Boxing, MMA, NFL Game Pass</td>
+            <td class="p-3 text-buff-muted">Required</td>
+            <td class="p-3 text-buff-muted">2 devices</td>
+          </tr>
+          <tr class="border-b border-buff-border">
+            <td class="p-3 font-bold text-white">F1 TV Pro</td>
+            <td class="p-3 text-buff-muted">$9.99</td>
+            <td class="p-3 text-buff-muted">Formula 1, F2, F3</td>
+            <td class="p-3 text-buff-muted">Required</td>
+            <td class="p-3 text-buff-muted">6 devices</td>
+          </tr>
+          <tr>
+            <td class="p-3 font-bold text-white">WWE Network / Peacock</td>
+            <td class="p-3 text-buff-muted">$9.99</td>
+            <td class="p-3 text-buff-muted">WWE, NXT, Premium Live Events</td>
+            <td class="p-3 text-buff-muted">Required</td>
+            <td class="p-3 text-buff-muted">3 devices</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="mt-4 text-sm text-buff-muted">Buffstreams provides access to all of the above leagues and events in a single platform with no subscription fees, no registration requirements, and no device limits. The platform aggregates streams from independent sources to deliver comprehensive sports coverage that would cost hundreds of dollars per month across multiple paid services.</p>
+  </section>
+
+  <!-- ══ PRIVACY & SECURITY ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Buffstreams Privacy & Security Recommendations</h2>
+    <p class="mb-4 text-sm text-buff-muted">Buffstreams is designed to respect user privacy. The platform does not require account creation, email addresses, phone numbers, or any personal identifying information. Users can access all content without cookies consent or tracking permissions for streaming functionality.</p>
+    <div class="grid gap-4 sm:grid-cols-2">
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">VPN Compatibility</h3>
+        <p class="text-sm text-buff-muted">Buffstreams works with all major VPN providers. Using a VPN adds an encryption layer that protects streaming activity from ISP throttling and surveillance. A VPN is not required to access Buffstreams but is recommended for users who prioritize online privacy while streaming live sports content.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">No Data Collection</h3>
+        <p class="text-sm text-buff-muted">Buffstreams does not collect, store, or share personal data from users. The platform does not require registration and does not use tracking cookies for streaming functionality. Viewers can watch without creating any digital footprint on the platform.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Ad Experience</h3>
+        <p class="text-sm text-buff-muted">Buffstreams displays advertisements to support the free service. Ads are contained within designated ad containers and do not interrupt the streaming experience. Multiple ad-free backup stream links are available for users who prefer an uninterrupted viewing experience.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-5">
+        <h3 class="mb-2 text-base font-bold text-white">Browser Security</h3>
+        <p class="text-sm text-buff-muted">Buffstreams recommends using an updated browser with built-in security features for the safest streaming experience. Modern browsers including Chrome, Firefox, Safari, and Edge include phishing protection, sandboxing, and automatic security updates that protect users while streaming.</p>
       </div>
     </div>
   </section>
@@ -494,6 +847,30 @@ const faqSchema = {
       </div>
       <p class="text-sm text-buff-muted">SportSurge aggregates free live sports streams from across the internet for NFL, NBA, MLB, NHL, UFC, soccer, F1, and more backed by an active community that shares and validates working links. The platform covers all major leagues with multiple stream options for every event.</p>
     </div>
+
+    <!-- NFLBite -->
+    <div class="mb-5 rounded-lg border border-buff-border bg-buff-darker p-5">
+      <div class="mb-3 flex items-center gap-3">
+        <span class="text-2xl">🏈</span>
+        <div>
+          <h3 class="text-base font-bold text-white">NFLBite</h3>
+          <p class="text-xs text-buff-muted">American Football Streaming</p>
+        </div>
+      </div>
+      <p class="text-sm text-buff-muted">NFLBite specializes in NFL football streaming with coverage of every regular season game, Thursday Night Football, Monday Night Football, Sunday Night Football, and the full postseason including the Super Bowl. The platform provides HD streams with multiple backup links optimized for football viewing.</p>
+    </div>
+
+    <!-- VIPBox -->
+    <div class="mb-5 rounded-lg border border-buff-border bg-buff-darker p-5">
+      <div class="mb-3 flex items-center gap-3">
+        <span class="text-2xl">🌍</span>
+        <div>
+          <h3 class="text-base font-bold text-white">VIPBox</h3>
+          <p class="text-xs text-buff-muted">International Sports Streaming</p>
+        </div>
+      </div>
+      <p class="text-sm text-buff-muted">VIPBox provides free live sports streams for a wide range of international sports including soccer, basketball, tennis, motorsports, and combat sports. The platform covers European football leagues, Grand Slam tennis, F1, MotoGP, UFC, and boxing with multiple stream links for every event.</p>
+    </div>
   </section>
 
   <!-- ══ FAN TESTIMONIALS ══ -->
@@ -567,6 +944,39 @@ const faqSchema = {
           </div>
         </div>
       </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-2 text-sm text-buff-gold">★★★★★</div>
+        <p class="mb-3 text-sm text-buff-muted italic">"I watch Premier League matches every weekend on Buffstreams. The streams are consistently reliable and the HD quality is excellent."</p>
+        <div class="flex items-center gap-2">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-buff-gold text-sm font-bold text-black">JP</div>
+          <div>
+            <div class="text-sm font-bold text-white">Juan P.</div>
+            <div class="text-xs text-buff-muted">Soccer Fan · Madrid, ES</div>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-2 text-sm text-buff-gold">★★★★★</div>
+        <p class="mb-3 text-sm text-buff-muted italic">"Buffstreams is perfect for keeping up with F1 races without paying for expensive sports packages. The qualifying and race streams work great."</p>
+        <div class="flex items-center gap-2">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-buff-gold text-sm font-bold text-black">LN</div>
+          <div>
+            <div class="text-sm font-bold text-white">Liam N.</div>
+            <div class="text-xs text-buff-muted">F1 Fan · Melbourne, AU</div>
+          </div>
+        </div>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <div class="mb-2 text-sm text-buff-gold">★★★★★</div>
+        <p class="mb-3 text-sm text-buff-muted italic">"From March Madness to the NBA Finals, Buffstreams has every basketball game I want to watch. The multiple stream options are a game changer."</p>
+        <div class="flex items-center gap-2">
+          <div class="flex h-9 w-9 items-center justify-center rounded-full bg-buff-gold text-sm font-bold text-black">KW</div>
+          <div>
+            <div class="text-sm font-bold text-white">Kendra W.</div>
+            <div class="text-xs text-buff-muted">Basketball Fan · Atlanta, GA</div>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -583,6 +993,38 @@ const faqSchema = {
       <a href="/f1" class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted no-underline hover:bg-buff-darker hover:text-buff-gold transition-colors">🏎️ F1</a>
       <a href="/mma" class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted no-underline hover:bg-buff-darker hover:text-buff-gold transition-colors">🥊 MMA</a>
       <a href="/wwe" class="rounded-full border border-buff-border bg-buff-card px-3 py-1 text-xs text-buff-muted no-underline hover:bg-buff-darker hover:text-buff-gold transition-colors">🤼 WWE</a>
+    </div>
+  </section>
+
+  <!-- ══ SPORTS STREAMING GLOSSARY ══ -->
+  <section class="not-prose mt-12 rounded-lg border border-buff-border bg-buff-darker p-6">
+    <h2 class="mb-2 text-2xl font-bold text-white">Sports Streaming Glossary</h2>
+    <p class="mb-6 text-sm text-buff-muted">Common terms and concepts related to live sports streaming on Buffstreams and other platforms.</p>
+    <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <h3 class="mb-1 text-sm font-bold text-white">HD Streaming</h3>
+        <p class="text-xs text-buff-muted">High-definition video streaming at 720p or 1080p resolution. HD streams on Buffstreams provide clearer picture quality than standard definition with better detail during fast-paced sports action.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <h3 class="mb-1 text-sm font-bold text-white">Bitrate</h3>
+        <p class="text-xs text-buff-muted">The amount of data transmitted per second in a video stream. Higher bitrates produce better image quality. Buffstreams HD streams typically use 1500-4000 kbps bitrates depending on resolution and source.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <h3 class="mb-1 text-sm font-bold text-white">Stream Latency</h3>
+        <p class="text-xs text-buff-muted">The delay between live action and when it appears on screen. Buffstreams streams typically have 15-45 seconds of latency which is standard for web-based streaming and allows for buffer management.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <h3 class="mb-1 text-sm font-bold text-white">CDN</h3>
+        <p class="text-xs text-buff-muted">Content Delivery Network that distributes video streams across multiple geographic servers. CDNs reduce buffering by serving video from the server closest to the viewer's location.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <h3 class="mb-1 text-sm font-bold text-white">Adaptive Bitrate</h3>
+        <p class="text-xs text-buff-muted">Technology that automatically adjusts video quality based on available internet bandwidth. When network conditions change, the stream quality scales up or down without manual intervention to prevent buffering.</p>
+      </div>
+      <div class="rounded-lg border border-buff-border bg-buff-card p-4">
+        <h3 class="mb-1 text-sm font-bold text-white">Buffer</h3>
+        <p class="text-xs text-buff-muted">A temporary data storage area that pre-loads video content before playback. Buffering smooths out network fluctuations but can cause playback delays if the buffer empties faster than it refills due to bandwidth constraints.</p>
+      </div>
     </div>
   </section>
 
@@ -626,6 +1068,46 @@ const faqSchema = {
       <details class="rounded-lg border border-buff-border bg-buff-card">
         <summary class="cursor-pointer px-4 py-3 font-medium text-white">Should I use a VPN with Buffstreams?</summary>
         <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">A VPN is not required but is recommended for added privacy and to bypass potential regional restrictions when accessing live sports streams.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">What internet speed do I need for Buffstreams?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">A minimum of 5 Mbps is recommended for SD quality, 10 Mbps for 720p HD, and 15 Mbps or higher for 1080p full HD streaming on Buffstreams.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">How often are Buffstreams streams updated?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams updates stream links in real time throughout live events. Schedule information is refreshed every 30 minutes and new stream sources are added as they become available.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">Does Buffstreams have a mobile app?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams does not require a mobile app. The platform is fully optimized for mobile browsers on iOS and Android devices and works through Safari, Chrome, or any modern browser without installation.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">Can I watch Buffstreams on a smart TV?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams can be accessed on smart TVs through the built-in web browser on Samsung, LG, Sony, and Vizio models. Screen mirroring from a mobile device also works for TV viewing.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">Does Buffstreams work internationally?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams is accessible globally. The platform does not employ geo-blocking restrictions and works from any country with an internet connection. Using a VPN can help with regional accessibility.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">Are there ads on Buffstreams?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams displays advertisements to support the free service. Ads are contained within designated areas and do not interrupt the streaming experience. Multiple ad-free backup links are available.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">Can I watch replays on Buffstreams?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams focuses primarily on live sports streaming. Some stream sources may remain accessible after events conclude depending on availability but the platform is optimized for real-time coverage.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">Does Buffstreams cover college sports?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams covers NCAA football across all FBS conferences, NCAA basketball including March Madness, College Football Playoff games, bowl games, and select FCS and lower division matchups.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">What leagues does Buffstreams cover?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams covers the NFL, NBA, NHL, MLB, MLS, Premier League, La Liga, Serie A, Bundesliga, Ligue 1, UEFA Champions League, UFC, Bellator, PFL, ONE Championship, WWE, Formula 1, NASCAR, IndyCar, ATP Tour, WTA Tour, PGA Tour, LIV Golf, and NCAA sports.</p>
+      </details>
+      <details class="rounded-lg border border-buff-border bg-buff-card">
+        <summary class="cursor-pointer px-4 py-3 font-medium text-white">How do I switch between stream sources on Buffstreams?</summary>
+        <p class="border-t border-buff-border px-4 py-3 text-sm text-buff-muted">Buffstreams displays all available stream sources for each event. Users can click on any listed stream to switch sources instantly. Each stream source is labeled with its provider name and stream number.</p>
       </details>
       <details class="rounded-lg border border-buff-border bg-buff-card" open>
         <summary class="cursor-pointer px-4 py-3 font-medium text-white">Is Buffstreams still active in 2026?</summary>

@@ -4,4 +4,4 @@ Disallow: /badges/
 Disallow: /images/
 Disallow: /_astro/
 
-Sitemap: https://buffstreamsbackup.world/sitemap.xml
+Sitemap: https://buffstreamsbackup.shop/sitemap.xml
