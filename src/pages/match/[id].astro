@@ -218,7 +218,7 @@ const sourceName = (s: string) => SOURCE_NAMES[s] || s.charAt(0).toUpperCase() +
         for (var ri = 0; ri < streams.length; ri++) {
           var st = streams[ri];
           var isLast = ri === streams.length - 1;
-          var href = 'https://watch.buffstreamsbackup.world/?id=' + matchId + '&source=' + st.source + '&stream=' + st.streamNo;
+          var href = 'https://flickjetpro.github.io/sportsitewatch/?id=' + matchId + '&source=' + st.source + '&stream=' + st.streamNo;
           var quality = st.hd ? 'HD' : 'SD';
           var qClass = st.hd ? 'text-buff-gold' : 'text-buff-muted';
           var viewersColor = st.viewers > 0 ? 'color:#22c55e' : 'color:#888';
