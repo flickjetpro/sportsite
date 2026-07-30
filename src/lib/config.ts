@@ -1,4 +1,4 @@
-export const MAIN_DOMAIN = 'buffstreamsbackup.shop'
+export const MAIN_DOMAIN = 'buffstreams.buzz'
 
 export const SOURCE_NAMES: Record<string, string> = {
   echo: 'Echo',
